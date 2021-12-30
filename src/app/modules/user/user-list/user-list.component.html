@@ -1,13 +1,54 @@
-<!--<div class="row">
+<div class="row">
     <div class="col-12">
         <app-title-h1 type="primary" text="Lista de Usuarios"></app-title-h1>
     </div>
-    <app-card-user [data]="user" *ngFor="let user of users;" class="col-12 col-md-6 col-xl-3" ></app-card-user>
-</div> -->
-<div class="container-fluid px-0">
-    <div class="row bg-dark h-100">
-        <div class="col-12 px-0">
-            <app-carousel [items]="carouselData"></app-carousel>
-        </div>
+    <ng-container *ngIf="users; else elseUsersLoader;">
+        <app-card-user [data]="user" *ngFor="let user of users;trackBy: trackByUserId" class="col-12 col-md-6 col-xl-3" ></app-card-user>
+    </ng-container>
+    <div class="col-12">
+        <button class="btn btn-primary mt-3 ml-3" (click)="newUser()">Agregar Usuario</button>
     </div>
+    <!----------------------------------
+        Init Loader of card user
+    ----------------------------------->
+    <ng-template #elseUsersLoader>
+        <app-card-loader class="col-12 col-md-6 col-xl-3" [bars]="4" [imageSize]="100" [barHeight]="7" *ngFor="let i of [0,1,2,3]"></app-card-loader>
+    </ng-template>
+    <!----------------------------------
+        End Loader of card user
+    ----------------------------------->
+
+    <!----------------------------------
+        Ejemplo para trabajar con el index de ngFor
+    ----------------------------------->
+    <!--
+        <div class="row">
+            <div class="col-12">
+                <h1>Lista de tareas</h1>
+            </div>
+            <div class="col-12" *ngFor="let task of tasks; index as i;">
+                <h2>Tarea # {{i + 1}} - {{task.title}}</h2>
+            </div>
+        </div>
+    -->
+
+    <!----------------------------------
+        Ejemplo para trabajar encontrar el primero y ultimo item de un array
+    ----------------------------------->
+    <!--
+        <div class="row">
+            <div class="col-12">
+                <h1>Opciones de días</h1>
+            </div>
+            <div class="col-12" *ngFor="let option of options; first as isFirst; last as isLast">
+                <h2>{{option}} {{ isFirst || isLast ? 'día': 'días'}}</h2>
+            </div>
+        </div>
+    -->
+    <button class="btn btn-danger mr-2" (click)="showError()">Mostrar error</button>
+    <button class="btn btn-success" (click)="showSuccess()">Mostrar success</button>
+    <div class="dsc-error" [ngStyle]="style" *ngIf="isShow">
+        {{msg}}
+    </div>
+    
 </div>

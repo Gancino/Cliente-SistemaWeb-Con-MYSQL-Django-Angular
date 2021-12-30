@@ -7,7 +7,8 @@ export const USERS_DATA: ICardUser[] = [
     age: 29,
     description: 'Desarrollador FullStack',
     avatar: 'https://conceptodefinicion.de/wp-content/uploads/2015/03/hombre.jpg',
-    work: 'Proyect Manger'
+    work: 'Proyect Manger',
+    gender: 'M'
   },
   {
     id: 2,
@@ -15,20 +16,23 @@ export const USERS_DATA: ICardUser[] = [
     age: 24,
     description: 'Desarrollador Frontend',
     avatar: 'https://st.depositphotos.com/2069323/2156/i/600/depositphotos_21568785-stock-photo-man-pointing.jpg',
-    work: 'Diseñador'
+    work: 'Diseñador',
+    gender: ''
   },
   {
     id: 3,
     name: 'Paul Pilicita',
     age: 27,
     description: 'Desarrollador Backend',
-    avatar: 'https://t2.pb.ltmcdn.com/es/posts/3/0/1/como_saber_si_le_gustas_a_una_persona_por_whatsapp_5103_orig.jpg'
+    avatar: 'https://t2.pb.ltmcdn.com/es/posts/3/0/1/como_saber_si_le_gustas_a_una_persona_por_whatsapp_5103_orig.jpg',
+    gender: ''
   },
   {
     id: 4,
     name: 'Gancino',
     age: 23,
     description: 'Desarrollador FullStack',
-    avatar: 'https://www.isesinstituto.com/sites/default/files/istock-1158245282.jpg'
+    avatar: 'https://www.isesinstituto.com/sites/default/files/istock-1158245282.jpg',
+    gender: ''
   }
   ];
