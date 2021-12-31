@@ -9,9 +9,11 @@ import { ICarouselItem } from '@shared/components/carousel/Icarousel-item.metada
 })
 export class HomeCarouselComponent implements OnInit {
 
-  public carouselData: ICarouselItem[] = CAROUSEL_DATA_ITEMS;
+  public carouselData: ICarouselItem[];
 
-  constructor() { }
+  constructor() { 
+    this.carouselData = CAROUSEL_DATA_ITEMS;
+  }
 
   ngOnInit(): void {
   }

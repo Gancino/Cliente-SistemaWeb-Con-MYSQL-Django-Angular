@@ -14,10 +14,14 @@ export class UserDetailComponent implements OnInit{
   public users: ICardUser[] = [];
   public id: number;
   public currentUser: ICardUser;
+
+  public title: string;
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService
   ) {
+    this.title = this.userService.getTitle();
     this.userService.getAllUsers().subscribe(r => {
       if(!r.error){
         this.users = r.data;

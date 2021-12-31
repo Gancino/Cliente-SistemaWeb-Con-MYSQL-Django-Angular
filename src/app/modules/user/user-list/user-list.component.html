@@ -1,22 +1,19 @@
 <div class="row">
     <div class="col-12">
-        <app-title-h1 type="primary" text="Lista de Usuarios"></app-title-h1>
+        <app-title-h1 type="primary" [text]="title" [pricePesos]="pricePesos"></app-title-h1>
+        <button class="btn btn-primary" (click)="addAmount()">Agregar 10 pesos</button>
+
     </div>
-    <ng-container *ngIf="users; else elseUsersLoader;">
-        <app-card-user [data]="user" *ngFor="let user of users;trackBy: trackByUserId" class="col-12 col-md-6 col-xl-3" ></app-card-user>
-    </ng-container>
-    <div class="col-12">
+</div>
+
+     <!----------------------------------
+        Ejemplo para simular el Agregar usuario
+    ----------------------------------->
+     <!--
+        <div class="col-12">
         <button class="btn btn-primary mt-3 ml-3" (click)="newUser()">Agregar Usuario</button>
     </div>
-    <!----------------------------------
-        Init Loader of card user
-    ----------------------------------->
-    <ng-template #elseUsersLoader>
-        <app-card-loader class="col-12 col-md-6 col-xl-3" [bars]="4" [imageSize]="100" [barHeight]="7" *ngFor="let i of [0,1,2,3]"></app-card-loader>
-    </ng-template>
-    <!----------------------------------
-        End Loader of card user
-    ----------------------------------->
+    -->
 
     <!----------------------------------
         Ejemplo para trabajar con el index de ngFor
@@ -45,10 +42,13 @@
             </div>
         </div>
     -->
-    <button class="btn btn-danger mr-2" (click)="showError()">Mostrar error</button>
-    <button class="btn btn-success" (click)="showSuccess()">Mostrar success</button>
-    <div class="dsc-error" [ngStyle]="style" *ngIf="isShow">
-        {{msg}}
-    </div>
-    
-</div>
+    <!----------------------------------
+        Ejemplo para trabajar con mensajes de error o success
+    ----------------------------------->
+    <!--
+        <button class="btn btn-danger mr-2" (click)="showError()">Mostrar error</button>
+        <button class="btn btn-success" (click)="showSuccess()">Mostrar success</button>
+        <div class="dsc-error" [ngStyle]="style" *ngIf="isShow">
+            {{msg}}
+        </div> 
+    -->

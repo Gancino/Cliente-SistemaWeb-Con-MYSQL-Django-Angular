@@ -10,6 +10,17 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class UserService extends ApiClass {
   
+  private title = 'Detalle de usuario';
+
+  getTitle(): string{
+    return this.title;
+  }
+  setTitle(t: string){
+    this.title = t;
+  }
+  clearTitle(){
+    this.title = "Detalle de usuario"
+  }
   constructor(http: HttpClient) {
     super(http);
   }
