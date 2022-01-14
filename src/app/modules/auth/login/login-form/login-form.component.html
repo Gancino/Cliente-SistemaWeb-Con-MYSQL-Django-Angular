@@ -1,0 +1,133 @@
+<h1>Bienvenido de nuevo</h1>
+<p>Gracias por volver a tu sitio favorito, por favor llenar el formulario.</p>
+<form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+    <!--------------------Field Email-------------------------->
+    <div class="login-form-input">
+        <label> Email*:</label>
+        <input type="email" placeholder="Email" formControlName="username">
+        <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+        *ngIf="(f.username.errors && loginSubmitted)">
+            <ng-container [ngSwitch]="f.username.value">
+                <ng-container *ngSwitchCase="''">*El email es requerido!</ng-container>
+                <ng-container *ngSwitchDefault>*El email es invalido!</ng-container>
+            </ng-container>
+        </small>
+    </div>
+    <!--------------------Field Password-------------------------->
+    <div class="login-form-input">
+        <label> Contraseña*:</label>
+        <input type="password" placeholder="Contraseña" formControlName="password">
+        <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+        *ngIf="(f.password.errors && loginSubmitted)">
+            <ng-container [ngSwitch]="f.password.value">
+                <ng-container *ngSwitchCase="''">*El password es requerido!</ng-container>
+                <ng-container *ngSwitchDefault>*El password debe tener un máximo de 10 caracteres!</ng-container>
+            </ng-container>
+        </small>
+    </div>
+    <small class="small">Olvidé contraseña</small>
+    <div class="login-form-buttons">
+        <button class="login-form-buttons__signup">Registrarse</button>
+        <button type="submit" class="login-form-buttons__signin">Iniciar sesión</button>
+    </div>
+</form>
+
+<!--------------------------Trabajar NgModel-----------------------------------------------------
+<h1>Bienvenido de nuevo</h1>
+<p>Gracias por volver a tu sitio favorito, por favor llenar el formulario.</p>
+<div class="login-form-input">
+    <label> Email*:</label>
+    <input type="email" placeholder="Email" [(ngModel)]="loginForm.email.val" #email="ngModel">
+    <small class="bg-danger text-light mt-1 px-2 py-1 rounded" *ngIf="(!loginForm.email.isValid() && loginSubmitted)">{{loginForm.email.error}}</small>
+</div>
+<div class="login-form-input">
+    <label> Contraseña*:</label>
+    <input type="password" placeholder="Contraseña" [(ngModel)]="loginForm.password.val" #password="ngModel">
+    <small class="bg-danger text-light mt-1 px-2 py-1 rounded" *ngIf="(!loginForm.password.isValid() && loginSubmitted)">{{loginForm.password.error}}</small>
+</div>
+<small>Olvidé contraseña</small>
+<div class="login-form-buttons">
+    <button class="login-form-buttons__signup">Registrarse</button>
+    <button class="login-form-buttons__signin" (click)="authenticate()">Iniciar sesión</button>
+</div>
+------------------------------------------------------------------------------------------------------>
+
+<!---------Trabajar con ReactiveForm-------------------------
+
+<h1>Bienvenido de nuevo</h1>
+<p>Gracias por volver a tu sitio favorito, por favor llenar el formulario.</p>
+<form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+    <--------------------Field Person name--------------------------
+    <div formGroupName="person">
+        <div class="login-form-input">
+            <label> Nombre*:</label>
+            <input type="text" placeholder="Nombre" formControlName="name">
+            <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+            *ngIf="fp.get('name').errors && loginSubmitted">
+                <ng-container [ngSwitch]="fp.get('name').value">
+                    <ng-container *ngSwitchCase="''">*El nombre es requerido!</ng-container>
+                    <ng-container *ngSwitchDefault>*El nombre debe tener máximo 35 caracteres!</ng-container>
+                </ng-container>
+            </small>
+        </div>
+        <div class="login-form-input">
+            <label> Apellido*:</label>
+            <input type="text" placeholder="Apellido" formControlName="lastname">
+            <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+            *ngIf="fp.get('lastname').errors && loginSubmitted">
+                <ng-container [ngSwitch]="fp.get('lastname').value">
+                    <ng-container *ngSwitchCase="''">*El apellido es requerido!</ng-container>
+                    <ng-container *ngSwitchDefault>*El apellido debe tener máximo 35 caracteres!</ng-container>
+                </ng-container>
+            </small>
+        </div>
+    </div>
+    <--------------------Field Email--------------------------
+    <div class="login-form-input">
+        <label> Email*:</label>
+        <input type="email" placeholder="Email" formControlName="email">
+        <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+        *ngIf="(fm.email.errors && loginSubmitted)">
+            <ng-container [ngSwitch]="fm.email.value">
+                <ng-container *ngSwitchCase="''">*El email es requerido!</ng-container>
+                <ng-container *ngSwitchDefault>*El email es invalido!</ng-container>
+            </ng-container>
+        </small>
+    </div>
+    <--------------------Field Password--------------------------
+    <div class="login-form-input">
+        <label> Contraseña*:</label>
+        <input type="password" placeholder="Contraseña" formControlName="password">
+        <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+        *ngIf="(fm.password.errors && loginSubmitted)">
+            <ng-container [ngSwitch]="fm.password.value">
+                <ng-container *ngSwitchCase="''">*El password es requerido!</ng-container>
+                <ng-container *ngSwitchDefault>*El password debe tener un máximo de 10 caracteres!</ng-container>
+            </ng-container>
+        </small>
+    </div>
+    <--------------------Field Interests--------------------------
+    <div formArrayName="interests">
+        <button (click)="addInterest()" type="button">Agregar+</button>
+        <ng-container *ngFor="let interest of interests.controls; let i=index">
+            <div class="login-form-input">
+                <label> Interes*: <span (click)="deleteInterest(i)">X</span></label>
+                <input type="text" placeholder="Interes" [formControlName]="i">
+                <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+                *ngIf="(interest.errors && loginSubmitted)">
+                    <ng-container [ngSwitch]="interest.value">
+                        <ng-container *ngSwitchCase="''">*El interes es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*El interes debe tener minimo 10 caracteres!</ng-container>
+                    </ng-container>
+                </small>
+            </div>
+        </ng-container>
+    </div>
+    <small class="small">Olvidé contraseña</small>
+    <div class="login-form-buttons">
+        <button class="login-form-buttons__signup">Registrarse</button>
+        <button type="submit" class="login-form-buttons__signin">Iniciar sesión</button>
+    </div>
+</form>
+
+--------------------------------------------------------------------------->

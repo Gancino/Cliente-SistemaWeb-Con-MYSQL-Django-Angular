@@ -1,0 +1,15 @@
+<div class="dsc-left-nav-menu">
+    <h5 class="dsc-left-nav-menu__title">{{data.title}}</h5>
+    <ul class="dsc-left-nav-menu__links">
+        <ng-container *ngFor="let link of data.links">
+            <li 
+                class="dsc-left-nav-menu__links-link" 
+                [routerLink]="link.link ? link.link : null"
+                (click)="link.method ? link.method() : null"
+            >
+                <fa-icon [icon]="link.icon"></fa-icon>
+                <span>{{link.name}}</span>
+            </li>
+        </ng-container>
+    </ul>
+</div>

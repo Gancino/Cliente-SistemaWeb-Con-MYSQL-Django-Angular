@@ -86,7 +86,16 @@
               "browserTarget": "Tutorial:build:production"
             },
             "development": {
-              "browserTarget": "Tutorial:build:development"
+              "browserTarget": "Tutorial:build:development",
+
+
+              "proxyConfig": "src/proxy.conf.json"
+
+
+
+
+
+
             }
           },
           "defaultConfiguration": "development"

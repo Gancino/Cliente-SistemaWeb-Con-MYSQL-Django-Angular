@@ -1,0 +1,197 @@
+$primary: #7D051D;
+$secondary: #655C5C;
+
+::ng-deep { //<-------permite que los estilos tambien afecte a los componentes hijos en este caso seria el component (login-form)
+    .login {
+        &-container{
+            width: 100%;
+            height: 100vh;
+            min-height: 800px;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        &-form {
+            width: 60%;
+            min-width: 300px;
+            max-width: 700px;
+            background: #fff;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 3rem;
+            &-logo {
+                height: 120px;
+            }
+            &-content {
+                width: 100%;
+                margin: 1.5rem 0;
+                > h1 {
+                    font-size: 2.75rem;
+                    color: $secondary;
+                    font-weight: 600;
+                    margin-bottom: 0.5rem;
+                }
+                > p {
+                    color: $secondary;
+                    opacity: 0.6;
+                    max-width: 350px;
+                    margin-bottom: 3rem;
+                }
+                .small {
+                    display: block;
+                    width: 100%;
+                    text-align: right;
+                    opacity: 0.7;
+                    margin-bottom: 3rem;
+                    &:hover {
+                        opacity: 0.9;
+                        cursor: pointer;
+                    }
+                }
+            }
+            &-input {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 2rem;
+                > label {
+                    font-weight: 400;
+                    color: black;
+                    font-size: 1.25rem;
+                    margin-bottom: 0.5rem;
+    
+                }
+                > input {
+                    height: 50px;
+                    border: 1px solid $primary;
+                    padding-left: 1rem;
+                    opacity: 0.9;
+                    background: none;
+                    outline: none;
+                    color: $primary;
+                    &:focus, &:active {
+                        border-left: 5px solid $primary;
+                    }
+                    &:-webkit-autofill {
+                        box-shadow: 0 0 0 30px white inset !important;
+                    }
+                }
+            }
+            &-buttons {
+                float: right;
+                margin-bottom: 3rem;
+                &__signup, &__signin {
+                    height: 50px;
+                    min-width: 170px;
+                    border: none;
+                    box-shadow: 1px 1px 6px 0 rgba(0,0,0,0.3);
+                    transition: 0.5s all ease-in-out;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                &__signup {
+                    border: 1px solid $primary;
+                    color: $primary;
+                    background: #fff;
+                    margin-right: 1rem;
+                    &:hover {
+                        background: $primary;
+                        color: #fff;
+                    }
+                }
+                &__signin {
+                    background: $primary;
+                    color: #fff;
+                    &:hover {
+                        border: 1px solid $primary;
+                        background: #fff;
+                        color: $primary;
+                    }
+                    &:disabled {
+                        opacity: 0.5;
+                    }
+                }
+            }
+            &-footer {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &__links {
+                    margin-bottom: 1rem;
+                    > a {
+                        margin-right: 1rem;
+                        color: $primary;
+                        text-decoration: none;
+                        &:hover {
+                            cursor: pointer;
+                            font-weight: 600;
+                        }
+                    }
+                }
+                &__socials {
+                    &_social {
+                        font-size: 2rem;
+                        color: $primary;
+                        margin-left: 1rem;
+                        &:hover {
+                            opacity: 0.9;
+                            transform: scale(1.05);
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    ::ng-deep {
+        .login {
+            &-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 1px 1px 6px 0 rgba(0,0,0,0.3);
+                padding: 1rem 0;
+            }
+            &-form {
+                width: calc(90% - 3rem);
+                padding: 1rem;
+                height: fit-content;
+                &-logo {
+                    height: 30px;
+                }
+                &-content {
+                    width: 100%;
+                    margin: 2rem 0 1rem 0;
+                    > h1 {
+                        font-size: 1.5rem;
+                    }
+                    > p {
+                        margin-bottom: 2rem;
+                    }
+                }
+                &-input {
+                    > input {
+                        height: 40px;
+                    }
+                }
+                &-buttons {
+                    float: right;
+                    &__signup, &__signin {
+                        height: 40px;
+                        min-width: 100px;
+                    }
+                }
+                &-footer {
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}

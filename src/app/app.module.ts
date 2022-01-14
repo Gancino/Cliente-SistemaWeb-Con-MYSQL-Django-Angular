@@ -10,6 +10,8 @@ import { SkeletonComponent } from './layout/skeleton/skeleton.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavigationComponent } from './layout/navigation/navigation.component';
 import { LeftNavComponent } from './layout/left-nav/left-nav.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { LeftNavMenuComponent } from './layout/left-nav/left-nav-menu/left-nav-menu.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { LeftNavComponent } from './layout/left-nav/left-nav.component';
     SkeletonComponent,
     FooterComponent,
     NavigationComponent,
-    LeftNavComponent
+    LeftNavComponent,
+    HeaderComponent,
+    LeftNavMenuComponent
   ],
   imports: [
     BrowserModule,

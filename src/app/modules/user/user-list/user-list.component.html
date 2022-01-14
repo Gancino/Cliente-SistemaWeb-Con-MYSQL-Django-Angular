@@ -1,10 +1,32 @@
 <div class="row">
     <div class="col-12">
+        <app-title-h1 type="primary" [text]="title"></app-title-h1>
+    </div>
+    <ng-container *ngIf="users; else elseUsersLoader;">
+        <app-card-user [data]="user" *ngFor="let user of users;trackBy: trackByUserId" class="col-12 col-md-6 col-xl-3" ></app-card-user>
+    </ng-container>
+    
+    <!----------------------------------
+        Init Loader of card user
+    ----------------------------------->
+    <ng-template #elseUsersLoader>
+        <app-card-loader class="col-12 col-md-6 col-xl-3" [bars]="4" [imageSize]="100" [barHeight]="7" *ngFor="let i of [0,1,2,3]"></app-card-loader>
+    </ng-template>
+    <!----------------------------------
+        End Loader of card user
+    ----------------------------------->
+</div>
+
+<!----------------------------------------------------------------
+    Trabajar con ngOnChanges()
+    <div class="row">
+    <div class="col-12">
         <app-title-h1 type="primary" [text]="title" [pricePesos]="pricePesos"></app-title-h1>
         <button class="btn btn-primary" (click)="addAmount()">Agregar 10 pesos</button>
 
     </div>
 </div>
+-->
 
      <!----------------------------------
         Ejemplo para simular el Agregar usuario

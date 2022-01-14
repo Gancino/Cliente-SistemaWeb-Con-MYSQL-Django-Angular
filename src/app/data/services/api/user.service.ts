@@ -34,7 +34,7 @@ export class UserService extends ApiClass {
     data: ICardUser[]
   }> {
     const response = {error: false, msg: '', data: [] as ICardUser[]};
-    return this.http.get<ICardUser[]>(this.url + 'users')
+    return this.http.get<ICardUser[]>(this.url + 'api/1.0/users')
     .pipe(
       map( r => {
         response.data = r;
@@ -60,7 +60,7 @@ export class UserService extends ApiClass {
     data: ICardUser
   }> {
     const response = {error: false, msg: '', data: null as ICardUser};
-    return this.http.get<ICardUser>(this.url + 'users/' + id)
+    return this.http.get<ICardUser>(this.url + 'api/1.0/users/' + id)
     .pipe(
       map( r => {
         response.data = r;

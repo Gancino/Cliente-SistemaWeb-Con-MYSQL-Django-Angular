@@ -29,34 +29,39 @@
                 &__name {
                     color: map-get($map: $theme, $key: 'light');
                     margin-bottom: 0.15rem;
+                    font-size: 17px; //.....
                 }
                 &__position {
                     color: map-get($map: $theme, $key: 'light');
                     font-weight: 400;
+                    font-size: 11px; //....
+                    margin-bottom: 0.1rem; //.....
                 }
             }
             &-menu {
                 width: 100%;
                 border-bottom: map-get($map: $theme, $key: 'border_primary');
-                padding: 0.5rem 0;
+                padding: 0.3rem 0.3rem;
                 &__title {
                     color: map-get($map: $theme, $key: 'secondary');
                     text-align: left;
-                    margin-left: 0.5rem;
+                    margin: 0.3rem;
                     font-weight: 700;
+                    font-size: 13px; //....
                 }
                 &__links {
                     padding: 0;
+                    margin-bottom: 0;
                     &-link {
                         width: 100%;
                         color: map-get($map: $theme, $key: 'light');
                         list-style: none;
-                        font-size: 1rem;
-                        padding: 0.4rem 0.1rem 0.4rem 0.5rem;
+                        font-size: 1.1rem;
+                        padding: 0.25rem 0.3rem;
                         transition: 0.5s all ease-in-out;
                         opacity: 0.7;
                         > span {
-                            margin-left: 0.5rem;
+                            margin-left: 0.7rem;
                         }
                         &:hover {
                             background: rgba(255,255,255,0.15);
