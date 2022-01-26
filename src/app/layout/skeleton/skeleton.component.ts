@@ -8,7 +8,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 export class SkeletonComponent implements AfterViewInit{
 
   public showLeftNav = true;
-  public $theme: 'dark' | 'red' | 'blue-dark' | 'yellow' = 'red';
+  public $theme: 'dark' | 'red' | 'blue-dark' | 'yellow' = 'blue-dark';
   public loader = 'assets/images/loader/loader.gif';
   public isLoader = true;
   constructor() { }

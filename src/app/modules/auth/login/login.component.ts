@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit{
 
   showMessage(){
     this.authService.getMessage().subscribe(dat=>{
-      this.msg = dat,
-      console.log(this.msg);
+      this.msg = dat;
+      //console.log(this.msg);
     });
   }
 }

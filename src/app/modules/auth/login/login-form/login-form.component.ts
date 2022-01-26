@@ -35,7 +35,7 @@ export class LoginFormComponent {
     });
   }
   ngOnInit(): void {
-    return this.loginForm.get('username').setValue('nuevo@gmail.com')
+    return this.loginForm.get('username').setValue(this.authService.getUser.email)
   }
 
  
@@ -49,7 +49,7 @@ export class LoginFormComponent {
     {
       return;
     }
-    console.log('Authenticated', this.loginForm.value);
+    //console.log('Authenticated', this.loginForm.value);
     this.authService.login(this.loginForm.value).subscribe( r => {
       //Show Errors
       console.log(r);

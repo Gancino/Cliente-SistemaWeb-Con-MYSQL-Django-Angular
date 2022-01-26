@@ -51,7 +51,7 @@ export class AuthService {
           if (!response.error){
             this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_USER_LIST);
           }
-          console.log(r.data);
+          //console.log(r.data);
           return response;
         }),
         catchError( e => {

@@ -30,7 +30,7 @@ export class TitleH1Component implements OnInit,OnChanges {
   }
   //El metodo ngOnInit() se ejecuta una ves que el componente se haya construido
   ngOnInit(): void {
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
   }
   
 

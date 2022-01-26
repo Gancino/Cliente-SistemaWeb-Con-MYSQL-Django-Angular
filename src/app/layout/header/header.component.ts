@@ -18,7 +18,7 @@ export class HeaderComponent {
   public faHome = faHome;
   public faUsers = faUsers;
   public avatar = 'assets/images/defaults/avatar.jpg';
-  public logo = 'assets/images/defaults/logo.png';
+  public logo = 'assets/images/defaults/logo_negocio.jpg';
   public userSubscription: Subscription;
   public PathMedia = API_ROUTES.PhotoUrl.IMAGEN
   constructor(
