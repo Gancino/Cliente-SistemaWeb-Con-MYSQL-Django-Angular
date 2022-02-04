@@ -1,0 +1,47 @@
+<div class="d-flex flex-row bd-highlight mb-3">
+    <div class="form-froup row" style="width: 60%;">
+
+        <label class="col-sm-2 col-form-label">Titulo:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" [(ngModel)]="titulo_con"
+                placeholder="Ingrese el título del contenido">
+        </div>
+        <label class="col-sm-2 col-form-label">Fecha:</label>
+        <div class="col-sm-10">
+            <input type="date" [(ngModel)]="fecha_con">
+        </div>
+        <label class="col-sm-2 col-form-label">Descripción:</label>
+        <div class="col-sm-10">
+            <textarea type="text" class="form-control" [(ngModel)]="descripcion_con"
+            placeholder="Ingrese la descripcion" rows="2"></textarea>
+        </div>
+        <label class="col-sm-2 col-form-label">Archivo:</label>
+        <div class="col-sm-10">
+            <input type="file" (change)="uploadFile($event)">
+            
+            <a href="{{filePath}}" target="_blank"><ng-container *ngIf="this.con.archivo_con != null">
+                <br>{{this.archivo_con}}
+            </ng-container></a>
+        </div>
+
+        <label class="col-sm-2 col-form-label">Autor:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" [(ngModel)]="autor_con"
+                placeholder="Ingrese el autor">
+        </div>
+        <label class="col-sm-2 col-form-label">Categoria:</label>
+        <div class="col-sm-10">
+            <select class="form-control" [(ngModel)]="fk_id_cat">
+                <option>--Seleccionar--</option>
+                <option *ngFor="let catNombre of CategoriaList" value="{{catNombre.id_cat}}">{{catNombre.nombre_cat}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="ml-3 bd-highlight" style=" width: 5%;"></div>
+    <div class="ml-3 bd-highlight" style=" width: 35%;">
+        <img [src]=PhotoFilePath height="250px;" width="385px;">
+        <input type="file" (change)="uploadImage($event)" class="mt-2"/>
+    </div>
+</div>
+<button (click)="addContenido()" *ngIf="con.id_con==0" class="btn btn-primary">Guardar</button>
+<button (click)="updateContenido()" *ngIf="con.id_con!=0" class="btn btn-primary">Actualizar</button>

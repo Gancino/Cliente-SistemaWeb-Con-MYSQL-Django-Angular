@@ -66,7 +66,26 @@ export class AuthService {
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
   }
 
-  private setUserToLocalStorage ( user: IApiUserAuthenticated){
+  cuenta() {
+    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
+  }
+
+  categorias() {
+    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_CATEGORIA_LIST);
+  }
+
+  contenidos() {
+    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_CONTENIDO_LIST);
+  }
+
+  miembros() {
+    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MIEMBRO_LIST);
+  }
+
+  usuarios() {
+    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_USER_LIST);
+  }
+  public setUserToLocalStorage ( user: IApiUserAuthenticated){
     localStorage.setItem(this.nameUserLS, JSON.stringify(user));
   }
 
@@ -76,6 +95,39 @@ export class AuthService {
 
   UploadPhoto(val:any){
     return this.http.post(API_ROUTES.PhotoUrl.IMAGEN,val);
+  }
+
+  UploadFile(val:any){
+    return this.http.post(API_ROUTES.API.SAVEFILE,val);
+  }
+
+  /*
+  updateUser(val:any, id:any){
+    return this.http.put(API_ROUTES.USERS.UPDATE+id+"/", val);
+  }
+  */
+  updateUser(val:any, id:any): Observable <{       //retornara un observable
+    error: boolean;
+    msg: string;
+    data: any
+  }> {
+    const response = {error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null as any};
+    return this.http.put<{error: boolean, msg: string, data: any}>(API_ROUTES.USERS.UPDATE+id+"/", val)
+      .pipe(
+        map(r => {
+          response.msg = r.msg;
+          response.error = r.error;
+          response.data = r.data;
+          if(!r.error){
+            this.setUserToLocalStorage(r.data);
+          }
+          //console.log(r.data);
+          return response;
+        }),
+        catchError( e => {
+          return of(response);
+        })
+      );
   }
 }
 

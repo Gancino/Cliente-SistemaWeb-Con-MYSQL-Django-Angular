@@ -5,6 +5,7 @@ export interface IApiUserAuthenticated {
     last_name: string;
     user_id: number;
     email: string;
+    password: string;
     avatar: string;
     work: string;
 }

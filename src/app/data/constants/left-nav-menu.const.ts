@@ -1,7 +1,42 @@
 import { ILeftNavMenu } from "@data/interfaces";
-import { faUser, faCog, faClipboard, faComment, faHeart, faBookmark, faChartLine, faCogs } from "@fortawesome/free-solid-svg-icons";
-import { faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faUser, faCog, faIndent, faIdCard, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { Router } from "@angular/router";
+import { INTERNAL_ROUTES } from "./routes";
 
+export const LEFT_NAV_MENUS: ILeftNavMenu[] = [
+    {
+        title: 'Mi cuenta',
+        links: [
+            {
+                icon: faUser,
+                name: 'Perfil'
+            },
+            {
+                icon: faCog,
+                name: 'Mi cuenta'
+            }
+        ]
+    },
+    {
+        title: 'Administración',
+        links: [
+            {
+                icon: faIndent,
+                name: 'Categorias'
+            },
+            {
+                icon: faIdCard,
+                name: 'Contenidos'
+            },
+            {
+                icon: faUsers,
+                name: 'Miembros'
+            }
+        ]
+    }
+]
+
+/*
 export const LEFT_NAV_MENUS: ILeftNavMenu[] = [
     {
         title: 'Mi cuenta',
@@ -50,3 +85,4 @@ export const LEFT_NAV_MENUS: ILeftNavMenu[] = [
         ]
     }
 ]
+*/

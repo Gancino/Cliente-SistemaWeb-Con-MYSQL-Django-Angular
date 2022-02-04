@@ -1,0 +1,43 @@
+<div class="d-flex flex-row bd-highlight mb-3">
+    <div class="form-froup row" style="width: 60%;">
+
+        <label class="col-sm-2 col-form-label">Nombres:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" [(ngModel)]="nombre_miem"
+                placeholder="Ingrese sus nombres">
+        </div>
+        <label class="col-sm-2 col-form-label">Apellidos:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" [(ngModel)]="apellido_miem"
+                placeholder="Ingrese sus apellidos">
+        </div>
+        <label class="col-sm-2 col-form-label">Descripción:</label>
+        <div class="col-sm-10">
+            <textarea type="text" class="form-control" [(ngModel)]="descripcion_miem"
+            placeholder="Ingrese su descripcion" rows="2"></textarea>
+        </div>
+        <label class="col-sm-2 col-form-label">Correo:</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" [(ngModel)]="correo_miem"
+                placeholder="Ingrese su correo electronico">
+        </div>
+        <label class="col-sm-2 col-form-label">Telefono:</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" [(ngModel)]="telefono_miem"
+                placeholder="Ingrese su número de telefono">
+        </div>
+        <label class="col-sm-2 col-form-label">Cargo:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" [(ngModel)]="cargo_miem"
+                placeholder="Ingrese su cargo">
+        </div>
+    </div>
+    <div class="ml-3 bd-highlight" style=" width: 5%;"></div>
+    <div class="ml-3 bd-highlight" style=" width: 35%;">
+        <img [src]=PhotoFilePath height="250px;" width="385px;">
+        <input type="file" (change)="uploadImage($event)" class="mt-2"/>
+    </div>
+</div>
+<button (click)="addMiembro()" *ngIf="miem.id_miem==0" class="btn btn-primary">Guardar</button>
+<button (click)="updateMiembro()" *ngIf="miem.id_miem!=0" class="btn btn-primary">Actualizar</button>
+

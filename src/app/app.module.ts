@@ -21,7 +21,7 @@ import { LeftNavMenuComponent } from './layout/left-nav/left-nav-menu/left-nav-m
     NavigationComponent,
     LeftNavComponent,
     HeaderComponent,
-    LeftNavMenuComponent
+    LeftNavMenuComponent,
   ],
   imports: [
     BrowserModule,

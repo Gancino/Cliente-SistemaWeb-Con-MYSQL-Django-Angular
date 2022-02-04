@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { API_ROUTES } from '@data/constants/routes';
 import { AuthService } from '@data/services/api/auth.service';
-import { faBars, faBell, faComment, faHome, faUsers} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBell, faComment, faHome, faIdCard, faIndent, faUser, faUsers} from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,6 +17,9 @@ export class HeaderComponent {
   public faComment = faComment;
   public faHome = faHome;
   public faUsers = faUsers;
+  public faIndent = faIndent;
+  public faIdCard = faIdCard;
+  public faUser = faUser;
   public avatar = 'assets/images/defaults/avatar.jpg';
   public logo = 'assets/images/defaults/logo_negocio.jpg';
   public userSubscription: Subscription;
