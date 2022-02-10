@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeCarouselComponent } from './home-carousel/home-carousel.component';
+import { CarouselImagesComponent } from './carousel-images/carousel-images.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeCarouselComponent
+    component: CarouselImagesComponent
   }
 ];
 

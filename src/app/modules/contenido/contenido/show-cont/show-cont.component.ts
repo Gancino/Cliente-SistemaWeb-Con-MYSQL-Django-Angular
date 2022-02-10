@@ -45,7 +45,7 @@ export class ShowContComponent implements OnInit {
     fk_id_cat : "",
 
     }
-    this.ModalTitle="Agregar una nuevo contenido";
+    this.ModalTitle="Agregar un nuevo contenido";
     this.ActivateAddEditConComp=true;
   }
   closeClick(){

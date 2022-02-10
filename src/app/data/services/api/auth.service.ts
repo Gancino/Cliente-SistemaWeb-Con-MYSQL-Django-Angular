@@ -49,7 +49,7 @@ export class AuthService {
           this.setUserToLocalStorage(r.data);
           this.currentUser.next(r.data);
           if (!response.error){
-            this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_USER_LIST);
+            this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
           }
           //console.log(r.data);
           return response;
@@ -82,8 +82,8 @@ export class AuthService {
     this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MIEMBRO_LIST);
   }
 
-  usuarios() {
-    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_USER_LIST);
+  publicContent() {
+    this.router.navigateByUrl(INTERNAL_ROUTES.PUBLIC_HOME);
   }
   public setUserToLocalStorage ( user: IApiUserAuthenticated){
     localStorage.setItem(this.nameUserLS, JSON.stringify(user));
@@ -98,7 +98,7 @@ export class AuthService {
   }
 
   UploadFile(val:any){
-    return this.http.post(API_ROUTES.API.SAVEFILE,val);
+    return this.http.post(API_ROUTES.API.SAVEIMAGEUSER,val);
   }
 
   /*
@@ -106,13 +106,22 @@ export class AuthService {
     return this.http.put(API_ROUTES.USERS.UPDATE+id+"/", val);
   }
   */
-  updateUser(val:any, id:any): Observable <{       //retornara un observable
+  updateUser(data: {
+    username: string;
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    avatar: string;
+    work: string;
+  }, id:any
+  ): Observable <{       //retornara un observable
     error: boolean;
     msg: string;
     data: any
   }> {
-    const response = {error: true, msg: ERRORS_CONST.LOGIN.ERROR, data: null as any};
-    return this.http.put<{error: boolean, msg: string, data: any}>(API_ROUTES.USERS.UPDATE+id+"/", val)
+    const response = {error: true, msg: ERRORS_CONST.UPDATE.ERROR, data: null as any};
+    return this.http.put<{error: boolean, msg: string, data: any}>(API_ROUTES.USERS.UPDATE+id+"/", data)
       .pipe(
         map(r => {
           response.msg = r.msg;

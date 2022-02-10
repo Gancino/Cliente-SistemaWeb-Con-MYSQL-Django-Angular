@@ -19,7 +19,7 @@ export class NoAuthGuard implements CanActivate {
   ): boolean{
     const curretUser = this.authService.getUser;
     if (curretUser) {
-      this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_USER_LIST);
+      this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
       return false;
     }
     return true;

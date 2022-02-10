@@ -43,10 +43,10 @@
             </div>
             Codigo
           </th>
-          <th>
+          <th [width]="275">
             <div class="d-flex flex-row">
               <input [(ngModel)]="MiembroNombreFilter" class="form-control"
-              (keyup)="FilterFn()" placeholder="Buscar por Nombres">
+              (keyup)="FilterFn()" placeholder="Buscar por Nombre">
               <button type="button" class="btn btn-ligth"
               (click)="sortResult('nombre_miem', true)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
@@ -65,6 +65,7 @@
           <th>Apellidos</th>
           <th>Correo</th>
           <th>Cargo</th>
+          <th>Opciones</th>
         </tr>
     </thead>
     <tbody>

@@ -6,11 +6,11 @@
     </div>
 </div>
 <div class="dsc-header__submenu">
-    <fa-icon [icon]="faHome" class="dsc-header__submenu-icon" routerLink="/panel/home"></fa-icon>
-    <fa-icon [icon]="faUser" class="dsc-header__submenu-icon" routerLink="/panel/user"></fa-icon>
+    <fa-icon [icon]="faHome" class="dsc-header__submenu-icon" routerLink="/panel/cuenta"></fa-icon>
     <fa-icon [icon]="faIndent" class="dsc-header__submenu-icon" routerLink="/panel/categoria"></fa-icon>
     <fa-icon [icon]="faIdCard" class="dsc-header__submenu-icon" routerLink="/panel/contenido"></fa-icon>
     <fa-icon [icon]="faUsers" class="dsc-header__submenu-icon" routerLink="/panel/miembro"></fa-icon>
+    <fa-icon [icon]="faEye" class="dsc-header__submenu-icon" routerLink="/public/home"></fa-icon>
     <!--<fa-icon [icon]="faBell" class="dsc-header__submenu-icon"></fa-icon>
     <fa-icon [icon]="faComment" class="dsc-header__submenu-icon" ></fa-icon>-->
     <div class="dsc-header__submenu-usr" [ngStyle]="{'background-image': 'url(' +  PathMedia + this.authService.getUser.avatar + ')'}" *ngIf="this.authService.getUser" routerLink="/panel/cuenta"></div>

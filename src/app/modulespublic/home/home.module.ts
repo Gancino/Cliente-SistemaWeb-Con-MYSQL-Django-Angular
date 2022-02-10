@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CarouselImagesComponent } from './carousel-images/carousel-images.component';
 import { SharedModule } from '@shared/shared.module';
-import { HomeCarouselComponent } from './home-carousel/home-carousel.component';
 import { HomeRoutingModule } from './home-routing.module';
+
+
 
 @NgModule({
   declarations: [
-    HomeCarouselComponent
+    CarouselImagesComponent
   ],
   imports: [
     SharedModule,

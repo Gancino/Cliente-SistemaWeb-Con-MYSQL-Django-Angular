@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { API_ROUTES } from '@data/constants/routes';
 import { SharedService } from '@data/services/api/shared.service';
 
@@ -10,75 +11,169 @@ import { SharedService } from '@data/services/api/shared.service';
 export class AddEditMieComponent implements OnInit {
 
   @Input() miem:any;
-  id_miem:string;
-  nombre_miem!:string;
-  apellido_miem!:string;
-  correo_miem!:string;
-  telefono_miem!:string;
-  imagen_miem!:string;
-  cargo_miem!:string;
-  descripcion_miem!:string;
+  public miembroSubmitted;
+  public miembroForm: FormGroup;
   PhotoFilePath!: String;
   MiembroList:any=[];
-
+  public archivos:any=[];
   constructor(
+    private formBuilder: FormBuilder,
     private service : SharedService
-  ) { }
+  ) {
+    this.miembroSubmitted = false;
+    this.miembroForm = this.formBuilder.group({
+      id_miem:[
+        ''
+      ],
+      nombre_miem: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(100)
+        ]
+      ],
+      apellido_miem: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(100)
+        ]
+      ],
+      correo_miem: [
+        '', 
+        [
+          Validators.required,
+          Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+        ]
+      ],
+      telefono_miem: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(10)
+        ]
+      ],
+      imagen_miem: [
+        '', 
+        [
+          Validators.maxLength(100)
+        ]
+      ],
+      cargo_miem: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(100)
+        ]
+      ],
+      descripcion_miem: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(500)
+        ]
+      ]
+    });
+  }
+
+  get m(){
+    return this.miembroForm.controls;
+  }
 
   ngOnInit(): void {
     this.loadMiembroList();
   }
 
   loadMiembroList(){
-    this.id_miem=this.miem.id_miem;
-    this.nombre_miem=this.miem.nombre_miem;
-    this.apellido_miem=this.miem.apellido_miem;
-    this.correo_miem=this.miem.correo_miem;
-    this.telefono_miem=this.miem.telefono_miem;
-    this.imagen_miem=this.miem.imagen_miem;
-    this.cargo_miem=this.miem.cargo_miem;
-    this.descripcion_miem=this.miem.descripcion_miem;
-    this.PhotoFilePath=API_ROUTES.PhotoUrl.IMAGEN+this.miem.imagen_miem;
-  }
-
-  addMiembro(){
-    if(this.imagen_miem == null){
-      this.imagen_miem = "anonymous.png"
+    this.miembroForm.get('id_miem').setValue(this.miem.id_miem);
+    this.miembroForm.get('nombre_miem').setValue(this.miem.nombre_miem);
+    this.miembroForm.get('apellido_miem').setValue(this.miem.apellido_miem);
+    this.miembroForm.get('correo_miem').setValue(this.miem.correo_miem);
+    this.miembroForm.get('telefono_miem').setValue(this.miem.telefono_miem);
+    this.miembroForm.get('imagen_miem').setValue(this.miem.imagen_miem);
+    this.miembroForm.get('cargo_miem').setValue(this.miem.cargo_miem);
+    this.miembroForm.get('descripcion_miem').setValue(this.miem.descripcion_miem);
+    if(this.miem.imagen_miem == '' || this.miem.imagen_miem == null ){
+      this.PhotoFilePath=API_ROUTES.PhotoUrl.IMAGEN+'anonymous.png';
+    }else{
+      this.PhotoFilePath=API_ROUTES.PhotoUrl.MEDIA+this.miem.imagen_miem;
     }
-    var val = {id_miem:this.id_miem,
-                nombre_miem:this.nombre_miem,
-                apellido_miem:this.apellido_miem,
-                correo_miem:this.correo_miem,
-                telefono_miem:this.telefono_miem,
-                imagen_miem:this.imagen_miem,
-                cargo_miem:this.cargo_miem,
-                descripcion_miem:this.descripcion_miem};
-    this.service.addMiembro(val).subscribe(res=>{
-      alert(res.toString());
-    });
-  }
-  updateMiembro(){
-    var val = {id_miem:this.id_miem,
-                nombre_miem:this.nombre_miem,
-                apellido_miem:this.apellido_miem,
-                correo_miem:this.correo_miem,
-                telefono_miem:this.telefono_miem,
-                imagen_miem:this.imagen_miem,
-                cargo_miem:this.cargo_miem,
-                descripcion_miem:this.descripcion_miem};
-    this.service.updateMiembro(val).subscribe(res=>{
-      alert(res.toString());
-    });
   }
 
+  addEditMiembro(){
+    this.miembroSubmitted = true;
+    if (!this.miembroForm.valid)
+    {
+      return;
+    }
+    const formData = new FormData();
+    if(this.archivos.length>0){
+      this.archivos.forEach((archivo:any) => {
+        formData.append('imagen_miem', archivo)
+      })
+    }
+    
+    formData.append('nombre_miem', this.miembroForm.get('nombre_miem').value);
+    formData.append('apellido_miem', this.miembroForm.get('apellido_miem').value);
+    formData.append('correo_miem', this.miembroForm.get('correo_miem').value);
+    formData.append('telefono_miem', this.miembroForm.get('telefono_miem').value);
+    formData.append('cargo_miem', this.miembroForm.get('cargo_miem').value);
+    formData.append('descripcion_miem', this.miembroForm.get('descripcion_miem').value);
+ 
+    if(this.miem.id_miem==0){
+      this.service.addMiembro(formData).subscribe( r => {
+        alert(r.msg.toString());
+      });
+    }
+    else{
+      formData.append('id_miem', this.miembroForm.get('id_miem').value);
+      this.service.updateMiembro(formData).subscribe( r =>{
+        alert(r.msg.toString());
+      });
+    }
+  }
+
+  onChange(event:any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.extraerBase64(file).then((imagen: any) => {
+        this.PhotoFilePath = imagen.base;
+      })
+      this.archivos.push(file)
+      
+    }
+  }
+
+  extraerBase64 = async ( $event: any) => new Promise((resolve, reject) => {
+    try{
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () => {
+        resolve({
+          base: reader.result
+        });
+      };
+      reader.onerror = error => {
+        resolve({
+          base: null
+        });
+      };
+    } catch (e) {
+      return null;
+    }
+  })
+
+  /*
   uploadImage(event: any){
     var file=event.target.files[0];
     const formData:FormData=new FormData();
     formData.append('uploadedFile',file,file.name);
 
-    this.service.UploadFile(formData).subscribe((data:any)=>{
-      this.imagen_miem=data.toString();
-      this.PhotoFilePath=API_ROUTES.PhotoUrl.IMAGEN+this.imagen_miem;
+    this.service.UploadImage(formData).subscribe((data:any)=>{
+      this.miembroForm.get('imagen_miem').setValue(data.toString());
+      this.PhotoFilePath=API_ROUTES.PhotoUrl.IMAGEN+this.miembroForm.get('imagen_miem').value;
     });
   }
+  */
+
 }

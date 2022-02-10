@@ -4,14 +4,14 @@ import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadat
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  selector: 'app-miembros-list',
+  templateUrl: './miembros-list.component.html',
+  styleUrls: ['./miembros-list.component.scss']
 })
-export class UserListComponent implements OnInit, OnDestroy {
+export class MiembrosListComponent implements OnInit, OnDestroy {
   
   //-------------------------------------------------------------------
-  public users: ICardUser[]; // USERS_DATA;
+  public miembros: ICardUser[]; // USERS_DATA;
   public title: string;
   public userSubscription: Subscription;
 
@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService
   ) { 
-    this.userService.setTitle('Lista de usuarios');
+    this.userService.setTitle('Lista de miembros');
     this.title = this.userService.getTitle();
 
     this.pricePesos = 0;
@@ -28,21 +28,21 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   
   ngOnInit(): void {
-    this.getUsers();
+    this.getMiembros();
   }
 
-  getUsers(){
+  getMiembros(){
     this.userSubscription = this.userService
       .getAllUsers()
-      .subscribe(r => this.users = (r.error) ? [] : r.data);
+      .subscribe(r => this.miembros = (r.error) ? [] : r.data);
   }
 
   addAmount(){
     this.pricePesos += 10;
   }
   //Metodo que optimiza al realizar cambios (CRUD) en nuestra API
-  trackByUserId(index: any, item: { id: any; }){
-    return item.id;
+  trackByMiembroId(index: any, item: { id_miem: any; }){
+    return item.id_miem;
   }
 
 

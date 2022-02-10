@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ICarouselItem } from './Icarousel-item.metadata';
 
 @Component({
@@ -6,7 +6,7 @@ import { ICarouselItem } from './Icarousel-item.metadata';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss']
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnDestroy {
 
   /**
    * Custom Properties
@@ -15,15 +15,16 @@ export class CarouselComponent implements OnInit {
   @Input() height = 500;
   @Input() isFullScreen = false;
   @Input() items: ICarouselItem[] = [];
-
   /**
    * Final Properties
    */
 
   public finalHeight: string | number = 0;
   public currentPosition = 0;
+  public counter: any;
+  public tiempo: number = 5000;
 
-  constructor() { 
+  constructor() {
     this.finalHeight = this.isFullScreen ? '100vh' : `${this.height}px`;
   }
 
@@ -32,14 +33,22 @@ export class CarouselComponent implements OnInit {
       i.id = index;
       i.marginLeft = 0;
     });
+    this.counter = setInterval(() => this.setNext(), this.tiempo);
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.counter);
   }
 
   setCurrentPosition(position: number){
+    clearInterval(this.counter);
+    this.counter = setInterval(() => this.setNext(), this.tiempo);
     this.currentPosition = position;
     this.items.find( i => i.id === 0).marginLeft = -100 * position;
   }
 
   setNext(){
+    clearInterval(this.counter);
+		this.counter = setInterval(() => this.setNext(), this.tiempo);
     let finalPorcentage = 0;
     let nextPosition = this.currentPosition + 1;
     if (nextPosition <= this.items.length-1){
@@ -52,6 +61,8 @@ export class CarouselComponent implements OnInit {
   }
 
   setBack(){
+    clearInterval(this.counter);
+		this.counter = setInterval(() => this.setBack(), this.tiempo);
     let finalPorcentage = 0;
     let backPosition = this.currentPosition - 1;
     if (backPosition >= 0){
@@ -63,4 +74,9 @@ export class CarouselComponent implements OnInit {
     this.items.find(i => i.id === 0).marginLeft = finalPorcentage;
     this.currentPosition = backPosition;
   }
+  /*
+  pause(){
+    clearInterval(this.counter);
+  }
+  */
 }

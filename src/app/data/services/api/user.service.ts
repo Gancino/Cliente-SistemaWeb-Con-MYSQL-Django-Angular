@@ -34,15 +34,17 @@ export class UserService extends ApiClass {
     data: ICardUser[]
   }> {
     const response = {error: false, msg: '', data: [] as ICardUser[]};
-    return this.http.get<ICardUser[]>(this.url + 'api/1.0/users')
+    return this.http.get<ICardUser[]>(this.url + '/api/1.0/miembro') //'api/1.0/users'
     .pipe(
       map( r => {
         response.data = r;
+        /*
         r.map(i => {
           if(i.gender ==='' || i.gender === null){
             i.gender ='S/N';
           }
         });
+        */
         return response;
       }),
       catchError(this.error)
@@ -51,16 +53,16 @@ export class UserService extends ApiClass {
 
   /**
    * Get one user by id
-   * @param id number
+   * @param id_miem number
    * @returns 
    */
-  getUserById(id: number):Observable<{
+  getUserById(id_miem: number):Observable<{
     error: boolean,
     msg: string,
     data: ICardUser
   }> {
     const response = {error: false, msg: '', data: null as ICardUser};
-    return this.http.get<ICardUser>(this.url + 'api/1.0/users/' + id)
+    return this.http.get<ICardUser>(this.url + '/api/1.0/miembro/' + id_miem +'/') 
     .pipe(
       map( r => {
         response.data = r;

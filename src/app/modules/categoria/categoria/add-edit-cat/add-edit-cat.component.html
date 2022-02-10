@@ -1,11 +1,21 @@
-<div class="form-froup row">
-    <label class="col-sm-2 col-form-label">Categoria:</label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" [(ngModel)]="nombre_cat"
-            placeholder="Ingrese el nombre de una categoria">
+<form [formGroup]="categoriaForm" (ngSubmit)="addEditCategoria()">
+    <div class="form-froup row">
+        <label class="col-sm-2 col-form-label">Categoria:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" formControlName="nombre_cat"
+                placeholder="Ingrese el nombre de una categoria">
+            <div style="text-align:left; margin-top: 10px;">
+                <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+                *ngIf="(c.nombre_cat.errors && categoriaSubmitted)">
+                    <ng-container [ngSwitch]="c.nombre_cat.value">
+                        <ng-container *ngSwitchCase="''">*El nombre es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*El nombre debe tener un maximo de 100 caracteres!</ng-container>
+                    </ng-container>
+                </small>
+            </div>
+        </div>
+        <label class="col-sm-2 col-form-label"></label>
     </div>
-    <label class="col-sm-2 col-form-label"></label>
-</div>
-
-<button (click)="addCategoria()" *ngIf="cat.id_cat==0" class="btn btn-primary">Guardar</button>
-<button (click)="updateCategoria()" *ngIf="cat.id_cat!=0" class="btn btn-primary">Actualizar</button>
+    <button type="submit" *ngIf="cat.id_cat==0" class="btn btn-primary">Guardar</button>
+    <button type="submit" *ngIf="cat.id_cat!=0" class="btn btn-primary">Actualizar</button>
+</form>

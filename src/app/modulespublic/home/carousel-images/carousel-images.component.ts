@@ -3,11 +3,11 @@ import { CAROUSEL_DATA_ITEMS } from '@data/constants/carousel.const';
 import { ICarouselItem } from '@shared/components/carousel/Icarousel-item.metadata';
 
 @Component({
-  selector: 'app-home-carousel',
-  templateUrl: './home-carousel.component.html',
-  styleUrls: ['./home-carousel.component.scss']
+  selector: 'app-carousel-images',
+  templateUrl: './carousel-images.component.html',
+  styleUrls: ['./carousel-images.component.scss']
 })
-export class HomeCarouselComponent implements OnInit {
+export class CarouselImagesComponent implements OnInit {
 
   public carouselData: ICarouselItem[];
 
@@ -17,5 +17,4 @@ export class HomeCarouselComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

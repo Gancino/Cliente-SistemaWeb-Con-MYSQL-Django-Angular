@@ -8,27 +8,31 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { SkeletonComponent } from './layout/skeleton/skeleton.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { NavigationComponent } from './layout/navigation/navigation.component';
 import { LeftNavComponent } from './layout/left-nav/left-nav.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { LeftNavMenuComponent } from './layout/left-nav/left-nav-menu/left-nav-menu.component';
+import { SkeletonpublicComponent } from './layoutpublic/skeletonpublic/skeletonpublic.component';
+import { FooterpublicComponent } from './layoutpublic/footerpublic/footerpublic.component';
+import { NavigationpublicComponent } from './layoutpublic/navigationpublic/navigationpublic.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SkeletonComponent,
     FooterComponent,
-    NavigationComponent,
     LeftNavComponent,
     HeaderComponent,
     LeftNavMenuComponent,
+    SkeletonpublicComponent,
+    FooterpublicComponent,
+    NavigationpublicComponent,
   ],
   imports: [
     BrowserModule,
     //Core
     CoreModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
     {

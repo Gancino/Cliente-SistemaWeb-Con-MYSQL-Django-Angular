@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { SharedService } from '@data/services/api/shared.service';
 
 @Component({
@@ -26,8 +26,7 @@ export class ShowCatComponent implements OnInit {
     this.refreshCatList();
   }
 
-
-  refreshCatList(){
+  public refreshCatList(){
     this.service.getCatList().subscribe(data => {
       this.CategoriaList=data;
       this.CategoriaListWithoutFilter=data;

@@ -40,7 +40,7 @@ export class ShowMieComponent implements OnInit {
     apellido_miem : "",
     correo_miem : "",
     telefono_miem : "",
-    imagen_miem : "anonymous.png",
+    imagen_miem : "",
     cargo_miem : "",
     descripcion_miem : "",
     }

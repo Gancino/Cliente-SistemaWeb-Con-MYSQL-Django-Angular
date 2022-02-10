@@ -3,7 +3,7 @@ import { LEFT_NAV_MENUS } from '@data/constants/left-nav-menu.const';
 import { API_ROUTES } from '@data/constants/routes';
 import { ILeftNavMenu } from '@data/interfaces';
 import { AuthService } from '@data/services/api/auth.service';
-import { faBars, faCog, faIdCard, faIndent, faTimes, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCog, faEye, faIdCard, faIndent, faTimes, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,7 +18,7 @@ export class LeftNavComponent {
   public name = 'Fernanda Larios';
   public position = 'Gerente';
   public avatar = 'assets/images/defaults/avatar.jpg';
-  public logo = 'assets/images/defaults/logo.png';
+  public logo = 'assets/images/defaults/logo_negocio.jpg';
   public menus: ILeftNavMenu[]; // = LEFT_NAV_MENUS;
   public logoutMenu: ILeftNavMenu;
   public userSubscription: Subscription;
@@ -46,9 +46,9 @@ export class LeftNavComponent {
             method: () => this.authService.cuenta()
           },
           {
-            icon: faUser,
-            name: 'Usuarios',
-            method: () => this.authService.usuarios()
+            icon: faEye,
+            name: 'Ver',
+            method: () => this.authService.publicContent()
           }
         ]
       },

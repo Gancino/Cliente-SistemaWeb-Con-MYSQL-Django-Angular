@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { API_ROUTES } from '@data/constants/routes';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedService } from '@data/services/api/shared.service';
 
 @Component({
@@ -9,29 +9,53 @@ import { SharedService } from '@data/services/api/shared.service';
 })
 export class AddEditCatComponent implements OnInit {
 
-  constructor(private service:SharedService) { }
-
   @Input() cat:any;
-  id_cat!: string;
-  nombre_cat!: string;
+  public categoriaSubmitted;
+  public categoriaForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private service:SharedService,
+  ) {
+    this.categoriaSubmitted = false;
+    this.categoriaForm = this.formBuilder.group({
+      id_cat:[
+        ''
+      ],
+      nombre_cat: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(100)
+        ]
+      ]
+    });
+   }
+
+  get c(){
+    return this.categoriaForm.controls;
+  }
 
   ngOnInit(): void {
-    this.id_cat=this.cat.id_cat;
-    this.nombre_cat=this.cat.nombre_cat;
+    this.categoriaForm.get('id_cat').setValue(this.cat.id_cat);
+    this.categoriaForm.get('nombre_cat').setValue(this.cat.nombre_cat);
   }
   
-  addCategoria(){
-    var val = {id_cat:this.id_cat,
-                nombre_cat:this.nombre_cat};
-    this.service.addCategoria(val).subscribe(res=>{
-      alert(res.toString());
-    });
-  }
-  updateCategoria(){
-    var val = {id_cat:this.id_cat,
-                nombre_cat:this.nombre_cat};
-    this.service.updateCategoria(val).subscribe(res=>{
-      alert(res.toString());
-    });
+  addEditCategoria(){
+    this.categoriaSubmitted = true;
+    if (!this.categoriaForm.valid)
+    {
+      return;
+    }
+    if(this.cat.id_cat==0){
+      this.service.addCategoria(this.categoriaForm.value).subscribe( r => {
+        alert(r.msg.toString());
+      });
+    }
+    else{
+      this.service.updateCategoria(this.categoriaForm.value).subscribe( r =>{
+        alert(r.msg.toString());
+      });
+    }
   }
 }
