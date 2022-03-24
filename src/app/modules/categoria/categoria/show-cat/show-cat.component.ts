@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { SharedService } from '@data/services/api/shared.service';
+import { PrivateService } from '@data/services/api/private.service';
 
 @Component({
   selector: 'app-show-cat',
@@ -17,7 +17,7 @@ export class ShowCatComponent implements OnInit {
   CategoriaListWithoutFilter:any=[];
 
   constructor(
-    private service : SharedService
+    private service : PrivateService
   ) { }
 
   CategoriaList: any=[];
@@ -84,5 +84,10 @@ export class ShowCatComponent implements OnInit {
       }
     })
   }
-  
+
+  recargar(){
+    this.refreshCatList();
+    this.CategoriaIdFilter='';
+    this.CategoriaNombreFilter='';
+  }
 }

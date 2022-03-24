@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { LEFT_NAV_MENUS } from '@data/constants/left-nav-menu.const';
 import { API_ROUTES } from '@data/constants/routes';
 import { ILeftNavMenu } from '@data/interfaces';
 import { AuthService } from '@data/services/api/auth.service';
@@ -22,7 +21,7 @@ export class LeftNavComponent {
   public menus: ILeftNavMenu[]; // = LEFT_NAV_MENUS;
   public logoutMenu: ILeftNavMenu;
   public userSubscription: Subscription;
-  public PathMedia = API_ROUTES.PhotoUrl.IMAGEN
+  public PathMedia = API_ROUTES.PhotoUrl.MEDIA
   constructor(
     public authService: AuthService
   ) { 

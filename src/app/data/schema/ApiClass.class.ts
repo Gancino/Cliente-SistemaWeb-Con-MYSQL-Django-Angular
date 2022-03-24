@@ -1,4 +1,5 @@
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { of } from 'rxjs';
 
@@ -7,7 +8,8 @@ export class ApiClass {
     public isProduction=environment.production;
 
     constructor(
-        protected http: HttpClient
+        protected http: HttpClient,
+        protected router: Router
     ){
     }
 

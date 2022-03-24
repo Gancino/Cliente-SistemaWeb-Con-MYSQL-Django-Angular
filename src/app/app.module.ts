@@ -14,6 +14,10 @@ import { LeftNavMenuComponent } from './layout/left-nav/left-nav-menu/left-nav-m
 import { SkeletonpublicComponent } from './layoutpublic/skeletonpublic/skeletonpublic.component';
 import { FooterpublicComponent } from './layoutpublic/footerpublic/footerpublic.component';
 import { NavigationpublicComponent } from './layoutpublic/navigationpublic/navigationpublic.component';
+import { Page404Component } from './modules/server/page404/page404.component';
+import { Page0Component } from './modules/server/page0/page0.component';
+import { Page401Component } from './modules/server/page401/page401.component';
+import { Page500Component } from './modules/server/page500/page500.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import { NavigationpublicComponent } from './layoutpublic/navigationpublic/navig
     SkeletonpublicComponent,
     FooterpublicComponent,
     NavigationpublicComponent,
+    Page404Component,
+    Page0Component,
+    Page401Component,
+    Page500Component,
   ],
   imports: [
     BrowserModule,

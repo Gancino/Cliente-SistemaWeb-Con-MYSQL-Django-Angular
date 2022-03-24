@@ -23,7 +23,7 @@ export class HeaderComponent {
   public avatar = 'assets/images/defaults/avatar.jpg';
   public logo = 'assets/images/defaults/logo_negocio.jpg';
   public userSubscription: Subscription;
-  public PathMedia = API_ROUTES.PhotoUrl.IMAGEN
+  public PathMedia = API_ROUTES.PhotoUrl.MEDIA
   constructor(
     public authService : AuthService
   ) { }

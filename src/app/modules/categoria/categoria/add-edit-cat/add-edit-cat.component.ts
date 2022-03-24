@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, destroyPlatform, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SharedService } from '@data/services/api/shared.service';
+import { PrivateService } from '@data/services/api/private.service';
+import { ShowCatComponent } from '../show-cat/show-cat.component';
 
 @Component({
   selector: 'app-add-edit-cat',
@@ -15,7 +16,7 @@ export class AddEditCatComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private service:SharedService,
+    private service:PrivateService
   ) {
     this.categoriaSubmitted = false;
     this.categoriaForm = this.formBuilder.group({

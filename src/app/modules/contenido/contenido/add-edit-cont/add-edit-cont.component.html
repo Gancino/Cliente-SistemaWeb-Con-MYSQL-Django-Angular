@@ -41,15 +41,15 @@
             </div>
             <label class="col-sm-2 col-form-label">Archivo:</label>
             <div class="col-sm-10">
-                <input type="file" (change)="uploadFile($event)">
+                <input type="file" (change)="onChangeFil($event)">
                 <a href="{{filePath}}" target="_blank"><ng-container *ngIf="this.con.archivo_con != null">
-                    <br>{{this.contenidoForm.get('archivo_con').value}}
+                    <br>{{this.filePathName}}
                 </ng-container></a>
                 <div style="margin-top: 10px; margin-bottom: 10px;">
                     <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
                     *ngIf="(cont.archivo_con.errors && contenidoSubmitted)">
                         <ng-container [ngSwitch]="cont.archivo_con.value">
-                            <ng-container *ngSwitchDefault>*El nombre del archivo debe tener un maximo de 200 caracteres!</ng-container>
+                            <ng-container *ngSwitchDefault>*El nombre del archivo debe tener un maximo de 300 caracteres!</ng-container>
                         </ng-container>
                     </small>
                 </div>
@@ -87,7 +87,7 @@
         <div class="ml-3 bd-highlight" style=" width: 5%;"></div>
         <div class="ml-3 bd-highlight" style=" width: 35%;">
             <img [src]=PhotoFilePath height="250px;" width="385px;">
-            <input type="file" (change)="uploadImage($event)" class="mt-2"/>
+            <input type="file" (change)="onChangeImg($event)" class="mt-2"/>
         </div>
     </div>
     <button type="submit" *ngIf="con.id_con==0" class="btn btn-primary">Guardar</button>

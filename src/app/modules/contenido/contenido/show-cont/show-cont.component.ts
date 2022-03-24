@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '@data/services/api/shared.service';
+import { PrivateService } from '@data/services/api/private.service';
 
 @Component({
   selector: 'app-show-cont',
@@ -18,13 +18,12 @@ export class ShowContComponent implements OnInit {
   ContenidoListWithoutFilter:any=[];
 
   constructor(
-    private service : SharedService
+    private service : PrivateService
   ) { }
 
   ngOnInit(): void {
     this.refreshConList();
   }
-
 
   refreshConList(){
     this.service.getContList().subscribe(data => {
@@ -39,7 +38,7 @@ export class ShowContComponent implements OnInit {
     titulo_con : "",
     descripcion_con : "",
     archivo_con : "",
-    imagen_con : "anonymous.png",
+    imagen_con : "",
     fecha_con : "",
     autor_con : "",
     fk_id_cat : "",
@@ -89,6 +88,12 @@ export class ShowContComponent implements OnInit {
         return (b[prop]>a[prop])?1 : ((b[prop]<a[prop]) ?-1 : 0);
       }
     })
+  }
+
+  recargar(){
+    this.refreshConList();
+    this.ContenidoIdFilter='';
+    this.ContenidoTituloFilter='';
   }
 
 }

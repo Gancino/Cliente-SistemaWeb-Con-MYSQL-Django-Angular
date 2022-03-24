@@ -61,8 +61,18 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem(this.nameUserLS);
-    this.currentUser.next(null);
+    return this.http.post<any>(API_ROUTES.AUTH.LOGOUT, {}).subscribe(r =>{
+      localStorage.removeItem(this.nameUserLS);
+      this.currentUser.next(null);
+      this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
+    });
+  }
+
+  errorlogout() {
+    if(this.getUser){
+      localStorage.removeItem(this.nameUserLS);
+      this.currentUser.next(null);
+    }
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
   }
 
@@ -106,22 +116,13 @@ export class AuthService {
     return this.http.put(API_ROUTES.USERS.UPDATE+id+"/", val);
   }
   */
-  updateUser(data: {
-    username: string;
-    email: string;
-    password: string;
-    first_name: string;
-    last_name: string;
-    avatar: string;
-    work: string;
-  }, id:any
-  ): Observable <{       //retornara un observable
+  updateUser( formData:any, id:any): Observable <{       //retornara un observable
     error: boolean;
-    msg: string;
+    msg: any;
     data: any
   }> {
     const response = {error: true, msg: ERRORS_CONST.UPDATE.ERROR, data: null as any};
-    return this.http.put<{error: boolean, msg: string, data: any}>(API_ROUTES.USERS.UPDATE+id+"/", data)
+    return this.http.put<{error: boolean, msg: any, data: any}>(API_ROUTES.USERS.UPDATE+id+"/", formData)
       .pipe(
         map(r => {
           response.msg = r.msg;

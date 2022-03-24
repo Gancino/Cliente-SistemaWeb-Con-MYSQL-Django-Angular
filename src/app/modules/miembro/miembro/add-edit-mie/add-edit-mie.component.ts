@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { API_ROUTES } from '@data/constants/routes';
-import { SharedService } from '@data/services/api/shared.service';
+import { PrivateService } from '@data/services/api/private.service';
 
 @Component({
   selector: 'app-add-edit-mie',
@@ -13,13 +13,19 @@ export class AddEditMieComponent implements OnInit {
   @Input() miem:any;
   public miembroSubmitted;
   public miembroForm: FormGroup;
+  public correoExist: boolean;
+  public correoExistValue: string;
+
   PhotoFilePath!: String;
   MiembroList:any=[];
   public archivos:any=[];
+
   constructor(
     private formBuilder: FormBuilder,
-    private service : SharedService
+    private service : PrivateService
   ) {
+    this.correoExist = false;
+    this.correoExistValue = '';
     this.miembroSubmitted = false;
     this.miembroForm = this.formBuilder.group({
       id_miem:[
@@ -43,7 +49,8 @@ export class AddEditMieComponent implements OnInit {
         '', 
         [
           Validators.required,
-          Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+          Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+          Validators.maxLength(100)
         ]
       ],
       telefono_miem: [
@@ -56,7 +63,7 @@ export class AddEditMieComponent implements OnInit {
       imagen_miem: [
         '', 
         [
-          Validators.maxLength(100)
+          Validators.maxLength(300)
         ]
       ],
       cargo_miem: [
@@ -90,13 +97,14 @@ export class AddEditMieComponent implements OnInit {
     this.miembroForm.get('apellido_miem').setValue(this.miem.apellido_miem);
     this.miembroForm.get('correo_miem').setValue(this.miem.correo_miem);
     this.miembroForm.get('telefono_miem').setValue(this.miem.telefono_miem);
-    this.miembroForm.get('imagen_miem').setValue(this.miem.imagen_miem);
     this.miembroForm.get('cargo_miem').setValue(this.miem.cargo_miem);
     this.miembroForm.get('descripcion_miem').setValue(this.miem.descripcion_miem);
     if(this.miem.imagen_miem == '' || this.miem.imagen_miem == null ){
       this.PhotoFilePath=API_ROUTES.PhotoUrl.IMAGEN+'anonymous.png';
+      this.miembroForm.get('imagen_miem').setValue('');
     }else{
       this.PhotoFilePath=API_ROUTES.PhotoUrl.MEDIA+this.miem.imagen_miem;
+      this.miembroForm.get('imagen_miem').setValue(this.miem.imagen_miem);
     }
   }
 
@@ -122,13 +130,25 @@ export class AddEditMieComponent implements OnInit {
  
     if(this.miem.id_miem==0){
       this.service.addMiembro(formData).subscribe( r => {
-        alert(r.msg.toString());
+        if(r.error){
+          this.correoExist = true;
+          this.correoExistValue = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
+        }else{
+          this.correoExist = false;
+          alert(r.msg.toString());
+        }
       });
     }
     else{
       formData.append('id_miem', this.miembroForm.get('id_miem').value);
       this.service.updateMiembro(formData).subscribe( r =>{
-        alert(r.msg.toString());
+        if(r.error){
+          this.correoExist = true;
+          this.correoExistValue = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
+        }else{
+          this.correoExist = false;
+          alert(r.msg.toString());
+        }
       });
     }
   }
@@ -163,6 +183,18 @@ export class AddEditMieComponent implements OnInit {
     }
   })
 
+  existCorreo(){
+    this.correoExist=false;
+    if(this.correoExistValue !== ''){
+      let correoForm = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
+      if( correoForm === this.correoExistValue){
+        this.correoExist = true;
+      }
+      else{
+        this.correoExist = false;
+      }
+    }
+  }
   /*
   uploadImage(event: any){
     var file=event.target.files[0];

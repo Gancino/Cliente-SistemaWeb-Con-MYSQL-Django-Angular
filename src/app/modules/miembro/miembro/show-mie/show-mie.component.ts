@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '@data/services/api/shared.service';
+import { PrivateService } from '@data/services/api/private.service';
 
 @Component({
   selector: 'app-show-mie',
@@ -18,7 +18,7 @@ export class ShowMieComponent implements OnInit {
   MiembroListWithoutFilter:any=[];
 
   constructor(
-    private service : SharedService
+    private service : PrivateService
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class ShowMieComponent implements OnInit {
     cargo_miem : "",
     descripcion_miem : "",
     }
-    this.ModalTitle="Agregar una nuevo miembro";
+    this.ModalTitle="Agregar un nuevo miembro";
     this.ActivateAddEditMiemComp=true;
   }
   closeClick(){
@@ -88,6 +88,12 @@ export class ShowMieComponent implements OnInit {
         return (b[prop]>a[prop])?1 : ((b[prop]<a[prop]) ?-1 : 0);
       }
     })
+  }
+
+  recargar(){
+    this.refreshMiemList();
+    this.MiembroIdFilter='';
+    this.MiembroNombreFilter='';
   }
 
 }

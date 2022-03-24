@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '@data/services/api/user.service';
+import { PublicService } from '@data/services/api/public.service';
 import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadata';
 import { Subscription } from 'rxjs';
 
@@ -13,17 +13,17 @@ export class MiembrosListComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------------
   public miembros: ICardUser[]; // USERS_DATA;
   public title: string;
-  public userSubscription: Subscription;
+  public miembroSubscription: Subscription;
 
-  public pricePesos: number;
+  //public pricePesos: number;
 
   constructor(
-    private userService: UserService
+    private service: PublicService
   ) { 
-    this.userService.setTitle('Lista de miembros');
-    this.title = this.userService.getTitle();
+    this.service.setTitle('Lista de miembros');
+    this.title = this.service.getTitle();
 
-    this.pricePesos = 0;
+    //this.pricePesos = 0;
   }
 
   
@@ -32,26 +32,26 @@ export class MiembrosListComponent implements OnInit, OnDestroy {
   }
 
   getMiembros(){
-    this.userSubscription = this.userService
-      .getAllUsers()
+    this.miembroSubscription = this.service
+      .getAllMiembros()
       .subscribe(r => this.miembros = (r.error) ? [] : r.data);
   }
-
+  /*
   addAmount(){
     this.pricePesos += 10;
   }
+  */
   //Metodo que optimiza al realizar cambios (CRUD) en nuestra API
+
   trackByMiembroId(index: any, item: { id_miem: any; }){
     return item.id_miem;
   }
 
-
-
   ngOnDestroy(): void {
-    this.userService.clearTitle();
-    if(this.userSubscription) {
+    this.service.clearTitle();
+    if(this.miembroSubscription) {
       //console.log('unsubscribe');
-      this.userSubscription.unsubscribe();
+      this.miembroSubscription.unsubscribe();
     }
   }
   //--------------------------------------------------------------------

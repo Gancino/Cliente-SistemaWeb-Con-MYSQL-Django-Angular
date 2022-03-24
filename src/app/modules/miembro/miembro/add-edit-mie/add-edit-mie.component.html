@@ -46,15 +46,20 @@
             </div>
             <label class="col-sm-2 col-form-label">Correo:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" formControlName="correo_miem"
-                    placeholder="Ingrese su correo electronico">
+                <input type="text" class="form-control" formControlName="correo_miem"
+                    placeholder="Ingrese su correo electronico" (input)="existCorreo()">
                 <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
                     <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
                     *ngIf="(m.correo_miem.errors && miembroSubmitted)">
                         <ng-container [ngSwitch]="m.correo_miem.value">
                             <ng-container *ngSwitchCase="''">*El correo es requerido!</ng-container>
-                            <ng-container *ngSwitchDefault>*El correo es invalido!</ng-container>
-                    </ng-container>
+                            <ng-container *ngIf="m.correo_miem.value.length > 100">*El correo debe tener un maximo de 100 caracteres!</ng-container>
+                            <ng-container *ngIf="m.correo_miem.hasError('pattern')">*El correo es invalido!</ng-container>
+                        </ng-container>
+                    </small>
+                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
+                    *ngIf="(correoExist && miembroSubmitted)">
+                        <ng-container>¡Otro Miembro con este correo ya existe!</ng-container>
                     </small>
                 </div>
             </div>

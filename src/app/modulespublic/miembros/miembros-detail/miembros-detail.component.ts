@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { API_ROUTES } from '@data/constants/routes';
-import { UserService } from '@data/services/api/user.service';
+import { PublicService } from '@data/services/api/public.service';
 import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadata';
 
 @Component({
@@ -19,10 +19,10 @@ export class MiembrosDetailComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private service: PublicService
   ) {
-    this.title = this.userService.getTitle();
-    this.userService.getAllUsers().subscribe(r => {
+    this.title = this.service.getTitle();
+    this.service.getAllMiembros().subscribe(r => {
       if(!r.error){
         this.miembros = r.data;
       }
@@ -33,7 +33,7 @@ export class MiembrosDetailComponent implements OnInit{
   }
 
   ngOnInit(): void{
-    this.userService.getUserById(this.id_miem).subscribe( r =>{
+    this.service.getMiembroById(this.id_miem).subscribe( r =>{
       if (!r.error){
         this.currentMiembro = r.data;
         if(this.currentMiembro.imagen_miem == '' || this.currentMiembro.imagen_miem == null ){

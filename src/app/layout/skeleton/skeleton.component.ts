@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-skeleton',
@@ -8,10 +8,12 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 export class SkeletonComponent implements AfterViewInit{
 
   public showLeftNav = true;
-  public $theme: 'dark' | 'red' | 'blue-dark' | 'yellow' = 'blue-dark';
+  public $theme: 'blue-dark' | 'dark' | 'red' | 'yellow';
   public loader = 'assets/images/loader/loader.gif';
   public isLoader = true;
-  constructor() { }
+  constructor() { 
+    this.$theme = 'blue-dark';
+  }
 
 
   //Una ves que todos los componentes se cargen y la vista este lista o completa se ejecuta este metodo
@@ -24,5 +26,17 @@ export class SkeletonComponent implements AfterViewInit{
 
   showMenu() {
     this.showLeftNav = !this.showLeftNav;
+  }
+
+  getTheme(): string{
+    return this.$theme;
+  }
+
+  setTheme(theme: any){
+    this.$theme = theme;
+  }
+
+  clearTheme(){
+    this.$theme = 'blue-dark'
   }
 }
