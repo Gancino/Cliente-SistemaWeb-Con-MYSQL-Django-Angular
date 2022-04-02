@@ -1,0 +1,76 @@
+<mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+<form *ngIf="!loading" class="example-form" tabindex="0" [formGroup]="userForm" (ngSubmit)="updateUser()">
+    <mat-form-field appearance="outline" class="ancho" [color]="colorUsernameInput">
+        <mat-label>Nombre de usuario</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
+        <input type="text" matInput autocomplete="off" (input)="existUsername()"
+            placeholder="Ingrese su nuevo nombre de usuario" formControlName="username">
+        <mat-error *ngIf="(u.username.errors && userSubmitted)">
+            <ng-container [ngSwitch]="u.username.value">
+                <ng-container *ngSwitchCase="''">*El nombre de usuario es requerido!</ng-container>
+                <ng-container *ngSwitchDefault>*El nombre de usuario debe tener un máximo de 150 caracteres!</ng-container>
+            </ng-container>
+        </mat-error>
+        <mat-hint [align]="'start'" *ngIf="usernameExist">
+            <ng-container><p style="color: #f44336;">¡El nombre de usuario ingresado ya existe!</p></ng-container>
+        </mat-hint>
+        <mat-icon *ngIf="u.username.value!=''" matSuffix class="pointer" (click)="eliminarTexto('username')">close</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="ancho" [color]="colorEmailInput">
+        <mat-label>Correo electrónico</mat-label>
+        <mat-icon matPrefix>mail</mat-icon>
+        <input type="text" matInput autocomplete="off" (input)="existEmail()"
+            placeholder="Ingrese sus apellidos" formControlName="email">
+        <mat-error *ngIf="(u.email.errors && userSubmitted)">
+            <ng-container [ngSwitch]="u.email.value">
+                <ng-container *ngSwitchCase="''">*El correo electrónico es requerido!</ng-container>
+                <ng-container *ngIf="u.email.value.length > 100">*El correo electrónico debe tener un máximo de 100 caracteres!</ng-container>
+                <ng-container *ngIf="u.email.hasError('pattern')">*El correo electrónico es inválido!</ng-container>
+            </ng-container>
+        </mat-error>
+        <mat-hint [align]="'start'" *ngIf="emailExist">
+            <ng-container><p style="color: #f44336;">¡El correo electrónico ingresado ya existe!</p></ng-container>
+        </mat-hint>
+        <mat-icon *ngIf="u.email.value!=''" matSuffix class="pointer" (click)="eliminarTexto('email')">close</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="ancho">
+        <mat-label>Nueva contraseña</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input [type]="typePassword" matInput autocomplete="off"
+            placeholder="Ingrese su nueva contraseña" formControlName="password">
+        <mat-error *ngIf="(u.password.errors && userSubmitted)">
+            <ng-container [ngSwitch]="u.password.value">
+                <ng-container *ngSwitchCase="''">*La contraseña es requerida!</ng-container>
+                <ng-container *ngSwitchDefault>*La contraseña debe tener un máximo de 128 caracteres!</ng-container>
+            </ng-container>
+        </mat-error>
+        <mat-icon matSuffix class="pointer" (click)="metodotypePassword('1')" *ngIf="clickPassword">visibility</mat-icon>
+        <mat-icon matSuffix class="pointer" (click)="metodotypePassword('0')" *ngIf="!clickPassword">visibility_off</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="ancho" [color]="colorConfirmPassword">
+        <mat-label>Confirmar contraseña</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
+        <input [type]="typeConfirmPassword" matInput autocomplete="off" (input)="notConfirmPassword()"
+            placeholder="Ingrese su nueva contraseña para confirmar" formControlName="confirmpassword">
+        <mat-error *ngIf="(u.confirmpassword.errors && userSubmitted)">
+            <ng-container [ngSwitch]="u.confirmpassword.value">
+                <ng-container *ngSwitchCase="''">*Confirmar contraseña!</ng-container>
+                <ng-container *ngSwitchDefault>*La contraseña debe tener un máximo de 128 caracteres!</ng-container>
+            </ng-container>
+        </mat-error>
+        <mat-hint [align]="'start'" *ngIf="errorConfirmPassword">
+            <ng-container><p style="color: #f44336;">¡Las contraseñas no coinciden!</p></ng-container>
+        </mat-hint>
+        <mat-icon matSuffix class="pointer" (click)="metodotypeConfirmPassword('1')" *ngIf="clickConfirmPassword">visibility</mat-icon>
+        <mat-icon matSuffix class="pointer" (click)="metodotypeConfirmPassword('0')" *ngIf="!clickConfirmPassword">visibility_off</mat-icon>
+    </mat-form-field>
+
+    <div style="text-align: center; margin-top: 10px;">
+        <button type="submit" class="button" mat-raised-button color="primary">
+            <mat-icon>save</mat-icon>Actualizar
+        </button>
+    </div>
+</form>

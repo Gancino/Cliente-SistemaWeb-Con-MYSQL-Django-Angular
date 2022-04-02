@@ -28,5 +28,6 @@ export const API_ROUTES = {
     },
     USERS: {
         UPDATE: `${ENV.uri}/users/update/`,
+        UPDATECREDENTIALS: `${ENV.uri}/users/updateCredentials/`,
     }
 };

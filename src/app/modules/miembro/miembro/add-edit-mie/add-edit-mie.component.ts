@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Alertas } from '@data/constants';
 import { API_ROUTES } from '@data/constants/routes';
 import { PrivateService } from '@data/services/api/private.service';
 
@@ -13,19 +14,25 @@ export class AddEditMieComponent implements OnInit {
   @Input() miem:any;
   public miembroSubmitted;
   public miembroForm: FormGroup;
+  public loading: boolean;
   public correoExist: boolean;
   public correoExistValue: string;
+  public colorCorreoInput: string;
 
   PhotoFilePath!: String;
   MiembroList:any=[];
   public archivos:any=[];
+  public estadoImg:string;
 
   constructor(
     private formBuilder: FormBuilder,
     private service : PrivateService
   ) {
+    this.colorCorreoInput = 'primary';
     this.correoExist = false;
     this.correoExistValue = '';
+    this.loading = false;
+    this.estadoImg = 'Subir imágen';
     this.miembroSubmitted = false;
     this.miembroForm = this.formBuilder.group({
       id_miem:[
@@ -114,6 +121,7 @@ export class AddEditMieComponent implements OnInit {
     {
       return;
     }
+    this.loading=true;
     const formData = new FormData();
     if(this.archivos.length>0){
       this.archivos.forEach((archivo:any) => {
@@ -130,6 +138,20 @@ export class AddEditMieComponent implements OnInit {
  
     if(this.miem.id_miem==0){
       this.service.addMiembro(formData).subscribe( r => {
+        setTimeout(() => {
+          this.loading=false;
+          if(!r.error){
+            Alertas.mostrarAlert('Buen trabajo!','Registro agregado correctamente en el sistema.','success');
+            this.miembroForm.reset();
+            this.reiniciarForm(['nombre_miem', 'apellido_miem', 'descripcion_miem', 'correo_miem', 'telefono_miem', 'cargo_miem']);
+          }else{
+            Alertas.mostrarAlert('Error!','¡Error al agregar el registro, intentalo de nuevo!','error');
+            this.correoExist = true;
+            this.correoExistValue = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
+            this.colorCorreoInput = 'warn';
+          }
+        }, 500);
+        /*
         if(r.error){
           this.correoExist = true;
           this.correoExistValue = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
@@ -137,11 +159,24 @@ export class AddEditMieComponent implements OnInit {
           this.correoExist = false;
           alert(r.msg.toString());
         }
+        */
       });
     }
     else{
       formData.append('id_miem', this.miembroForm.get('id_miem').value);
       this.service.updateMiembro(formData).subscribe( r =>{
+        setTimeout(() => {
+          this.loading=false;
+          if(!r.error){
+            Alertas.mostrarAlert('Buen trabajo!','Registro actualizado correctamente.','success');
+          }else{
+            Alertas.mostrarAlert('Error!','¡Error al actualizar el registro, intentalo de nuevo!','error');
+            this.correoExist = true;
+            this.correoExistValue = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
+            this.colorCorreoInput = 'warn';
+          }
+        }, 500);
+        /*
         if(r.error){
           this.correoExist = true;
           this.correoExistValue = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
@@ -149,6 +184,7 @@ export class AddEditMieComponent implements OnInit {
           this.correoExist = false;
           alert(r.msg.toString());
         }
+        */
       });
     }
   }
@@ -160,7 +196,7 @@ export class AddEditMieComponent implements OnInit {
         this.PhotoFilePath = imagen.base;
       })
       this.archivos.push(file)
-      
+      this.estadoImg=file.name;
     }
   }
 
@@ -189,11 +225,33 @@ export class AddEditMieComponent implements OnInit {
       let correoForm = this.miembroForm.get('correo_miem').value.toString().trim().toLowerCase();
       if( correoForm === this.correoExistValue){
         this.correoExist = true;
+        this.colorCorreoInput = 'warn';
       }
       else{
         this.correoExist = false;
+        this.colorCorreoInput = 'primary';
       }
     }
+  }
+
+  abrirInputImg(){
+    const imgUpload = document.getElementById('imgUploadMiembro') as HTMLInputElement;
+    imgUpload.click();
+  }
+
+  reiniciarForm(campo: any[]){
+    for (let i=0; i < campo.length; i++){
+      this.miembroForm.get(campo[i]).setValue('');  
+    } 
+    this.PhotoFilePath=API_ROUTES.PhotoUrl.IMAGEN + 'anonymous.png';
+    this.archivos=[];
+    this.miembroSubmitted = false;
+    this.estadoImg='Subir imágen';
+    this.colorCorreoInput = 'primary';
+  }
+
+  eliminarTexto(campo: string){
+    this.miembroForm.get(campo).setValue('');
   }
   /*
   uploadImage(event: any){

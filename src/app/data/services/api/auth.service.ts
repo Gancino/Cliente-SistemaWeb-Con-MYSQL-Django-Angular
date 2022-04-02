@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ERRORS_CONST } from '@data/constants';
 import { API_ROUTES, INTERNAL_ROUTES } from '@data/constants/routes';
@@ -76,25 +76,38 @@ export class AuthService {
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
   }
 
-  cuenta() {
+  cuenta(event: EventEmitter<any>) {
     this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
+    setTimeout(() => {
+      event.emit();
+    }, 150);
   }
 
-  categorias() {
+  categorias(event: EventEmitter<any>) {
     this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_CATEGORIA_LIST);
+    setTimeout(() => {
+      event.emit();
+    }, 150);
   }
 
-  contenidos() {
+  contenidos(event: EventEmitter<any>) {
     this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_CONTENIDO_LIST);
+    setTimeout(() => {
+      event.emit();
+    }, 150);
   }
 
-  miembros() {
+  miembros(event: EventEmitter<any>) {
     this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MIEMBRO_LIST);
+    setTimeout(() => {
+      event.emit();
+    }, 150);
   }
 
   publicContent() {
     this.router.navigateByUrl(INTERNAL_ROUTES.PUBLIC_HOME);
   }
+
   public setUserToLocalStorage ( user: IApiUserAuthenticated){
     localStorage.setItem(this.nameUserLS, JSON.stringify(user));
   }
@@ -130,6 +143,36 @@ export class AuthService {
           response.data = r.data;
           if(!r.error){
             this.setUserToLocalStorage(r.data);
+            this.currentUser = new BehaviorSubject(
+              JSON.parse(localStorage.getItem(this.nameUserLS))
+            );
+          }
+          //console.log(r.data);
+          return response;
+        }),
+        catchError( e => {
+          return of(response);
+        })
+      );
+  }
+
+  updateUserCredentials( formData:any, id:any): Observable <{       //retornara un observable
+    error: boolean;
+    msg: any;
+    data: any
+  }> {
+    const response = {error: true, msg: ERRORS_CONST.UPDATE.ERROR, data: null as any};
+    return this.http.put<{error: boolean, msg: any, data: any}>(API_ROUTES.USERS.UPDATECREDENTIALS+id+"/", formData)
+      .pipe(
+        map(r => {
+          response.msg = r.msg;
+          response.error = r.error;
+          response.data = r.data;
+          if(!r.error){
+            this.setUserToLocalStorage(r.data);
+            this.currentUser = new BehaviorSubject(
+              JSON.parse(localStorage.getItem(this.nameUserLS))
+            );
           }
           //console.log(r.data);
           return response;

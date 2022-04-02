@@ -1,3 +1,115 @@
+
+<div class="col-12">
+    <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+    <form *ngIf="!loading" class="example-form" [formGroup]="miembroForm" (ngSubmit)="addEditMiembro()" tabindex="0">
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-3 mb-4 text-center" style="height: 343px;">
+                <img class="dsc-user-img" [src]=PhotoFilePath alt="">
+                <div style="height: 63px; margin-top: 15px;">
+                    <button type="button" class="ancho" mat-raised-button color="primary" (click)="abrirInputImg()">
+                        <mat-icon>file_upload</mat-icon>{{estadoImg}}
+                    </button>
+                    <input type="file" style="visibility: hidden; width: 0%;" (change)="onChange($event)" id="imgUploadMiembro">
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-9 pl-4" style="height: 345px; margin-bottom: 25px;">
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Nombres</mat-label>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese sus nombres" formControlName="nombre_miem">
+                    <mat-error *ngIf="(m.nombre_miem.errors && miembroSubmitted)">
+                        <ng-container [ngSwitch]="m.nombre_miem.value">
+                            <ng-container *ngSwitchCase="''">*El nombre es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El nombre debe tener un máximo de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="m.nombre_miem.value!=''" matSuffix class="pointer" (click)="eliminarTexto('nombre_miem')">close</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Apellidos</mat-label>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese sus apellidos" formControlName="apellido_miem">
+                    <mat-error *ngIf="(m.apellido_miem.errors && miembroSubmitted)">
+                        <ng-container [ngSwitch]="m.apellido_miem.value">
+                            <ng-container *ngSwitchCase="''">*El apellido es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El apellido debe tener un máximo de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="m.apellido_miem.value!=''" matSuffix class="pointer" (click)="eliminarTexto('apellido_miem')">close</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="ancho" [color]="colorCorreoInput">
+                    <mat-label>Correo</mat-label>
+                    <input type="text" matInput autocomplete="off" (input)="existCorreo()" 
+                        placeholder="Ingrese su correo electrónico" formControlName="correo_miem">
+                    <mat-error *ngIf="(m.correo_miem.errors && miembroSubmitted)">
+                        <ng-container [ngSwitch]="m.correo_miem.value">
+                            <ng-container *ngSwitchCase="''">*El correo es requerido!</ng-container>
+                            <ng-container *ngIf="m.correo_miem.value.length > 100">*El correo debe tener un máximo de 100 caracteres!</ng-container>
+                            <ng-container *ngIf="m.correo_miem.hasError('pattern')">*El correo es inválido!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-hint [align]="'start'" *ngIf="correoExist">
+                        <ng-container><p style="color: #f44336;">¡Otro Miembro con este correo ya existe!</p></ng-container>
+                    </mat-hint>
+                    <mat-icon *ngIf="m.correo_miem.value!=''" matSuffix class="pointer" (click)="eliminarTexto('correo_miem')">close</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Teléfono</mat-label>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese su número de teléfono" formControlName="telefono_miem">
+                    <mat-error *ngIf="(m.telefono_miem.errors && miembroSubmitted)">
+                        <ng-container [ngSwitch]="m.telefono_miem.value">
+                            <ng-container *ngSwitchCase="''">*El número de teléfono es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El número de teléfono debe tener un máximo de 10 números!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="m.telefono_miem.value!=''" matSuffix class="pointer" (click)="eliminarTexto('telefono_miem')">close</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Cargo</mat-label>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese su cargo" formControlName="cargo_miem">
+                    <mat-error *ngIf="(m.cargo_miem.errors && miembroSubmitted)">
+                        <ng-container [ngSwitch]="m.cargo_miem.value">
+                            <ng-container *ngSwitchCase="''">*El cargo es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El cargo debe tener un máximo de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="m.cargo_miem.value!=''" matSuffix class="pointer" (click)="eliminarTexto('cargo_miem')">close</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="ancho">
+                <mat-label>Descripción</mat-label>
+                    <textarea matInput #message 
+                        placeholder="Ingrese su descripción" formControlName="descripcion_miem">
+                    </textarea>
+                    <mat-error *ngIf="(m.descripcion_miem.errors && miembroSubmitted)">
+                        <ng-container [ngSwitch]="m.descripcion_miem.value">
+                            <ng-container *ngSwitchCase="''">*La descripción es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*La descripción debe tener un máximo de 500 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="m.descripcion_miem.value!=''" matSuffix class="pointer" (click)="eliminarTexto('descripcion_miem')">close</mat-icon>
+                    <mat-hint [align]="'end'">{{message.value.length}} / 500</mat-hint>
+            </mat-form-field>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+            <button type="submit" *ngIf="miem.id_miem==0" class="button" mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <button type="submit" *ngIf="miem.id_miem!=0" class="button" mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </div>
+    </form>
+</div>
+
+<!--
 <form [formGroup]="miembroForm" (ngSubmit)="addEditMiembro()">
     <div class="d-flex flex-row bd-highlight mb-3">
         <div class="form-froup row" style="width: 60%;">
@@ -101,3 +213,4 @@
     <button type="submit" *ngIf="miem.id_miem==0" class="btn btn-primary">Guardar</button>
     <button type="submit" *ngIf="miem.id_miem!=0" class="btn btn-primary">Actualizar</button>    
 </form>
+-->

@@ -1,3 +1,64 @@
+<!-- Modal -->
+<ng-template #contenido let-modal>
+    <div class="modal-header" style="height: 30px;">
+        <h5 class="modal-title" style="margin-top: 10px;">{{ModalTitle}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close" (click)="closeClick()" tabindex="-1"></button>
+    </div>
+    <div class="modal-body">
+        <app-edit-credenciales></app-edit-credenciales>
+    </div>
+</ng-template>
+
+<section class="seccion-perfil-usuario">
+    <div class="perfil-usuario-header">
+        <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
+                <img [src]="PhotoFilePath" alt="img-avatar">
+                <!--
+                <button type="button" class="boton-avatar">
+                    <i class="far fa-image"></i>
+                </button>
+                -->
+            </div>
+            <!--
+            <button type="button" class="boton-portada">
+                <i class="far fa-image"></i> Cambiar fondo
+            </button>
+            -->
+        </div>
+    </div>
+    <div class="perfil-usuario-body">
+        <div class="perfil-usuario-bio">
+            <h3 class="titulo">{{first_name+' '+last_name}}</h3>
+            <p class="texto">{{descripcion}}</p>
+        </div>
+        <div class="perfil-usuario-footer" style="margin-bottom: 20px;">
+            <ul class="lista-datos">
+                <li><i class="icono fas fa-envelope"></i>{{email}}</li>
+                <li><i class="icono fas fa-user"></i>{{username}}</li>
+                <li><i class="icono fas fa-phone-alt"></i>{{telefono}}</li>
+            </ul>
+            <ul class="lista-datos">
+                <li><i class="icono fas fa-map-marker-alt"></i>{{direccion}}</li>
+                <li><i class="icono fas"><mat-icon>apartment</mat-icon></i>{{empresa}}</li>
+                <li><i class="icono fas fa-briefcase"></i>{{work}}</li>
+            </ul>
+        </div>
+        <div class="redes-sociales">
+            <a class="boton-redes facebook" routerLink="/panel/cuenta/update" matTooltip="Editar perfil"><mat-icon>edit</mat-icon></a>
+            <button class="boton-redes credenciales" matTooltip="Editar credenciales" (click)="editClick(contenido)"><mat-icon>person</mat-icon></button>
+            <button type="button" matTooltip="Cambiar tema [{{cont+1}}/4]" (click)="cambiarTheme()" class="boton-redes cambiartema">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-octagon-half" viewBox="0 0 16 16">
+                    <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM8 15h2.9l4.1-4.1V5.1L10.9 1H8v14z"/>
+                </svg>
+            </button>
+            <a href="" class="boton-redes facebook fab fa-facebook-f" matTooltip="Facebook"><i class="icon-facebook"></i></a>
+            <a href="" class="boton-redes twitter fab fa-twitter" matTooltip="Twitter"><i class="icon-twitter"></i></a>
+        </div>
+    </div>
+</section>
+<!--
 <br><br>
 <div class="d-flex flex-row bd-highlight mb-3">
     <div class="form-froup row" style="width: 60%;">
@@ -29,7 +90,7 @@
 </div>
 
 <div>
-    <!-- Button trigger modal -->
+    <-- Button trigger modal --
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
     data-bs-target="#exampleModal " (click)="editClick()" data-backdrop="static" 
     data-keyboard="false"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -45,7 +106,7 @@
 </div>
 
 
-  <!-- Modal -->
+  <-- Modal --
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
@@ -60,3 +121,5 @@
       </div>
     </div>
   </div>
+
+-->

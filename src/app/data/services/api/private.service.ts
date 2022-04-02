@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ERRORS_CONST } from '@data/constants';
 import { API_ROUTES } from '@data/constants/routes';
+import { IApiCategoria, IApiContenido, IApiMiembro } from '@data/interfaces';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -14,8 +15,8 @@ export class PrivateService {
     private http: HttpClient
   ) { }
 
-  getCatList():Observable<any[]>{
-    return this.http.get<any[]>(API_ROUTES.API.CATEGORIA);
+  getCatList():Observable<IApiCategoria[]>{
+    return this.http.get<IApiCategoria[]>(API_ROUTES.API.CATEGORIA);
   }
 
   addCategoria(
@@ -75,8 +76,8 @@ export class PrivateService {
 
   //--------------------------------------------------------------------------------------------//
 
-  getContList():Observable<any[]>{
-    return this.http.get<any[]>(API_ROUTES.API.CONTENIDO);
+  getContList():Observable<IApiContenido[]>{
+    return this.http.get<IApiContenido[]>(API_ROUTES.API.CONTENIDO);
   }
 
   addContenido( formData:any ): Observable <{       //retornara un observable
@@ -127,8 +128,8 @@ export class PrivateService {
 
   //--------------------------------------------------------------------------------------//
 
-  getMiemList():Observable<any[]>{
-    return this.http.get<any[]>(API_ROUTES.API.MIEMBRO);
+  getMiemList():Observable<IApiMiembro[]>{
+    return this.http.get<IApiMiembro[]>(API_ROUTES.API.MIEMBRO);
   }
   
   addMiembro( formData:any ): Observable <{       //retornara un observable
@@ -255,8 +256,8 @@ export class PrivateService {
     return this.http.post(API_ROUTES.API.SAVEFILE,val);
   }
 
-  getAllCategoriaNombres():Observable<any[]>{
-    return this.http.get<any[]>(API_ROUTES.API.CATEGORIA);
+  getAllCategoriaNombres():Observable<IApiCategoria[]>{
+    return this.http.get<IApiCategoria[]>(API_ROUTES.API.CATEGORIA);
   }
 
 }

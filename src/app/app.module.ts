@@ -18,6 +18,7 @@ import { Page404Component } from './modules/server/page404/page404.component';
 import { Page0Component } from './modules/server/page0/page0.component';
 import { Page401Component } from './modules/server/page401/page401.component';
 import { Page500Component } from './modules/server/page500/page500.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { Page500Component } from './modules/server/page500/page500.component';
     CoreModule,
     SharedModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

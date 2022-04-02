@@ -7,6 +7,7 @@ import * as fromComponents from './components';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularDesignModule } from './angular-design/angular-design.module';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule,
     FontAwesomeModule,
     //bootstrap
-    NgbModule
+    NgbModule,
+    //AngularMaterial
+    AngularDesignModule
   ],
   declarations: [...fromComponents.components],
   exports: [
@@ -28,6 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     RouterModule,
     FontAwesomeModule,
+    AngularDesignModule,
     ...fromComponents.components
   ]
 })

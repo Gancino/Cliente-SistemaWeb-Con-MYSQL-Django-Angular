@@ -1,4 +1,126 @@
 <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+    <section class="seccion-perfil-usuario">
+        <div class="perfil-usuario-header">
+            <div class="perfil-usuario-portada">
+                <div class="perfil-usuario-avatar">
+                    <img [src]="PhotoFilePath" alt="img-avatar">
+                    <button type="button" class="boton-avatar" matTooltip="Subir imágen" (click)="abrirInputImg()">
+                        <mat-icon>file_upload</mat-icon>
+                    </button>
+                    <input type="file" style="visibility: hidden; width: 0%;" (change)="onChange($event)" id="imgUploadUser">
+                </div>
+                <button type="button" class="boton-portada" matTooltip="Regresar al perfil" (click)="regresar()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="perfil-usuario-body">
+            <div class="perfil-usuario-bio">
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Nombre</mat-label>
+                    <mat-icon matPrefix>person</mat-icon>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese sus nombres" formControlName="first_name">
+                    <mat-error *ngIf="(u.first_name.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.first_name.value">
+                            <ng-container *ngSwitchCase="''">*El nombre es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El nombre debe tener un máximo de 150 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="u.first_name.value!=''" matSuffix class="pointer" (click)="eliminarTexto('first_name')">close</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Apellido</mat-label>
+                    <mat-icon matPrefix>person</mat-icon>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese sus apellidos" formControlName="last_name">
+                    <mat-error *ngIf="(u.last_name.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.last_name.value">
+                            <ng-container *ngSwitchCase="''">*El apellido es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El apellido debe tener un máximo de 150 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="u.last_name.value!=''" matSuffix class="pointer" (click)="eliminarTexto('last_name')">close</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Rol/Trabajo</mat-label>
+                    <mat-icon matPrefix>home_repair_service</mat-icon>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese su nuevo rol" formControlName="work">
+                    <mat-error *ngIf="(u.work.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.work.value">
+                            <ng-container *ngSwitchCase="''">*El rol es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El rol debe tener un máximo de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="u.work.value!=''" matSuffix class="pointer" (click)="eliminarTexto('work')">close</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Dirección</mat-label>
+                    <mat-icon matPrefix>place</mat-icon>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese su nueva dirección" formControlName="direccion">
+                    <mat-error *ngIf="(u.direccion.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.direccion.value">
+                            <ng-container *ngSwitchCase="''">*La dirección es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*La dirección debe tener un máximo de 150 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="u.direccion.value!=''" matSuffix class="pointer" (click)="eliminarTexto('direccion')">close</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Teléfono</mat-label>
+                    <mat-icon matPrefix>phone</mat-icon>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese su nuevo número telefónico" formControlName="telefono">
+                    <mat-error *ngIf="(u.telefono.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.telefono.value">
+                            <ng-container *ngSwitchCase="''">*El número de teléfono es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El teléfono debe tener un máximo de 10 números!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="u.telefono.value!=''" matSuffix class="pointer" (click)="eliminarTexto('telefono')">close</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Empresa</mat-label>
+                    <mat-icon matPrefix>apartment</mat-icon>
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el nuevo nombre de su empresa" formControlName="empresa">
+                    <mat-error *ngIf="(u.empresa.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.empresa.value">
+                            <ng-container *ngSwitchCase="''">*El nombre de la empresa es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*El nombre de la empresa debe tener un máximo de 150 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="u.empresa.value!=''" matSuffix class="pointer" (click)="eliminarTexto('empresa')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="perfil-usuario-bio">
+                <mat-form-field appearance="outline" class="ancho">
+                    <mat-label>Descripción</mat-label>
+                    <mat-icon matPrefix>description</mat-icon>
+                    <textarea matInput #message autocomplete="off" formControlName="descripcion"
+                        placeholder="Ingrese una nueva descripción para su perfil"></textarea>
+                    <mat-error *ngIf="(u.descripcion.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.descripcion.value">
+                            <ng-container *ngSwitchCase="''">*La descripción es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*La descripción debe tener un máximo de 300 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <mat-icon *ngIf="u.descripcion.value!=''" matSuffix class="pointer" (click)="eliminarTexto('descripcion')">close</mat-icon>
+                    <mat-hint [align]="'end'">{{message.value.length}} / 300</mat-hint>
+                </mat-form-field>
+                <div style="text-align: right; width: 100%; margin-top: 10px;">
+                    <button type="submit" class="button" mat-raised-button color="primary" matTooltip="Guardar cambios">
+                        <mat-icon>save</mat-icon>Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+<!--
+<form [formGroup]="userForm" (ngSubmit)="updateUser()" tabindex="0">
     <div class="d-flex flex-row bd-highlight mb-3">
         <div class="form-froup row" style="width: 60%;">
             <label class="col-sm-2 col-form-label">Nombre:</label>
@@ -43,53 +165,59 @@
                     </small>
                 </div>
             </div>
-            <label class="col-sm-2 col-form-label">Username:</label>
+            <label class="col-sm-2 col-form-label">Dirección:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="username"
-                    placeholder="Ingrese su nombre de usuario" (input)="existUsername()">
+                <input type="text" class="form-control" formControlName="direccion"
+                    placeholder="Ingrese su nueva dirección">
                 <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
                     <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.username.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.username.value">
-                            <ng-container *ngSwitchCase="''">*El nombre de usuario es requerido!</ng-container>
-                            <ng-container *ngSwitchDefault>*El nombre de usuario debe tener un maximo de 150 caracteres!</ng-container>
-                    </ng-container>
-                    </small>
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(usernameExist && userSubmitted)">
-                        <ng-container>¡El nombre de usuario ingresado ya existe!</ng-container>
-                    </small>
-                </div>
-            </div>
-            <label class="col-sm-2 col-form-label">Email:</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" formControlName="email"
-                    placeholder="Ingrese su email" (input)="existEmail()">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.email.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.email.value">
-                            <ng-container *ngSwitchCase="''">*El email es requerido!</ng-container>
-                            <ng-container *ngIf="u.email.value.length > 100">*El email debe tener un maximo de 100 caracteres!</ng-container>
-                            <ng-container *ngIf="u.email.hasError('pattern')">*El email es invalido!</ng-container>
+                    *ngIf="(u.direccion.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.direccion.value">
+                            <ng-container *ngSwitchCase="''">*La dirección es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*La dirección debe tener un máximo de 150 caracteres!</ng-container>
                         </ng-container>
                     </small>
+                </div>
+            </div>
+            <label class="col-sm-2 col-form-label">Teléfono:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" formControlName="telefono"
+                    placeholder="Ingrese su nuevo número telefónico">
+                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
                     <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(emailExist && userSubmitted)">
-                        <ng-container>¡El email ingresado ya existe!</ng-container>
+                    *ngIf="(u.telefono.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.telefono.value">
+                            <ng-container *ngSwitchCase="''">*El número de teléfono es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El teléfono debe tener un máximo de 10 números!</ng-container>
+                        </ng-container>
                     </small>
                 </div>
             </div>
-            <label class="col-sm-2 col-form-label">Contraseña:</label>
+            <label class="col-sm-2 col-form-label">Empresa:</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" formControlName="password"
-                    placeholder="Ingrese su nueva contraseña">
+                <input type="text" class="form-control" formControlName="empresa"
+                    placeholder="Ingrese el nuevo nombre de su empresa">
                 <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
                     <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.password.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.password.value">
-                            <ng-container *ngSwitchCase="''">*La contraseña es requerida!</ng-container>
-                            <ng-container *ngSwitchDefault>*La contraseña debe tener un maximo de 128 caracteres!</ng-container>
+                    *ngIf="(u.empresa.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.empresa.value">
+                            <ng-container *ngSwitchCase="''">*El nombre de la empresa es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*El nombre de la empresa debe tener un máximo de 150 caracteres!</ng-container>
+                        </ng-container>
+                    </small>
+                </div>
+            </div>
+
+            <label class="col-sm-2 col-form-label">Descripción:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" formControlName="descripcion"
+                    placeholder="Ingrese una nueva descripción para su perfil">
+                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
+                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
+                    *ngIf="(u.descripcion.errors && userSubmitted)">
+                        <ng-container [ngSwitch]="u.descripcion.value">
+                            <ng-container *ngSwitchCase="''">*La descripción es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*La descripción debe tener un máximo de 300 caracteres!</ng-container>
                         </ng-container>
                     </small>
                 </div>
@@ -103,3 +231,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Actualizar</button>
 </form>
+-->

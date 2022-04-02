@@ -1,3 +1,31 @@
+<div class="body">
+    <div class="formulario">
+        <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+        <form *ngIf="!loading" [formGroup]="categoriaForm" (ngSubmit)="addEditCategoria()" tabindex="0">
+            <mat-form-field class="ancho" appearance="outline" style="margin-bottom: 10px;">
+                <mat-label>Nombre</mat-label>
+                <input type="text" matInput autocomplete="off" placeholder="Ingresar el nombre" formControlName="nombre_cat">
+                <!--<mat-icon matPrefix>reorder</mat-icon>-->
+                <!--<mat-hint>Nombre de la categoría</mat-hint>-->
+                <mat-error *ngIf="(c.nombre_cat.errors && categoriaSubmitted)">
+                    <ng-container [ngSwitch]="c.nombre_cat.value">
+                        <ng-container *ngSwitchCase="''">*El nombre es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*El nombre debe tener un máximo de 100 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <mat-icon *ngIf="c.nombre_cat.value!=''" matSuffix class="pointer" (click)="eliminarTexto('nombre_cat')">close</mat-icon>
+            </mat-form-field>
+            <button type="submit" *ngIf="cat.id_cat==0" class="ancho button" mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <button type="submit" *ngIf="cat.id_cat!=0" class="ancho button" mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </form>
+    </div>
+</div>
+
+<!--
 <form [formGroup]="categoriaForm" (ngSubmit)="addEditCategoria()">
     <div class="form-froup row">
         <label class="col-sm-2 col-form-label">Categoria:</label>
@@ -19,3 +47,4 @@
     <button type="submit" *ngIf="cat.id_cat==0" class="btn btn-primary">Guardar</button>
     <button type="submit" *ngIf="cat.id_cat!=0" class="btn btn-primary">Actualizar</button>
 </form>
+-->

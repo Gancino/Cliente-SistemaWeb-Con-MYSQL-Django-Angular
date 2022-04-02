@@ -5,3 +5,26 @@
 @import './layout/left-nav.scss';
 @import './layout/footer.scss';
 @import './layout.scss';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.spinner {
+    margin: 0 auto;
+}
+
+.spinnertable {
+    margin: 100px auto;
+    //background-color: #f5f5f5;
+}
+
+
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container { 
+    z-index: 9999!important; 
+} 
+
+.padding-main{
+    padding: 1rem;
+    //margin: 1rem;
+}

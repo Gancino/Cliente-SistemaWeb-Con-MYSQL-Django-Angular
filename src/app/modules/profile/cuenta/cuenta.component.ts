@@ -1,9 +1,12 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Alertas } from '@data/constants';
 import { API_ROUTES } from '@data/constants/routes';
 import { AuthService } from '@data/services/api/auth.service';
 import { PrivateService } from '@data/services/api/private.service';
 import { SkeletonComponent } from '@layout/skeleton/skeleton.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cuenta',
@@ -13,7 +16,6 @@ import { SkeletonComponent } from '@layout/skeleton/skeleton.component';
 export class CuentaComponent implements OnInit{
 
   ModalTitle!: string;
-  ActivateEditUserComp:boolean=false;
 
   user_id:any;
   username!:string;
@@ -23,6 +25,10 @@ export class CuentaComponent implements OnInit{
   last_name!:string;
   avatar!:string;
   work!:string;
+  direccion!:string;
+  telefono!:string;
+  empresa!:string;
+  descripcion!:string;
   PhotoFilePath!: String;
 
   ThemeList: any=[];
@@ -31,6 +37,8 @@ export class CuentaComponent implements OnInit{
 
   constructor(
     public authService : AuthService, 
+    public modal : NgbModal,
+    private _snackBar: MatSnackBar,
     private skeleton:SkeletonComponent,
     private service: PrivateService,
     private formBuilder: FormBuilder,
@@ -59,6 +67,16 @@ export class CuentaComponent implements OnInit{
   ngOnInit(): void {
     this.loadUser()
     this.refreshTheme()
+  }
+
+  estructModal(content: any){
+    this.modal.open(content,{
+      size: 'md',
+      centered: true,
+      scrollable: true,
+      backdrop: 'static',
+      keyboard: false
+    });
   }
 
   refreshTheme(){
@@ -102,6 +120,8 @@ export class CuentaComponent implements OnInit{
         this.refreshTheme()
       });
     }
+    const them: any = ['Azul Oscuro', 'Oscuro','Rojo', 'Amarillo'];
+    Alertas.mostrarToast('Tema '+them[this.cont] + ' seleccionado ['+(this.cont+1)+'/4]', this._snackBar);
   }
 
   loadUser(){
@@ -113,17 +133,21 @@ export class CuentaComponent implements OnInit{
     this.last_name=this.authService.getUser.last_name;
     this.avatar=this.authService.getUser.avatar;
     this.work=this.authService.getUser.work;
+    this.direccion=this.authService.getUser.direccion;
+    this.telefono=this.authService.getUser.telefono;
+    this.empresa=this.authService.getUser.empresa;
+    this.descripcion=this.authService.getUser.descripcion;
     this.PhotoFilePath=API_ROUTES.PhotoUrl.MEDIA+this.authService.getUser.avatar;
   }
   
   closeClick(){
-    this.ActivateEditUserComp=false;
+    this.modal.dismissAll();
     this.loadUser();
   }
 
-  editClick(){
-    this.ModalTitle="Editar Cuenta";
-    this.ActivateEditUserComp=true;
+  editClick(contenido: any){
+    this.estructModal(contenido);
+    this.ModalTitle="Editar Credenciales de Acceso";
   }
 
 }

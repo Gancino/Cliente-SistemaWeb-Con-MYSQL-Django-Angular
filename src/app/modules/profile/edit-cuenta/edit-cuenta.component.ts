@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { API_ROUTES } from '@data/constants/routes';
+import { Router } from '@angular/router';
+import { Alertas } from '@data/constants';
+import { API_ROUTES, INTERNAL_ROUTES } from '@data/constants/routes';
 import { AuthService } from '@data/services/api/auth.service';
 
 @Component({
@@ -14,45 +16,15 @@ export class EditCuentaComponent implements OnInit {
   public userSubmitted;
   public userForm: FormGroup;
   PhotoFilePath!: String;
-  public emailExist: boolean;
-  public emailExistValue: string;
-  public usernameExist: boolean;
-  public usernameExistValue: string;
-
   public archivos:any=[];
 
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
     public authService : AuthService
   ) {
-    this.emailExist = false;
-    this.emailExistValue = '';
-    this.usernameExist = false;
-    this.usernameExistValue = '';
     this.userSubmitted = false;
     this.userForm = this.formBuilder.group({
-      username: [
-        '', 
-        [
-          Validators.required,
-          Validators.maxLength(150)
-        ]
-      ],
-      email: [
-        '', 
-        [
-          Validators.required,
-          Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
-          Validators.maxLength(100)
-        ]
-      ],
-      password: [
-        '', 
-        [
-          Validators.required,
-          Validators.maxLength(128)
-        ]
-      ],
       first_name: [
         '', 
         [
@@ -80,6 +52,34 @@ export class EditCuentaComponent implements OnInit {
           Validators.required,
           Validators.maxLength(100)
         ]
+      ],
+      direccion: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(150)
+        ]
+      ],
+      telefono: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(10)
+        ]
+      ],
+      empresa: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(150)
+        ]
+      ],
+      descripcion: [
+        '', 
+        [
+          Validators.required,
+          Validators.maxLength(300)
+        ]
       ]
     });
   }
@@ -93,21 +93,22 @@ export class EditCuentaComponent implements OnInit {
 
   loadUser(){
     this.user_id=this.authService.getUser.user_id;
-    this.userForm.get('username').setValue(this.authService.getUser.username);
-    this.userForm.get('email').setValue(this.authService.getUser.email);
-    this.userForm.get('password').setValue("");
     this.userForm.get('first_name').setValue(this.authService.getUser.first_name);
     this.userForm.get('last_name').setValue(this.authService.getUser.last_name);
     this.userForm.get('avatar').setValue(this.authService.getUser.avatar);
     this.userForm.get('work').setValue(this.authService.getUser.work);
+    this.userForm.get('direccion').setValue(this.authService.getUser.direccion);
+    this.userForm.get('telefono').setValue(this.authService.getUser.telefono);
+    this.userForm.get('empresa').setValue(this.authService.getUser.empresa);
+    this.userForm.get('descripcion').setValue(this.authService.getUser.descripcion);
     this.PhotoFilePath=API_ROUTES.PhotoUrl.MEDIA+this.authService.getUser.avatar;
   }
 
   updateUser(){
-
     this.userSubmitted = true;
     if (!this.userForm.valid)
     {
+      Alertas.mostrarAlert('Oops...','Por favor, complete todos los campos o verifique los errores del formulario', 'error');
       return;
     }
     const formData = new FormData();
@@ -116,30 +117,21 @@ export class EditCuentaComponent implements OnInit {
         formData.append('avatar', archivo)
       })
     }
-
-    formData.append('username', this.userForm.get('username').value);
-    formData.append('email', this.userForm.get('email').value);
-    formData.append('password', this.userForm.get('password').value);
     formData.append('first_name', this.userForm.get('first_name').value);
     formData.append('last_name', this.userForm.get('last_name').value);
     formData.append('work', this.userForm.get('work').value);
+    formData.append('direccion', this.userForm.get('direccion').value);
+    formData.append('telefono', this.userForm.get('telefono').value);
+    formData.append('empresa', this.userForm.get('empresa').value);
+    formData.append('descripcion', this.userForm.get('descripcion').value);
 
     this.authService.updateUser(formData, this.user_id).subscribe(res=>{
       if(!res.error){
-        alert(res.msg);
-        window.location.reload();
-      }
-      else{
-        if(res.msg.username)
-        {
-          this.usernameExist = true;
-          this.usernameExistValue = this.userForm.get('username').value.toString().trim().toLowerCase();
-        }
-        if(res.msg.email)
-        {
-          this.emailExist = true;
-          this.emailExistValue = this.userForm.get('email').value.toString().trim().toLowerCase();
-        }
+        Alertas.mostrarAlert('Buen trabajo!','Perfil actualizado correctamente.','success');
+        //window.location.reload();
+        this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
+      }else{
+        Alertas.mostrarAlert('Error!','¡Error al actualizar el perfil, intentalo de nuevo!','error');
       }
     });
   }
@@ -150,8 +142,7 @@ export class EditCuentaComponent implements OnInit {
       this.extraerBase64(file).then((imagen: any) => {
         this.PhotoFilePath = imagen.base;
       })
-      this.archivos.push(file)
-      
+      this.archivos.push(file);
     }
   }
 
@@ -174,31 +165,19 @@ export class EditCuentaComponent implements OnInit {
     }
   });
 
-  existEmail(){
-    this.emailExist=false;
-    if(this.emailExistValue !== ''){
-      let emailForm = this.userForm.get('email').value.toString().trim().toLowerCase();
-      if( emailForm === this.emailExistValue ){
-        this.emailExist = true;
-      }
-      else{
-        this.emailExist = false;
-      }
-    }
+  abrirInputImg(){
+    const imgUpload = document.getElementById('imgUploadUser') as HTMLInputElement;
+    imgUpload.click();
   }
 
-  existUsername(){
-    this.usernameExist=false;
-    if(this.usernameExistValue !== ''){
-      let usernameForm = this.userForm.get('username').value.toString().trim().toLowerCase();
-      if( usernameForm === this.usernameExistValue ){
-        this.usernameExist = true;
-      }
-      else{
-        this.usernameExist = false;
-      }
-    }
+  eliminarTexto(campo: string){
+    this.userForm.get(campo).setValue('');
   }
+
+  regresar(){
+    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
+  }
+
   /*
   uploadImage(event: any){
     var file=event.target.files[0];

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { API_ROUTES } from '@data/constants/routes';
 import { ILeftNavMenu } from '@data/interfaces';
 import { AuthService } from '@data/services/api/auth.service';
-import { faBars, faCog, faEye, faIdCard, faIndent, faTimes, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faEye, faIdCard, faIndent, faTimes, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -40,9 +40,9 @@ export class LeftNavComponent {
         title: 'Mi cuenta',
         links: [
           {
-            icon: faCog,
+            icon: faUser,
             name: 'Perfil',
-            method: () => this.authService.cuenta()
+            method: () => this.authService.cuenta(this.showMenu)
           },
           {
             icon: faEye,
@@ -57,17 +57,17 @@ export class LeftNavComponent {
           {
             icon: faIndent,
             name: 'Categorias',
-            method: () => this.authService.categorias()
+            method: () => this.authService.categorias(this.showMenu)
           },
           {
             icon: faIdCard,
             name: 'Contenidos',
-            method: () => this.authService.contenidos()
+            method: () => this.authService.contenidos(this.showMenu)
           },
           {
             icon: faUsers,
             name: 'Miembros',
-            method: () => this.authService.miembros()
+            method: () => this.authService.miembros(this.showMenu)
           }
         ]
       }

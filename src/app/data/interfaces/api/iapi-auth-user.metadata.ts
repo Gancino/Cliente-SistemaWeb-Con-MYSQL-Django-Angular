@@ -8,4 +8,8 @@ export interface IApiUserAuthenticated {
     password: string;
     avatar: string;
     work: string;
+    direccion: string;
+    telefono: string;
+    empresa: string;
+    descripcion: string;
 }
