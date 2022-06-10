@@ -1,0 +1,135 @@
+<div class="col-12">
+    <!--Spinner mientras se envia una peticion al api-->
+    <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+    <!--Formulario-->
+    <form *ngIf="!loading" [formGroup]="articuloForm" (ngSubmit)="addEditArticulo()" tabindex="0">
+        <div class="row">
+            <!--Content Inputs-->
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Título-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Título</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el título del artículo" formControlName="titulo_art">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(ar.titulo_art.errors && articuloSubmitted)">
+                        <ng-container [ngSwitch]="ar.titulo_art.value">
+                            <ng-container *ngSwitchCase="''">*El título es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="ar.titulo_art.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulo_art')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Indexación-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Indexación</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese una indexación" formControlName="indexacion_art">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(ar.indexacion_art.errors && articuloSubmitted)">
+                        <ng-container [ngSwitch]="ar.indexacion_art.value">
+                            <ng-container *ngSwitchCase="''">*La indexación es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="ar.indexacion_art.value!=''" matSuffix class="pointer" (click)="eliminarTexto('indexacion_art')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Desc-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Desc</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese una desc" formControlName="desc_art">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(ar.desc_art.errors && articuloSubmitted)">
+                        <ng-container [ngSwitch]="ar.desc_art.value">
+                            <ng-container *ngSwitchCase="''">*La desc es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="ar.desc_art.value!=''" matSuffix class="pointer" (click)="eliminarTexto('desc_art')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo ISSN-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>ISSN</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el ISSN" formControlName="issn_art">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(ar.issn_art.errors && articuloSubmitted)">
+                        <ng-container [ngSwitch]="ar.issn_art.value">
+                            <ng-container *ngSwitchCase="''">*El ISSN es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="ar.issn_art.value!=''" matSuffix class="pointer" (click)="eliminarTexto('issn_art')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <!--Campo Enlace-->
+            <mat-form-field appearance="outline">
+                <!--Label-->
+                <mat-label>Enlace</mat-label>
+                <!--Text Area-->
+                <textarea matInput #enl
+                    placeholder="Ingrese el enlace del Artículo" formControlName="enlace_art">
+                </textarea>
+                <!--Manejo de errores del textArea-->
+                <mat-error *ngIf="(ar.enlace_art.errors && articuloSubmitted)">
+                    <ng-container [ngSwitch]="ar.enlace_art.value">
+                        <ng-container *ngSwitchCase="''">*Este campo es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*Nose admite más de 300 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <!--Permite borrar el texto del campo-->
+                <mat-icon *ngIf="ar.enlace_art.value!=''" matSuffix class="pointer" (click)="eliminarTexto('enlace_art')">close</mat-icon>
+                <!--Mostrar la cantidad de caracteres ingresados-->
+                <mat-hint [align]="'end'">{{enl.value.length}} / 300</mat-hint>
+            </mat-form-field>
+            <!--Campo Autores-->
+            <mat-form-field appearance="outline">
+                <!--Label-->
+                <mat-label>Autores</mat-label>
+                <!--Text Area-->
+                <textarea matInput #aut
+                    placeholder="Ingrese los autores" formControlName="autores_art">
+                </textarea>
+                <!--Manejo de errores del textArea-->
+                <mat-error *ngIf="(ar.autores_art.errors && articuloSubmitted)">
+                    <ng-container [ngSwitch]="ar.autores_art.value">
+                        <ng-container *ngSwitchCase="''">*Este campo es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*Nose admite más de 500 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <!--Permite borrar el texto del campo-->
+                <mat-icon *ngIf="ar.autores_art.value!=''" matSuffix class="pointer" (click)="eliminarTexto('autores_art')">close</mat-icon>
+                <!--Mostrar la cantidad de caracteres ingresados-->
+                <mat-hint [align]="'end'">{{aut.value.length}} / 500</mat-hint>
+            </mat-form-field>
+        </div>
+        <!--Buttons tipo submit-->
+        <div class="buttons">
+            <!--Button Guardar-->
+            <button type="submit" *ngIf="art.id_art==0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <!--Button Editar-->
+            <button type="submit" *ngIf="art.id_art!=0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </div>
+    </form>
+</div>

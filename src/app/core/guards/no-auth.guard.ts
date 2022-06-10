@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { INTERNAL_ROUTES } from '@data/constants/routes';
 import { AuthService } from '@data/services/api/auth.service';
 
@@ -9,10 +9,12 @@ import { AuthService } from '@data/services/api/auth.service';
 
 //Si esta logeado y intenta acceder a los modulos de login, crear cuenta etc, se rediriga al panel principal
 export class NoAuthGuard implements CanActivate {
+
   constructor(
     private router: Router,
     private authService: AuthService
   ){}
+  
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

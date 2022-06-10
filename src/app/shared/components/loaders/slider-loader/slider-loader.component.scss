@@ -1,0 +1,94 @@
+.dsc-carousel-loader {
+    width: 100%;
+    display: flex;
+    align-items: center; //centrar en el eje y
+    justify-content: center; //centrar en el eje x
+    position: relative;
+    &::before{ //para darle opacidad al contenido
+        content: '';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #DCDADA;
+    }
+
+    &__content{
+        width: 100%;
+        &-item{
+            float: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 100%;
+            height: 100%;
+            &-title{
+                width: 25%;
+                height: 20px;
+                z-index: 1;
+                border-radius: 10px;
+                margin: 7px 0;
+                background: #DCDADA;
+                animation: load 1s infinite linear;
+            }
+            &-subtitle{
+                width: 45%;
+                height: 20px;
+                z-index: 1;
+                border-radius: 10px;
+                margin: 7px 0;
+                background: #DCDADA;
+                animation: load 1s infinite linear;
+            }
+        }
+    }
+
+    &__btns{
+        position: absolute;
+        width: 90%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        &-i{
+            //opacity: 0.7;
+            height: 45px;
+            width: 45px;
+            justify-content: space-between;
+            border-radius: 25px;
+            background: #DCDADA;
+            animation: load 1s infinite linear;
+        }
+    }
+
+    &__steps{
+        position: absolute;
+        bottom: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        &-step{
+            height: 8px;
+            width: 25px;
+            margin: 0 5px;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.7);
+            background: #DCDADA;
+            animation: load 1s infinite linear;
+        }
+    }
+}
+
+@keyframes load{
+    0% {
+        background: #bbb9b9;
+    }
+    50% {
+        background: #c4c2c2;
+    }
+    100% {
+        background: #b6b5b5;
+    }
+}

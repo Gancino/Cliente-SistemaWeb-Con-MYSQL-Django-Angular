@@ -1,0 +1,10 @@
+<div class="dsc-card-libro" *ngIf="data" [routerLink]="routeLibros + '/' + data.id_lib">
+    <div class="dsc-card-libro_info">
+        <h2><li>{{data.titulo_lib}}</li></h2>
+        <h4>ISSN: {{data.issn_lib}}</h4>
+        <p>{{data.desc_lib}}</p>
+        <p>{{data.tipo_lib}}</p>
+        <p>{{data.autores_lib}}</p>
+    </div>
+</div>
+

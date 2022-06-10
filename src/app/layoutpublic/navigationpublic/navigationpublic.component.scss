@@ -1,11 +1,396 @@
-.dsc-navigation {
+.menu_bar {
+    display: none;
+}
+
+header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
     height: 80px;
+    z-index: 2;
+    background: #023859;
+    //background:rgba(49, 49, 49, 1);
+}
+
+.containernav{
+    width: 85%;
+    margin: 0 auto;
+}
+
+.logo-nav-container{
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
     align-items: center;
-    background:rgba(0,0,0,0.8);
 }
-button{
-    margin: 3px;
+
+header nav {
+    z-index: 1000;
 }
+
+header nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+header nav ul li {
+    display: inline-block;
+    position: relative;
+}
+
+header nav ul li:hover {
+    background: #E6344A;
+    //background: #4a4a4a;
+    cursor: pointer;
+}
+
+header nav ul li a {
+    color: #fff;
+    display: block;
+    text-decoration: none;
+    padding: 30px 20px;
+    position: relative;
+}
+
+header nav ul li a >fa-icon {
+    margin-right: 10px;
+}
+
+header nav ul li a .submenuI, .submenuMI {
+    position: relative;
+    display: inline-block;
+    top: 12px;
+    margin-left: 10px;
+    margin-right: 0px;
+    transform: translateY(-50%);
+    transition: transform 0.4s;
+}
+
+.submenuMI {
+    display: none;
+}
+
+header nav ul li a .submenuP, .submenuMP {
+    position: relative;
+    display: inline-block;
+    top: 12px;
+    margin-left: 10px;
+    margin-right: 0px;
+    transform: translateY(-50%);
+    transition: transform 0.4s;
+}
+
+.submenuMP {
+    display: none;
+}
+
+header nav ul li a .submenuM, .submenuMM {
+    position: relative;
+    display: inline-block;
+    top: 12px;
+    margin-left: 10px;
+    margin-right: 0px;
+    transform: translateY(-50%);
+    transition: transform 0.4s;
+}
+
+.submenuMM {
+    display: none;
+}
+
+header nav ul li:hover a .submenuI {
+    transform: translateY(-50%) rotate(180deg);
+}
+header nav ul li:hover a .submenuP {
+    transform: translateY(-50%) rotate(180deg);
+}
+header nav ul li:hover a .submenuM {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+//por cada opcion es 80px y 1px de border bottom
+.submenuPC:hover .investigacionClass {
+    //display: block;
+    max-height: 81px;
+}
+.submenuPC:hover .publicacionesClass {
+    //display: block;
+    max-height: 405px;
+}
+.submenuPC:hover .miembrosClass {
+    //display: block;
+    max-height: 243px;
+}
+
+.submenuPC .investigacionClass, .submenuMovil .investigacionClass {
+    //display: none;
+    display: block;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s;
+
+    background: #011826;
+    position: absolute;
+    width: 150%;
+    z-index: 1000;
+}
+
+.submenuPC .publicacionesClass, .submenuMovil .publicacionesClass {
+    //display: none;
+    display: block;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s;
+
+    background: #011826;
+    position: absolute;
+    width: 150%;
+    z-index: 1000;
+}
+
+.submenuPC .miembrosClass, .submenuMovil .miembrosClass {
+    //display: none;
+    display: block;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s;
+
+    background: #011826;
+    position: absolute;
+    width: 150%;
+    z-index: 1000;
+}
+
+.submenuPC .investigacionClass li, .submenuMovil .investigacionClass li {
+    display: block;
+    position: relative;
+    //width: 114%;
+    //left: -32px;
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+}
+
+.submenuPC .publicacionesClass li, .submenuMovil .publicacionesClass li {
+    display: block;
+    //width: 114%;
+    //left: -32px;
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+}
+
+.submenuPC .miembrosClass li, .submenuMovil .miembrosClass li {
+    display: block;
+    //width: 114%;
+    //left: -32px;
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+}
+
+.submenuPC .investigacionClass li a, .submenuMovil .investigacionClass li a {
+    display: block;
+}
+
+.submenuPC .publicacionesClass li a, .submenuMovil .publicacionesClass li a {
+    display: block;
+}
+
+.submenuPC .miembrosClass li a, .submenuMovil .miembrosClass li a {
+    display: block;
+}
+
+@media screen and (max-width: 1127px){
+    .containernav {
+        width: 100%;
+    }
+
+    header {
+        display: block;
+    }
+
+    header nav {
+        background: #023859;
+        top: 80px;
+        width: 60%;
+        max-width: 350px;
+        height: calc(100% - 80px);
+        right: 100%;
+        margin: 0;
+        overflow: auto;
+        z-index: 1000;
+        position: fixed;
+    }
+
+    header nav::-webkit-scrollbar{
+        width: 7px;
+    }
+    
+    header nav:hover::-webkit-scrollbar-thumb{
+        background: #757574;
+        border-radius: 10px;
+    }
+    
+    header nav ul li {
+        display: block;
+        position: relative;
+        border-bottom: 1px solid rgba(255, 255, 255, .5);
+        //left: -32px;
+        //width: calc(100% + 32px);
+    }
+    
+    header nav ul li a {
+        display: block;
+    }
+
+    header nav ul li a .submenuI {
+        display: none;
+    }
+    
+    header nav ul li a .submenuMI {
+        float: right;
+        display: inline-flex;
+    }
+
+    header nav ul li a .submenuP {
+        display: none;
+    }
+    
+    header nav ul li a .submenuMP {
+        float: right;
+        display: inline-flex;
+    }
+
+    header nav ul li a .submenuM {
+        display: none;
+    }
+
+    header nav ul li a .submenuMM {
+        float: right;
+        display: inline-flex;
+    }
+    
+    .submenuMovil .investigacionClass {
+        width: 100%;
+        position: relative;
+        display: none;
+        max-height: 81px;
+    }
+    
+    .submenuMovil .publicacionesClass {
+        width: 100%;
+        position: relative;
+        display: none;
+        max-height: 405px;
+    }
+
+    .submenuMovil .miembrosClass {
+        width: 100%;
+        position: relative;
+        display: none;
+        max-height: 243px;
+    }
+    
+    .submenuMovil .investigacionClass li a {
+        margin-left: 15px;
+    }
+    
+    .submenuMovil .publicacionesClass li a {
+        margin-left: 15px;
+    }
+
+    .submenuMovil .miembrosClass li a {
+        margin-left: 15px;
+    }
+
+    .menu_bar {
+        //display: block;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        background: #E6344A;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+
+    .logo {
+       padding: 22px; 
+       z-index: 2;
+    }
+
+    .menu_bar .btn-menu {
+        display: block;
+        margin-top: 8px;
+        padding: 22px;
+        color: #fff;
+        overflow: hidden;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: auto;
+    }
+
+    header nav ul li a .submenuMIClass {
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+    header nav ul li a .submenuMPClass {
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+    header nav ul li a .submenuMMClass {
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+    .menu_icon{
+        //display: inline-block;
+        display: block;
+        position: relative;
+        //float: right;
+        //padding: 10px;
+        width: 50px;
+        //background:#011826;
+        height: 28px;
+        
+        cursor: pointer;
+    }
+
+    .menu_icon span{
+        width: 45px;
+        height: 4px;
+        background: #fff;
+        display: block;
+        transition: 0.2s ease-in-out;
+        position: relative;
+        margin-bottom: 6px;
+    }
+    
+    .menu_icon span:nth-child(2){
+        margin: 6px 0;
+    }
+
+    .menu_icon_Class{
+        padding-top: 10px;
+    }
+
+    .menu_icon_Class span {
+        margin-bottom: 0;
+    }
+
+    .menu_icon_Class span:nth-child(2){
+        display: none;
+        margin: 5px 0;
+    }
+
+    .menu_icon_Class span:nth-child(1){
+        transform: rotate(40deg);
+    }
+
+    .menu_icon_Class span:nth-child(3){
+        transform: rotate(-40deg);
+        margin-top: -3px;
+    }
+}
+

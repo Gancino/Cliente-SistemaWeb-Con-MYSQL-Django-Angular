@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Alertas } from '@data/constants';
-import { API_ROUTES } from '@data/constants/routes';
+import { CONST_GLOBAL } from '@data/constants/global.const';
+import { API_ROUTES, IMAGES_ROUTES, INTERNAL_ROUTES } from '@data/constants/routes';
 import { AuthService } from '@data/services/api/auth.service';
 import { PrivateService } from '@data/services/api/private.service';
 import { SkeletonComponent } from '@layout/skeleton/skeleton.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+declare var $: any;
 
 @Component({
   selector: 'app-cuenta',
@@ -15,34 +18,46 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CuentaComponent implements OnInit{
 
-  ModalTitle!: string;
+  public ModalTitle!: string;
+  public EditCredentUserComp!: boolean;
 
-  user_id:any;
-  username!:string;
-  email!:string;
-  password!:string;
-  first_name!:string;
-  last_name!:string;
-  avatar!:string;
-  work!:string;
-  direccion!:string;
-  telefono!:string;
-  empresa!:string;
-  descripcion!:string;
-  PhotoFilePath!: String;
+  public user_id:any;
+  public username!:string;
+  public email!:string;
+  public password!:string;
+  public first_name!:string;
+  public last_name!:string;
+  public avatar!:string;
+  public work!:string;
+  public direccion!:string;
+  public telefono!:string;
+  public empresa!:string;
+  public descripcion!:string;
+  public PhotoFilePath!: String;
 
-  ThemeList: any=[];
-  public themeForm: FormGroup;
-  public cont: number = 0;
+  public ThemeList!: any[];
+  public themeForm!: FormGroup;
+  public cont!: number;
+  public routeUpdate!: string;
+  public hrefFacebook!: string;
+  public hrefTwitter!: string;
 
   constructor(
-    public authService : AuthService, 
-    public modal : NgbModal,
+    private authService : AuthService, 
+    private modal : NgbModal,
     private _snackBar: MatSnackBar,
     private skeleton:SkeletonComponent,
     private service: PrivateService,
     private formBuilder: FormBuilder,
+    private router: Router
   ) {
+    this.EditCredentUserComp = false;
+    this.PhotoFilePath = IMAGES_ROUTES.LOADER_IMG;
+    this.ThemeList = [];
+    this.cont = 0;
+    this.routeUpdate = INTERNAL_ROUTES.PANEL_UPDATE_CUENTA;
+    this.hrefFacebook = CONST_GLOBAL.FACEBOOK;
+    this.hrefTwitter = CONST_GLOBAL.TWITTER;
     this.themeForm = this.formBuilder.group({
       id_th:[
         ''
@@ -59,6 +74,13 @@ export class CuentaComponent implements OnInit{
         [
           Validators.required,
           Validators.maxLength(10)
+        ]
+      ],
+      fk_id_usu: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20)
         ]
       ]
     });
@@ -80,7 +102,7 @@ export class CuentaComponent implements OnInit{
   }
 
   refreshTheme(){
-    this.service.getThemeList().subscribe(data => {
+    this.service.getThemeDetail(this.user_id).subscribe(data => {
       this.ThemeList=data;
       if(this.ThemeList.length > 0){
         for(let i = 0 ; i < 1 ; i++){
@@ -108,14 +130,15 @@ export class CuentaComponent implements OnInit{
       }
       this.themeForm.get('nombre_th').setValue(themes[this.cont][0])
       this.themeForm.get('posicion_th').setValue(themes[this.cont][1])
+      this.themeForm.get('fk_id_usu').setValue(this.user_id)
       this.service.updateTheme(this.themeForm.value).subscribe( r =>{
         this.refreshTheme()
       });
-    }
-    else{
+    }else{
       //console.log("Agregar")
       this.themeForm.get('nombre_th').setValue(themes[this.cont+1][0])
       this.themeForm.get('posicion_th').setValue(themes[this.cont+1][1])
+      this.themeForm.get('fk_id_usu').setValue(this.user_id)
       this.service.addTheme(this.themeForm.value).subscribe( r =>{
         this.refreshTheme()
       });
@@ -137,17 +160,28 @@ export class CuentaComponent implements OnInit{
     this.telefono=this.authService.getUser.telefono;
     this.empresa=this.authService.getUser.empresa;
     this.descripcion=this.authService.getUser.descripcion;
-    this.PhotoFilePath=API_ROUTES.PhotoUrl.MEDIA+this.authService.getUser.avatar;
+    if(this.authService.getUser.avatar == '' || this.authService.getUser.avatar == null ){
+      this.PhotoFilePath=IMAGES_ROUTES.USER_CONTENT;
+    }else{
+      this.PhotoFilePath=API_ROUTES.MEDIA.DEFAULT+this.authService.getUser.avatar;
+    }
   }
   
   closeClick(){
     this.modal.dismissAll();
+    this.EditCredentUserComp = false;
     this.loadUser();
   }
 
   editClick(contenido: any){
+    this.EditCredentUserComp = true;
     this.estructModal(contenido);
     this.ModalTitle="Editar Credenciales de Acceso";
+  }
+
+  editProfile(){
+    this.router.navigateByUrl(this.routeUpdate);
+    $("html, body").animate({ scrollTop: 0 }, 100);
   }
 
 }

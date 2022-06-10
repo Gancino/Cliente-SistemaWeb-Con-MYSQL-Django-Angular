@@ -3,11 +3,40 @@
 @mixin create-left-nav($name, $theme) { 
     .dsc-#{$name} {
         .dsc-left-nav {
-            grid-column: 1;
-            grid-row: 1/4;
+            position: fixed;
+            width: 260px;
+            left: -260px;
             background: map-get($map: $theme, $key: 'primary');
+            height: 100vh;
+            padding-right: 0.2rem;
+            padding-left: 0;
+            transition: 0.4s ease-in-out;
             &-brand {
-                display: none;
+                height: 60px; //---ojo
+                display: flex;
+                align-items: center;
+                padding: 0.5rem 1rem;
+                border-bottom: map-get($map: $theme, $key: 'border_primary');
+                &__menu {
+                    color: map-get($map: $theme, $key: 'light');
+                    font-size: 25px;
+                    margin-right: 0.5rem;
+                    cursor: pointer;
+                }
+                &__logo {
+                    display: flex;
+                    align-items: center;
+                    > img {
+                        height: 30px;
+                    }
+                    span {
+                        color: map-get($map: $theme, $key: 'light');
+                        letter-spacing: 3px;
+                        font-weight: 700;
+                        font-size: 1.5rem;
+                        text-transform: uppercase;
+                    }
+                }
             }
             &-usr {
                 width: 100%;
@@ -53,62 +82,146 @@
                     padding: 0;
                     margin-bottom: 0;
                     &-link {
-                        width: 100%;
-                        color: map-get($map: $theme, $key: 'light');
                         list-style: none;
-                        font-size: 1.1rem;
-                        padding: 0.25rem 0.3rem;
-                        transition: 0.5s all ease-in-out;
-                        opacity: 0.7;
-                        > span {
-                            margin-left: 0.7rem;
-                        }
-                        &:hover {
-                            background: rgba(255,255,255,0.15);
-                            cursor: pointer;
-                            opacity: 1;
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-
-    @media(max-width: 768px) {
-        .dsc-#{$name} {
-            .dsc-left-nav {
-                position: fixed;
-                width: 250px;
-                min-height: 500px;
-                height: 100vh;
-                &-brand {
-                    display: flex;
-                    align-items: center;
-                    padding: 0.5rem 1rem;
-                    border-bottom: map-get($map: $theme, $key: 'border_primary');
-                    &__menu {
-                        color: map-get($map: $theme, $key: 'light');
-                        font-size: 25px;
-                        margin-right: 0.5rem;
-                        cursor: pointer;
-                    }
-                    &__logo {
-                        display: flex;
-                        align-items: center;
-                        > img {
-                            height: 30px;
-                        }
-                        span {
+                        line-height: 30px;
+                        &-router {
+                            font-size: 1.1rem;
+                            padding: 0.25rem 0.3rem;
+                            transition: 0.5s all ease-in-out;
+                            opacity: 0.7;
                             color: map-get($map: $theme, $key: 'light');
-                            letter-spacing: 3px;
-                            font-weight: 700;
-                            font-size: 1.5rem;
-                            text-transform: uppercase;
+                            text-decoration: none;
+                            font-weight: 500;
+                            display: block;
+                            width: 100%;
+                            position: relative;
+                            &-name {
+                                margin-left: 0.7rem;
+                            }
+                            //Icono para el submenu si esq existe
+                            //icono submenu Investigacion
+                            &-submenuI {
+                                position: absolute;
+                                top: 50%;
+                                right: 15px;
+                                transform: translateY(-50%);
+                                font-size: 22px;
+                                transition: transform 0.4s;
+                            }
+                            //icono submenu Publicaciones
+                            &-submenuP {
+                                position: absolute;
+                                top: 50%;
+                                right: 15px;
+                                transform: translateY(-50%);
+                                font-size: 22px;
+                                transition: transform 0.4s;
+                            }
+                            &:hover {
+                                background: rgba(255,255,255,0.15);
+                                cursor: pointer;
+                                opacity: 1;
+                            }
+                            &-submenuIClass{
+                                transform: translateY(-50%) rotate(180deg);
+                            }
+                            &-submenuPClass{
+                                transform: translateY(-50%) rotate(180deg);
+                            }
                         }
                     }
+                    //------si existe Submenus por cada submenu crear esto
+                    //---Submenu Investigación
+                    &__sublinksI {
+                        padding: 0;
+                        padding-left: 20px;
+                        margin-bottom: 0;
+                        position: static;
+
+                        display: block;
+                        max-height: 0;
+                        overflow: hidden;
+                        transition: max-height 0.7s;
+                        
+                        &-sublink {
+                            list-style: none;
+                            line-height: 20px;
+                            &-subrouter {
+                                font-size: 1.1rem;
+                                padding: 0.25rem 0.3rem;
+                                transition: 0.5s all ease-in-out;
+                                opacity: 0.7;
+                                color: map-get($map: $theme, $key: 'light');
+                                text-decoration: none;
+                                font-weight: 500;
+                                display: block;
+                                width: 100%;
+                                position: relative;
+                                &-subname {
+                                    margin-left: 0.7rem;
+                                }
+                                &:hover {
+                                    background: rgba(255,255,255,0.15);
+                                    cursor: pointer;
+                                    opacity: 1;
+                                }
+                            }
+                        }
+                    }
+                    //-----------------------------------------------
+                    //------------Submenu Publicaciones
+                    &__sublinksP {
+                        padding: 0;
+                        padding-left: 20px;
+                        margin-bottom: 0;
+                        position: static;
+                        
+                        display: block;
+                        max-height: 0;
+                        overflow: hidden;
+                        transition: max-height 0.7s;
+
+                        &-sublink {
+                            list-style: none;
+                            line-height: 20px;
+                            &-subrouter {
+                                font-size: 1.1rem;
+                                padding: 0.25rem 0.3rem;
+                                transition: 0.5s all ease-in-out;
+                                opacity: 0.7;
+                                color: map-get($map: $theme, $key: 'light');
+                                text-decoration: none;
+                                font-weight: 500;
+                                display: block;
+                                width: 100%;
+                                position: relative;
+                                &-subname {
+                                    margin-left: 0.7rem;
+                                }
+                                &:hover {
+                                    background: rgba(255,255,255,0.15);
+                                    cursor: pointer;
+                                    opacity: 1;
+                                }
+                            }
+                        }
+                    }
+                    //------------------------------
                 }
             }
+        }
+        .dsc-left-navClass {
+            left:0;
+            transition: 0.4s ease-in-out;
+        }
+        .dsc-left-nav-opacity {
+            position: fixed;
+            left: 1px;
+            width: 100%;
+            background: black;
+            opacity: 0.4;
+            height: 100vh;
+            z-index: 1;
         }
     }
 }

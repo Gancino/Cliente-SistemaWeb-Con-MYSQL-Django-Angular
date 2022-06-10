@@ -1,18 +1,13 @@
 <h6 class="dsc-footer-text">
-    Creado por Franklin Gancino
+    {{data.MENSAJES.uno}}
 </h6>
 <div class="dsc-footer__socials">
-    <fa-icon [icon]="faYoutube" class="dsc-footer__socials-social" ></fa-icon>
-    <fa-icon [icon]="faFacebook" class="dsc-footer__socials-social" ></fa-icon>
-    <fa-icon [icon]="faTwitter" class="dsc-footer__socials-social" ></fa-icon>
+    <ng-container *ngFor="let iconhref of data.ICONSHREFS">
+        <a [href]="iconhref.href">
+            <fa-icon [icon]="iconhref.icon" class="dsc-footer__socials-social"></fa-icon>
+        </a>
+    </ng-container>
 </div>
 <h6 class="dsc-footer-text">
-    | Todos los derechos reservados
+    {{data.MENSAJES.dos}}
 </h6>
-
-
-<!--
-<div class="dsc-footer">
-    <p>Creado por Franklin Gancino | Todos los derechs reservados</p>
-</div>
--->

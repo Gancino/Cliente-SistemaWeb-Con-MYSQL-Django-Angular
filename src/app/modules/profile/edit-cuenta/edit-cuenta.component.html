@@ -4,19 +4,19 @@
             <div class="perfil-usuario-portada">
                 <div class="perfil-usuario-avatar">
                     <img [src]="PhotoFilePath" alt="img-avatar">
-                    <button type="button" class="boton-avatar" matTooltip="Subir imágen" (click)="abrirInputImg()">
+                    <button type="button" class="button boton-avatar" matTooltip="Subir imágen" (click)="abrirInputImg()">
                         <mat-icon>file_upload</mat-icon>
                     </button>
-                    <input type="file" style="visibility: hidden; width: 0%;" (change)="onChange($event)" id="imgUploadUser">
+                    <input type="file" class="ocultar" (change)="onChange($event)" id="imgUploadUser">
                 </div>
-                <button type="button" class="boton-portada" matTooltip="Regresar al perfil" (click)="regresar()">
+                <button type="button" class="button boton-portada" matTooltip="Regresar al perfil" (click)="regresar()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
             </div>
         </div>
         <div class="perfil-usuario-body">
             <div class="perfil-usuario-bio">
-                <mat-form-field appearance="outline" class="ancho">
+                <mat-form-field appearance="outline">
                     <mat-label>Nombre</mat-label>
                     <mat-icon matPrefix>person</mat-icon>
                     <input type="text" matInput autocomplete="off" 
@@ -29,7 +29,7 @@
                     </mat-error>
                     <mat-icon *ngIf="u.first_name.value!=''" matSuffix class="pointer" (click)="eliminarTexto('first_name')">close</mat-icon>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="ancho">
+                <mat-form-field appearance="outline">
                     <mat-label>Apellido</mat-label>
                     <mat-icon matPrefix>person</mat-icon>
                     <input type="text" matInput autocomplete="off" 
@@ -42,7 +42,7 @@
                     </mat-error>
                     <mat-icon *ngIf="u.last_name.value!=''" matSuffix class="pointer" (click)="eliminarTexto('last_name')">close</mat-icon>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="ancho">
+                <mat-form-field appearance="outline">
                     <mat-label>Rol/Trabajo</mat-label>
                     <mat-icon matPrefix>home_repair_service</mat-icon>
                     <input type="text" matInput autocomplete="off" 
@@ -55,7 +55,7 @@
                     </mat-error>
                     <mat-icon *ngIf="u.work.value!=''" matSuffix class="pointer" (click)="eliminarTexto('work')">close</mat-icon>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="ancho">
+                <mat-form-field appearance="outline">
                     <mat-label>Dirección</mat-label>
                     <mat-icon matPrefix>place</mat-icon>
                     <input type="text" matInput autocomplete="off" 
@@ -68,7 +68,7 @@
                     </mat-error>
                     <mat-icon *ngIf="u.direccion.value!=''" matSuffix class="pointer" (click)="eliminarTexto('direccion')">close</mat-icon>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="ancho">
+                <mat-form-field appearance="outline">
                     <mat-label>Teléfono</mat-label>
                     <mat-icon matPrefix>phone</mat-icon>
                     <input type="text" matInput autocomplete="off" 
@@ -81,7 +81,7 @@
                     </mat-error>
                     <mat-icon *ngIf="u.telefono.value!=''" matSuffix class="pointer" (click)="eliminarTexto('telefono')">close</mat-icon>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="ancho">
+                <mat-form-field appearance="outline">
                     <mat-label>Empresa</mat-label>
                     <mat-icon matPrefix>apartment</mat-icon>
                     <input type="text" matInput autocomplete="off" 
@@ -96,7 +96,7 @@
                 </mat-form-field>
             </div>
             <div class="perfil-usuario-bio">
-                <mat-form-field appearance="outline" class="ancho">
+                <mat-form-field appearance="outline">
                     <mat-label>Descripción</mat-label>
                     <mat-icon matPrefix>description</mat-icon>
                     <textarea matInput #message autocomplete="off" formControlName="descripcion"
@@ -110,8 +110,8 @@
                     <mat-icon *ngIf="u.descripcion.value!=''" matSuffix class="pointer" (click)="eliminarTexto('descripcion')">close</mat-icon>
                     <mat-hint [align]="'end'">{{message.value.length}} / 300</mat-hint>
                 </mat-form-field>
-                <div style="text-align: right; width: 100%; margin-top: 10px;">
-                    <button type="submit" class="button" mat-raised-button color="primary" matTooltip="Guardar cambios">
+                <div class="buttons">
+                    <button type="submit" class="buttonsubmit" mat-raised-button color="primary">
                         <mat-icon>save</mat-icon>Actualizar
                     </button>
                 </div>
@@ -119,116 +119,3 @@
         </div>
     </section>
 </form>
-<!--
-<form [formGroup]="userForm" (ngSubmit)="updateUser()" tabindex="0">
-    <div class="d-flex flex-row bd-highlight mb-3">
-        <div class="form-froup row" style="width: 60%;">
-            <label class="col-sm-2 col-form-label">Nombre:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="first_name"
-                    placeholder="Ingrese sus nombres">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.first_name.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.first_name.value">
-                            <ng-container *ngSwitchCase="''">*El nombre es requerido!</ng-container>
-                            <ng-container *ngSwitchDefault>*El nombre debe tener un maximo de 150 caracteres!</ng-container>
-                    </ng-container>
-                    </small>
-                </div>
-            </div>
-            <label class="col-sm-2 col-form-label">Apellido:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="last_name"
-                    placeholder="Ingrese sus apellidos">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.last_name.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.last_name.value">
-                            <ng-container *ngSwitchCase="''">*El apellido es requerido!</ng-container>
-                            <ng-container *ngSwitchDefault>*El apellido debe tener un maximo de 150 caracteres!</ng-container>
-                    </ng-container>
-                    </small>
-                </div>
-            </div>
-            <label class="col-sm-2 col-form-label">Trabajo:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="work"
-                    placeholder="Ingrese su rol">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.work.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.work.value">
-                            <ng-container *ngSwitchCase="''">*El rol es requerido!</ng-container>
-                            <ng-container *ngSwitchDefault>*El rol debe tener un maximo de 100 caracteres!</ng-container>
-                    </ng-container>
-                    </small>
-                </div>
-            </div>
-            <label class="col-sm-2 col-form-label">Dirección:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="direccion"
-                    placeholder="Ingrese su nueva dirección">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.direccion.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.direccion.value">
-                            <ng-container *ngSwitchCase="''">*La dirección es requerida!</ng-container>
-                            <ng-container *ngSwitchDefault>*La dirección debe tener un máximo de 150 caracteres!</ng-container>
-                        </ng-container>
-                    </small>
-                </div>
-            </div>
-            <label class="col-sm-2 col-form-label">Teléfono:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="telefono"
-                    placeholder="Ingrese su nuevo número telefónico">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.telefono.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.telefono.value">
-                            <ng-container *ngSwitchCase="''">*El número de teléfono es requerido!</ng-container>
-                            <ng-container *ngSwitchDefault>*El teléfono debe tener un máximo de 10 números!</ng-container>
-                        </ng-container>
-                    </small>
-                </div>
-            </div>
-            <label class="col-sm-2 col-form-label">Empresa:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="empresa"
-                    placeholder="Ingrese el nuevo nombre de su empresa">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.empresa.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.empresa.value">
-                            <ng-container *ngSwitchCase="''">*El nombre de la empresa es requerida!</ng-container>
-                            <ng-container *ngSwitchDefault>*El nombre de la empresa debe tener un máximo de 150 caracteres!</ng-container>
-                        </ng-container>
-                    </small>
-                </div>
-            </div>
-
-            <label class="col-sm-2 col-form-label">Descripción:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="descripcion"
-                    placeholder="Ingrese una nueva descripción para su perfil">
-                <div style="text-align:left; margin-top: 10px; margin-bottom: 10px;">
-                    <small class="bg-danger text-light mt-1 px-2 py-1 rounded left" 
-                    *ngIf="(u.descripcion.errors && userSubmitted)">
-                        <ng-container [ngSwitch]="u.descripcion.value">
-                            <ng-container *ngSwitchCase="''">*La descripción es requerida!</ng-container>
-                            <ng-container *ngSwitchDefault>*La descripción debe tener un máximo de 300 caracteres!</ng-container>
-                        </ng-container>
-                    </small>
-                </div>
-            </div>
-        </div>
-        <div class="ml-3 bd-highlight" style=" width: 5%;"></div>
-        <div class="ml-3 bd-highlight" style=" width: 35%;">
-            <img [src]=PhotoFilePath height="250px;" width="385px;">
-            <input type="file" (change)="onChange($event)" class="mt-2"/>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Actualizar</button>
-</form>
--->

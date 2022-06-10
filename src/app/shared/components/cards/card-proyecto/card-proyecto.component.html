@@ -1,0 +1,9 @@
+<div class="dsc-card-proyecto" *ngIf="data" [routerLink]="routeProyectos + '/' + data.id_pro">
+    <div class="dsc-card-proyecto_info">
+        <h2><li>{{data.titulo_pro}}</li></h2>
+        <h4>Fecha: {{data.fecha_pro}}</h4>
+        <h4>Período: {{data.periodo_pro}}</h4>
+        <p>{{data.descripcion_pro}}</p>
+        <p>{{data.responsable_pro}}</p>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
-<form *ngIf="!loading" class="example-form" tabindex="0" [formGroup]="userForm" (ngSubmit)="updateUser()">
-    <mat-form-field appearance="outline" class="ancho" [color]="colorUsernameInput">
+<form *ngIf="!loading" tabindex="0" [formGroup]="userForm" (ngSubmit)="updateUser()">
+    <mat-form-field appearance="outline" [color]="colorUsernameInput">
         <mat-label>Nombre de usuario</mat-label>
         <mat-icon matPrefix>person</mat-icon>
         <input type="text" matInput autocomplete="off" (input)="existUsername()"
@@ -12,12 +12,12 @@
             </ng-container>
         </mat-error>
         <mat-hint [align]="'start'" *ngIf="usernameExist">
-            <ng-container><p style="color: #f44336;">¡El nombre de usuario ingresado ya existe!</p></ng-container>
+            <ng-container><p class="mensaje-error">¡El nombre de usuario ingresado ya existe!</p></ng-container>
         </mat-hint>
         <mat-icon *ngIf="u.username.value!=''" matSuffix class="pointer" (click)="eliminarTexto('username')">close</mat-icon>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="ancho" [color]="colorEmailInput">
+    <mat-form-field appearance="outline" [color]="colorEmailInput">
         <mat-label>Correo electrónico</mat-label>
         <mat-icon matPrefix>mail</mat-icon>
         <input type="text" matInput autocomplete="off" (input)="existEmail()"
@@ -30,12 +30,12 @@
             </ng-container>
         </mat-error>
         <mat-hint [align]="'start'" *ngIf="emailExist">
-            <ng-container><p style="color: #f44336;">¡El correo electrónico ingresado ya existe!</p></ng-container>
+            <ng-container><p class="mensaje-error">¡El correo electrónico ingresado ya existe!</p></ng-container>
         </mat-hint>
         <mat-icon *ngIf="u.email.value!=''" matSuffix class="pointer" (click)="eliminarTexto('email')">close</mat-icon>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="ancho">
+    <mat-form-field appearance="outline">
         <mat-label>Nueva contraseña</mat-label>
         <mat-icon matPrefix>lock</mat-icon>
         <input [type]="typePassword" matInput autocomplete="off"
@@ -46,11 +46,11 @@
                 <ng-container *ngSwitchDefault>*La contraseña debe tener un máximo de 128 caracteres!</ng-container>
             </ng-container>
         </mat-error>
-        <mat-icon matSuffix class="pointer" (click)="metodotypePassword('1')" *ngIf="clickPassword">visibility</mat-icon>
-        <mat-icon matSuffix class="pointer" (click)="metodotypePassword('0')" *ngIf="!clickPassword">visibility_off</mat-icon>
+        <mat-icon matSuffix class="pointer" (click)="metodotypePassword('1')" *ngIf="clickPassword && u.password.value!=''">visibility</mat-icon>
+        <mat-icon matSuffix class="pointer" (click)="metodotypePassword('0')" *ngIf="!clickPassword && u.password.value!=''">visibility_off</mat-icon>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="ancho" [color]="colorConfirmPassword">
+    <mat-form-field appearance="outline" [color]="colorConfirmPassword">
         <mat-label>Confirmar contraseña</mat-label>
         <mat-icon matPrefix>lock</mat-icon>
         <input [type]="typeConfirmPassword" matInput autocomplete="off" (input)="notConfirmPassword()"
@@ -62,14 +62,14 @@
             </ng-container>
         </mat-error>
         <mat-hint [align]="'start'" *ngIf="errorConfirmPassword">
-            <ng-container><p style="color: #f44336;">¡Las contraseñas no coinciden!</p></ng-container>
+            <ng-container><p class="mensaje-error">¡Las contraseñas no coinciden!</p></ng-container>
         </mat-hint>
-        <mat-icon matSuffix class="pointer" (click)="metodotypeConfirmPassword('1')" *ngIf="clickConfirmPassword">visibility</mat-icon>
-        <mat-icon matSuffix class="pointer" (click)="metodotypeConfirmPassword('0')" *ngIf="!clickConfirmPassword">visibility_off</mat-icon>
+        <mat-icon matSuffix class="pointer" (click)="metodotypeConfirmPassword('1')" *ngIf="clickConfirmPassword && u.confirmpassword.value!=''">visibility</mat-icon>
+        <mat-icon matSuffix class="pointer" (click)="metodotypeConfirmPassword('0')" *ngIf="!clickConfirmPassword && u.confirmpassword.value!=''">visibility_off</mat-icon>
     </mat-form-field>
 
-    <div style="text-align: center; margin-top: 10px;">
-        <button type="submit" class="button" mat-raised-button color="primary">
+    <div class="buttons">
+        <button type="submit" class="buttonsubmit" mat-raised-button color="primary">
             <mat-icon>save</mat-icon>Actualizar
         </button>
     </div>

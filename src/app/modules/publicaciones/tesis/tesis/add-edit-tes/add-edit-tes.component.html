@@ -1,0 +1,136 @@
+<div class="col-12">
+    <!--Spinner mientras se envia una peticion al api-->
+    <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+    <!--Formulario-->
+    <form *ngIf="!loading" [formGroup]="tesisForm" (ngSubmit)="addEditTesis()" tabindex="0">
+        <div class="row">
+            <!--Content Inputs-->
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Título-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Título</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el título de la tesis" formControlName="titulo_tes">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(te.titulo_tes.errors && tesisSubmitted)">
+                        <ng-container [ngSwitch]="te.titulo_tes.value">
+                            <ng-container *ngSwitchCase="''">*El título es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="te.titulo_tes.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulo_tes')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Año-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Año</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el año" formControlName="anio_tes">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(te.anio_tes.errors && tesisSubmitted)">
+                        <ng-container [ngSwitch]="te.anio_tes.value">
+                            <ng-container *ngSwitchCase="''">*La año es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 4 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="te.anio_tes.value!=''" matSuffix class="pointer" (click)="eliminarTexto('anio_tes')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Universidad-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Universidad</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese la universidad" formControlName="universidad_tes">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(te.universidad_tes.errors && tesisSubmitted)">
+                        <ng-container [ngSwitch]="te.universidad_tes.value">
+                            <ng-container *ngSwitchCase="''">*La universidad es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 200 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="te.universidad_tes.value!=''" matSuffix class="pointer" (click)="eliminarTexto('universidad_tes')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Select Tipo de Tesis-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Tipo</mat-label>
+                    <!--Select options-->
+                    <mat-select formControlName="tipo_tes" [(value)]="this.tes.tipo_tes">
+                        <!--Options-->
+                        <mat-option *ngFor="let tipoTes of tipoTesis" [value]="tipoTes.id">
+                            {{tipoTes.tipo}}
+                        </mat-option>
+                    </mat-select>
+                    <!--Manejo de errores del select-->
+                    <mat-error *ngIf="(te.tipo_tes.errors && tesisSubmitted)">
+                        <ng-container [ngSwitch]="te.tipo_tes.value">
+                            <ng-container *ngSwitchCase="''">*Seleccionar el tipo!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!--Campo Directores-->
+            <mat-form-field appearance="outline">
+                <!--Label-->
+                <mat-label>Directores</mat-label>
+                <!--Text Area-->
+                <textarea matInput #direct
+                    placeholder="Ingrese los directores" formControlName="directores_tes">
+                </textarea>
+                <!--Manejo de errores del textArea-->
+                <mat-error *ngIf="(te.directores_tes.errors && tesisSubmitted)">
+                    <ng-container [ngSwitch]="te.directores_tes.value">
+                        <ng-container *ngSwitchCase="''">*Este campo es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*Nose admite más de 500 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <!--Permite borrar el texto del campo-->
+                <mat-icon *ngIf="te.directores_tes.value!=''" matSuffix class="pointer" (click)="eliminarTexto('directores_tes')">close</mat-icon>
+                <!--Mostrar la cantidad de caracteres ingresados-->
+                <mat-hint [align]="'end'">{{direct.value.length}} / 500</mat-hint>
+            </mat-form-field>
+            <!--Campo Autores-->
+            <mat-form-field appearance="outline">
+                <!--Label-->
+                <mat-label>Autores</mat-label>
+                <!--Text Area-->
+                <textarea matInput #aut
+                    placeholder="Ingrese los autores" formControlName="autores_tes">
+                </textarea>
+                <!--Manejo de errores del textArea-->
+                <mat-error *ngIf="(te.autores_tes.errors && tesisSubmitted)">
+                    <ng-container [ngSwitch]="te.autores_tes.value">
+                        <ng-container *ngSwitchCase="''">*Este campo es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*Nose admite más de 500 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <!--Permite borrar el texto del campo-->
+                <mat-icon *ngIf="te.autores_tes.value!=''" matSuffix class="pointer" (click)="eliminarTexto('autores_tes')">close</mat-icon>
+                <!--Mostrar la cantidad de caracteres ingresados-->
+                <mat-hint [align]="'end'">{{aut.value.length}} / 500</mat-hint>
+            </mat-form-field>
+        </div>
+        <!--Buttons tipo submit-->
+        <div class="buttons">
+            <!--Button Guardar-->
+            <button type="submit" *ngIf="tes.id_tes==0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <!--Button Editar-->
+            <button type="submit" *ngIf="tes.id_tes!=0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </div>
+    </form>
+</div>

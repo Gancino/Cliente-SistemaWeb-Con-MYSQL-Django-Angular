@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { IMAGES_ROUTES } from '@data/constants/routes';
 
 @Component({
   selector: 'app-skeletonpublic',
   templateUrl: './skeletonpublic.component.html',
   styleUrls: ['./skeletonpublic.component.scss']
 })
-export class SkeletonpublicComponent implements OnInit {
+export class SkeletonpublicComponent implements AfterViewInit {
 
-  constructor() { }
+  public loader!: string;
+  public isLoader!: boolean;
 
-  ngOnInit(): void {
+  constructor() { 
+    this.loader = IMAGES_ROUTES.LOADER;
+    this.isLoader = true;
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.isLoader = false;
+    }, 1000);
   }
 
 }

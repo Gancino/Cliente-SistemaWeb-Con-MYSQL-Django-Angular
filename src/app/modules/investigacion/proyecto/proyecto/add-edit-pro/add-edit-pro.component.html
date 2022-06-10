@@ -1,0 +1,157 @@
+<div class="col-12">
+    <!--Spinner mientras se envia una peticion al api-->
+    <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+    <!--Formulario-->
+    <form *ngIf="!loading" [formGroup]="proyectoForm" (ngSubmit)="addEditProyecto()" tabindex="0">
+        <div class="row">
+            <!--Content Inputs-->
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Título-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Título</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el título del proyecto" formControlName="titulo_pro">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(pr.titulo_pro.errors && proyectoSubmitted)">
+                        <ng-container [ngSwitch]="pr.titulo_pro.value">
+                            <ng-container *ngSwitchCase="''">*El título es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="pr.titulo_pro.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulo_pro')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Responsable-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Responsable</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el responsable del proyecto" formControlName="responsable_pro">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(pr.responsable_pro.errors && proyectoSubmitted)">
+                        <ng-container [ngSwitch]="pr.responsable_pro.value">
+                            <ng-container *ngSwitchCase="''">*El nombre del responsable es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="pr.responsable_pro.value!=''" matSuffix class="pointer" (click)="eliminarTexto('responsable_pro')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Fecha-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Fecha</mat-label>
+                    <!--Input tipo Date-->
+                    <input type="date" matInput formControlName="fecha_pro">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(pr.fecha_pro.errors && proyectoSubmitted)">
+                        <ng-container [ngSwitch]="pr.fecha_pro.value">
+                            <ng-container *ngSwitchCase="''">*La fecha es requerida!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <!--Campo Período-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Período</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el período del proyecto" formControlName="periodo_pro">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(pr.periodo_pro.errors && proyectoSubmitted)">
+                        <ng-container [ngSwitch]="pr.periodo_pro.value">
+                            <ng-container *ngSwitchCase="''">*El período es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 50 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="pr.periodo_pro.value!=''" matSuffix class="pointer" (click)="eliminarTexto('periodo_pro')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <!--Campo Investigadores-->
+            <mat-form-field appearance="outline">
+                <!--Label-->
+                <mat-label>Investigadores</mat-label>
+                <!--Text Area-->
+                <textarea matInput #inves 
+                    placeholder="Ingrese los investigadored del proyecto" formControlName="investigadores_pro">
+                </textarea>
+                <!--Manejo de errores del textArea-->
+                <mat-error *ngIf="(pr.investigadores_pro.errors && proyectoSubmitted)">
+                    <ng-container [ngSwitch]="pr.investigadores_pro.value">
+                        <ng-container *ngSwitchCase="''">*Este campo es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*Nose admite más de 500 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <!--Permite borrar el texto del campo-->
+                <mat-icon *ngIf="pr.investigadores_pro.value!=''" matSuffix class="pointer" (click)="eliminarTexto('investigadores_pro')">close</mat-icon>
+                <!--Mostrar la cantidad de caracteres ingresados-->
+                <mat-hint [align]="'end'">{{inves.value.length}} / 500</mat-hint>
+            </mat-form-field>
+            <!--Campo Descripción-->
+            <mat-form-field appearance="outline">
+                <!--Label-->
+                <mat-label>Descripción</mat-label>
+                <!--Text Area-->
+                <textarea matInput #desc
+                    placeholder="Ingrese la descripción" formControlName="descripcion_pro">
+                </textarea>
+                <!--Manejo de errores del textArea-->
+                <mat-error *ngIf="(pr.descripcion_pro.errors && proyectoSubmitted)">
+                    <ng-container [ngSwitch]="pr.descripcion_pro.value">
+                        <ng-container *ngSwitchCase="''">*La descripción es requerida!</ng-container>
+                        <ng-container *ngSwitchDefault>*Nose admite más de 500 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <!--Permite borrar el texto del campo-->
+                <mat-icon *ngIf="pr.descripcion_pro.value!=''" matSuffix class="pointer" (click)="eliminarTexto('descripcion_pro')">close</mat-icon>
+                <!--Mostrar la cantidad de caracteres ingresados-->
+                <mat-hint [align]="'end'">{{desc.value.length}} / 500</mat-hint>
+            </mat-form-field>
+            <!--Content Files-->
+            <div *ngIf="subirArchivos">
+                <mat-card>
+                    <mat-card-title>Archivos</mat-card-title>
+                    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+                    <mat-card-content>
+                        <div class="row">
+                            <ng-container *ngIf="archivosList">
+                                <app-card-file [data]="archivo" *ngFor="let archivo of archivosList;" class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2" ></app-card-file>
+                            </ng-container>
+                        </div>
+                    </mat-card-content>
+                    <mat-divider inset></mat-divider>
+                    <mat-card-actions>
+                        <button mat-button type="button" (click)="abrirInputFil()" [disabled]="loadingFil">
+                            <mat-icon>file_upload</mat-icon>Nuevo
+                        </button>
+                        <!--Input tipo file-->
+                        <input type="file" class="ocultar" (change)="onChangeFil($event)" id="fileUploadProyecto">
+                    </mat-card-actions>
+                    
+                    <mat-card-footer *ngIf="loadingFil">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </mat-card-footer>
+                </mat-card>
+            </div>
+        </div>
+        <!--Buttons tipo submit-->
+        <div class="buttons">
+            <!--Button Guardar-->
+            <button type="submit" *ngIf="pro.id_pro==0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <!--Button Editar-->
+            <button type="submit" *ngIf="pro.id_pro!=0" class="buttonsubmit" 
+                mat-raised-button color="primary" [disabled]="loadingFil">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </div>
+    </form>
+</div>

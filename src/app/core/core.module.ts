@@ -23,4 +23,5 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     }
   ]
 })
+
 export class CoreModule { }

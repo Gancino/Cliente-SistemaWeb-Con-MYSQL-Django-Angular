@@ -1,0 +1,88 @@
+<div class="col-12">
+    <!--Spinner mientras se envia una peticion al api-->
+    <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+    <!--Formulario-->
+    <form *ngIf="!loading" [formGroup]="carouselForm" (ngSubmit)="addEditCarousel()" tabindex="0">
+        <div class="row">
+            <!--Content Imágen-->
+            <div class="col-12 col-md-6 col-xl-3 mb-4 text-center mostrar-imagen">
+                <!--Imágen-->
+                <img class="imagen" [src]="PhotoFilePath" alt="imágen">
+                <!--Content subir imágen-->
+                <div class="subir-imagen">
+                    <!--Button para subir una imágen-->
+                    <button type="button" class="ancho button" mat-raised-button color="primary" (click)="abrirInputImg()">
+                        <mat-icon>file_upload</mat-icon>{{estadoImg}}
+                    </button>
+                    <!--Input tipo file-->
+                    <input type="file" class="ocultar" (change)="onChangeImg($event)" id="imgUploadCarousel">
+                </div>
+            </div>
+            <!--Content inputs al costado de la imágen-->
+            <div class="col-12 col-md-6 col-xl-9 pl-4 mostrar-content">
+                <!--Campo Título principal-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Primer Título</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el primer título" formControlName="titulopr_car">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(c.titulopr_car.errors && carouselSubmitted)">
+                        <ng-container [ngSwitch]="c.titulopr_car.value">
+                            <ng-container *ngSwitchCase="''">*El primer título es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El primer título debe tener un máximo de 50 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="c.titulopr_car.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulopr_car')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Título secundario-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Segundo Título</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el segundo título" formControlName="titulosec_car">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(c.titulosec_car.errors && carouselSubmitted)">
+                        <ng-container [ngSwitch]="c.titulosec_car.value">
+                            <ng-container *ngSwitchCase="''">*El segundo título es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El segundo título debe tener un máximo de 50 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="c.titulosec_car.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulosec_car')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Subtítulo-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Subtítulo</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el subtítulo" formControlName="subtitulo_car">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(c.subtitulo_car.errors && carouselSubmitted)">
+                        <ng-container [ngSwitch]="c.subtitulo_car.value">
+                            <ng-container *ngSwitchCase="''">*El subtítulo es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*El subtítulo debe tener un máximo de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="c.subtitulo_car.value!=''" matSuffix class="pointer" (click)="eliminarTexto('subtitulo_car')">close</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <!--Buttons tipo submit-->
+        <div class="buttons">
+            <!--Button Guardar-->
+            <button type="submit" *ngIf="car.id_car==0" class="buttonsubmit" mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <!--Button Editar-->
+            <button type="submit" *ngIf="car.id_car!=0" class="buttonsubmit" mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </div>
+    </form>
+</div>

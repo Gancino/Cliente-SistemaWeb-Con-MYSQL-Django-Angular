@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@data/services/api/auth.service';
 
@@ -7,16 +7,25 @@ import { AuthService } from '@data/services/api/auth.service';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnDestroy {
 
-  public loginSubmitted;
-  public loginForm: FormGroup;
+  public loginSubmitted!: boolean;
+  public loginForm!: FormGroup;
+  public errormensajeApi!: boolean;
+  public loadingLogin!: boolean;
+  public typePassword!: string;
+  public clickPassword!: boolean;
+  public counter: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService
   ){
     this.loginSubmitted = false;
+    this.errormensajeApi = false;
+    this.loadingLogin = false;
+    this.typePassword='password';
+    this.clickPassword=true;
     this.loginForm = this.formBuilder.group({
       username: [
         '', 
@@ -34,29 +43,54 @@ export class LoginFormComponent {
       ]
     });
   }
+
   ngOnInit(): void {
     //return this.loginForm.get('username').setValue(this.authService.getUser.email)
   }
 
- 
+  ngOnDestroy(): void {
+    clearInterval(this.counter);
+  }
+
   get f(){
     return this.loginForm.controls;
   }
 
   authenticate(){
     this.loginSubmitted = true;
+    this.errormensajeApi = false;
+    clearInterval(this.counter);
     if (!this.loginForm.valid)
     {
       return;
     }
+    this.loadingLogin = true;
     //console.log('Authenticated', this.loginForm.value);
     this.authService.login(this.loginForm.value).subscribe( r => {
       //Show Errors
       //console.log(r);
-      if(r.error){
-        alert(r.msg.toString())
-      }
+      setTimeout(() => {
+        this.loadingLogin = false;
+        if(r.error){
+          this.errormensajeApi = true;
+          this.counter = setInterval(() => this.errormensajeApi = false, 10000);
+        }
+      }, 500);
     });
+  }
+
+  eliminarTexto(campo: string){
+    this.loginForm.get(campo).setValue('');
+  }
+
+  metodotypePassword(cond:string){
+    if(cond==='1'){
+      this.typePassword='text';
+      this.clickPassword=false;
+    }else{
+      this.typePassword='password';
+      this.clickPassword=true;
+    }
   }
 
 }

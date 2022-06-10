@@ -1,3 +1,37 @@
-<div class="dsc-footer">
+<!--
+<div class="dsc-footer container-fluid">
     <p>Creado por Franklin Gancino | Todos los derechos reservados</p>
 </div>
+-->
+
+<footer class="footer">
+    <section class="footer__container container">
+        <nav class="nav nav--footer">
+            <h2 class="footer__title">Róbotica e Inteligencia Artificial.</h2>
+            <ul class="nav__link nav__link--footer">
+                <ng-container *ngFor="let route of data.ROUTER">
+                    <li class="nav__items">
+                        <a [routerLink]="route.router" (click)="route.method()" class="nav__links">
+                            <fa-icon [icon]="route.icon"></fa-icon>{{route.txt}}
+                        </a>
+                    </li>
+                </ng-container>
+            </ul>
+        </nav>
+        <form class="footer__form">
+            <h2 class="footer__newsletter">Danos tu opinión sobre este sitio.</h2>
+            <div class="footer__inputs">
+                <input type="text" placeholder="Ingrese su opinión" class="footer__input">
+                <input type="submit" value="Enviar" class="footer__submit">
+            </div>
+        </form>
+    </section>
+    <section class="footer__copy container">
+        <div class="footer__social">
+            <ng-container *ngFor="let social of data.SOCIALS">
+                <a [href]="social.href" class="footer__icons"><img [src]="social.icon" [alt]="social.alt" class="footer__img"></a>
+            </ng-container>
+        </div>
+        <h3 class="footer__copyright">Derechos reservados &copy; Franklin Gancino</h3>
+    </section>
+</footer>

@@ -1,6 +1,9 @@
-<section class="dsc-{{$theme}} {{showLeftNav ? 'dsc-main-container': 'dsc-main-container-full'}}">
+<section class="dsc-{{$theme}} dsc-main-container-full">
     <app-header class="dsc-header" (showMenu)="showMenu()"></app-header>
-    <app-left-nav class="dsc-left-nav" *ngIf="showLeftNav" (showMenu)="showMenu()"></app-left-nav>
+    <div class="row">
+        <div class="dsc-left-nav-opacity" *ngIf="menu"></div>
+        <app-left-nav class="dsc-left-nav" (showMenu)="showMenu()" [class.dsc-left-navClass]="menu" [existMenu]="menu" [id]="idAppLeftNav"></app-left-nav>
+    </div>
     <main class="dsc-main-content">
         <router-outlet></router-outlet>
     </main>
@@ -8,14 +11,6 @@
 </section>
 <ng-container *ngIf="isLoader">
     <div class="dsc-loader">
-        <img [src]="loader" alt="">
+        <img [src]="loader" alt="loader">
     </div>
 </ng-container>
-
-<!--
-<app-navigation></app-navigation>
-<div class="dsc-skeleton-content">
-    <router-outlet></router-outlet>
-</div>
-<app-footer></app-footer>
--->

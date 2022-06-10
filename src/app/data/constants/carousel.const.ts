@@ -1,53 +1,43 @@
 import { ICarouselItem } from "@shared/components/carousel/Icarousel-item.metadata";
 export const CAROUSEL_DATA_ITEMS: ICarouselItem[] = [
     {
-        id: 1,
-        title: {
-            first: 'Titulo',
-            second: 'Principal'
-        },
-        subtitle: 'Esto es una gran descripcion',
+        id_car: 1,
+        titulopr_car: 'Titulo',
+        titulosec_car: 'Principal',
+        subtitulo_car: 'Esto es una gran descripcion',
         link: '/',
-        image: 'assets/images/1.jpg'
+        imagen_car: 'assets/images/1.jpg'
     },
     {
-        id: 2,
-        title: {
-            first: 'Titulo',
-            second: 'Segundo'
-        },
-        subtitle: 'Esto es una gran descripcion',
+        id_car: 2,
+        titulopr_car: 'Titulo',
+        titulosec_car: 'Segundo',
+        subtitulo_car: 'Esto es una gran descripcion',
         link: '/',
-        image: 'assets/images/2.jpg'
+        imagen_car: 'assets/images/2.jpg'
     },
     {
-        id: 3,
-        title: {
-            first: 'Titulo',
-            second: 'Tercero'
-        },
-        subtitle: 'Esto es una gran descripcion',
+        id_car: 3,
+        titulopr_car: 'Titulo',
+        titulosec_car: 'Tercero',
+        subtitulo_car: 'Esto es una gran descripcion',
         link: '/',
-        image: 'assets/images/3.jpg'
+        imagen_car: 'assets/images/3.jpg'
     },
     {
-        id: 4,
-        title: {
-            first: 'Titulo',
-            second: 'Cuarto'
-        },
-        subtitle: 'Esto es una gran descripcion',
+        id_car: 4,
+        titulopr_car: 'Titulo',
+        titulosec_car: 'Cuarto',
+        subtitulo_car: 'Esto es una gran descripcion',
         link: '/',
-        image: 'assets/images/4.jpg'
+        imagen_car: 'assets/images/4.jpg'
     },
     {
-        id: 5,
-        title: {
-            first: 'Titulo',
-            second: 'Quinto'
-        },
-        subtitle: 'Esto es una gran descripcion',
+        id_car: 5,
+        titulopr_car: 'Titulo',
+        titulosec_car: 'Quinto',
+        subtitulo_car: 'Esto es una gran descripcion',
         link: '/',
-        image: 'assets/images/5.jpg'
+        imagen_car: 'assets/images/5.jpg'
     }
 ]

@@ -1,18 +1,29 @@
 import { ERRORS_VALIDATIONS } from "@data/constants";
+import { CONST_GLOBAL } from "@data/constants/global.const";
+import { ICONS } from "@data/constants/icons/icons.const";
+import { INTERNAL_ROUTES } from "@data/constants/routes";
 import { IMAGES_ROUTES } from "@data/constants/routes/images.routes";
 import { ENUM_VALIDATION_OPTIONS } from "@data/enum";
 import { IField } from "@data/interfaces";
-import { faFacebookSquare, faInstagramSquare, faTwitterSquare } from "@fortawesome/free-brands-svg-icons";
 import { ValidationsService } from "@shared/services/validations/validations.service";
+declare var $: any;
 
 export const CONST_LOGIN_PAGE: {
     FORM: {
-        email: IField;
-        password: IField;
+        email: IField,
+        password: IField,
     },
-    ICONS: any[];
-    STYLE_BACKGROUND: any;
-    LOGO: string;
+    ICONSSOCIALS: {
+        icon: any,
+        href: string
+    } [],
+    STYLE_BACKGROUND: any,
+    LOGO: string,
+    ROUTE_INICIO: {txt: string, route: string, method: () => any},
+    HREFS: {
+        txt: string,
+        href: string
+    } []
 } = {
     FORM: {
         email: {
@@ -36,13 +47,43 @@ export const CONST_LOGIN_PAGE: {
             }
         }
     },
-    ICONS: [
-        faFacebookSquare,
-        faTwitterSquare,
-        faInstagramSquare
+    ICONSSOCIALS: [
+        {
+            icon: ICONS.faFacebookSquare,
+            href: CONST_GLOBAL.FACEBOOK
+        },
+        {
+            icon: ICONS.faTwitterSquare,
+            href: CONST_GLOBAL.TWITTER
+        },
+        {
+            icon: ICONS.faInstagramSquare,
+            href: CONST_GLOBAL.INSTAGRAM
+        }
     ],
     STYLE_BACKGROUND: {
         backgroundImage: `url(${IMAGES_ROUTES.BACKGROUND_LOGIN})`
     },
-    LOGO: IMAGES_ROUTES.LOGO
+    LOGO: IMAGES_ROUTES.LOGO,
+    ROUTE_INICIO: { 
+        txt: CONST_GLOBAL.MENUTXT.inicio, 
+        route: INTERNAL_ROUTES.PUBLIC_HOME,
+        method: () => {
+            $("html, body").animate({ scrollTop: 0 }, 100);
+        }
+    },
+    HREFS: [
+        {
+            txt: CONST_GLOBAL.MENUTXT.acercade,
+            href: CONST_GLOBAL.ACERCA_DE
+        },
+        {
+            txt: CONST_GLOBAL.MENUTXT.contactanos,
+            href: CONST_GLOBAL.CONTACTANOS
+        },
+        {
+            txt: CONST_GLOBAL.MENUTXT.blog,
+            href: CONST_GLOBAL.BLOG
+        }
+    ]
 }

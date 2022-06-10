@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { CONST_FOOTER_PUBLIC_PAGE } from '@data/constants';
 
 @Component({
   selector: 'app-footerpublic',
   templateUrl: './footerpublic.component.html',
   styleUrls: ['./footerpublic.component.scss']
 })
-export class FooterpublicComponent implements OnInit {
+export class FooterpublicComponent{
 
-  constructor() { }
+  public data!: any;
 
-  ngOnInit(): void {
+  constructor() { 
+    this.data = CONST_FOOTER_PUBLIC_PAGE;
   }
 
 }

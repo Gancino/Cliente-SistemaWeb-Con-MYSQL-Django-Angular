@@ -1,0 +1,14 @@
+.contenedor{
+    width: 100%;
+    height: calc(100vh - 60px);//si hay mas opciones cambiar aqui tambien
+    overflow: auto;
+    //padding-right: 0.2rem;
+}   
+.contenedor::-webkit-scrollbar{
+    width: 7px;
+}
+.contenedor:hover::-webkit-scrollbar-thumb{
+    background: #757574;
+    border-radius: 10px;
+}
+    

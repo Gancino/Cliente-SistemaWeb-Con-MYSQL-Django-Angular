@@ -4,6 +4,8 @@
     <!--------------------Field Email-------------------------->
     <div class="login-form-input">
         <label> Email*:</label>
+        <mat-icon class="icon-left">email</mat-icon>
+        <mat-icon class="icon-right" *ngIf="f.username.value!=''" (click)="eliminarTexto('username')">close</mat-icon>
         <input type="email" placeholder="Email" formControlName="username">
         <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
         *ngIf="(f.username.errors && loginSubmitted)">
@@ -16,7 +18,10 @@
     <!--------------------Field Password-------------------------->
     <div class="login-form-input">
         <label> Contraseña*:</label>
-        <input type="password" placeholder="Contraseña" formControlName="password">
+        <mat-icon class="icon-left">lock</mat-icon>
+        <mat-icon class="icon-right" (click)="metodotypePassword('1')" *ngIf="clickPassword && f.password.value!=''">visibility</mat-icon>
+        <mat-icon class="icon-right" (click)="metodotypePassword('0')" *ngIf="!clickPassword && f.password.value!=''">visibility_off</mat-icon>
+        <input [type]="typePassword" placeholder="Contraseña" formControlName="password">
         <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
         *ngIf="(f.password.errors && loginSubmitted)">
             <ng-container [ngSwitch]="f.password.value">
@@ -24,11 +29,18 @@
                 <ng-container *ngSwitchDefault>*El password debe tener un máximo de 10 caracteres!</ng-container>
             </ng-container>
         </small>
+        <small class="bg-danger text-light mt-1 px-2 py-1 rounded" 
+        *ngIf="(errormensajeApi)">
+            <ng-container>¡No puede iniciar sesión con las credenciales proporcionadas.!</ng-container>
+        </small>
     </div>
     <small class="small">Olvidé contraseña</small>
     <div class="login-form-buttons">
         <!--<button class="login-form-buttons__signup">Registrarse</button>-->
-        <button type="submit" class="login-form-buttons__signin">Iniciar sesión</button>
+        <button type="submit" *ngIf="!loadingLogin" class="login-form-buttons__signin">Iniciar sesión</button>
+        <div *ngIf="loadingLogin" class="login-form-buttons__spinner">
+            <mat-spinner diameter="35" class="login-form-buttons__spinner-login"></mat-spinner>
+        </div>
     </div>
 </form>
 

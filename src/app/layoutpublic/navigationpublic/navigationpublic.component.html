@@ -1,11 +1,91 @@
-<div class="dsc-navigation">
-    <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/apple-256.png" alt="" height="30">
-    <div class="button">
-        <button class="btn btn-primary" routerLink="/public/home">Inicio</button>
-        <button class="btn btn-primary" routerLink="/public/proyectos">Proyectos</button>
-        <button class="btn btn-primary" routerLink="/public/noticias">Noticias</button>
-        <button class="btn btn-primary" routerLink="/public/miembros">Miembros</button>
-        <button class="btn btn-primary" routerLink="/public/nosotros">Nosotros</button>
-        <button class="btn btn-primary" routerLink="/auth/login">Administrar</button>
+<header>
+    <div class="containernav logo-nav-container">
+        <div class="logo">
+            <img [src]="data.LOGO" alt="logo" height="30">
+        </div>
+        <div class="menu_bar">
+            <a class="btn-menu">
+                <span class="menu_icon" [class.menu_icon_Class]="data.menu" [id]="data.IDICONMENU">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+                <!--MENU-->
+            </a>
+        </div>
+        <nav [id]="data.IDNAVMENU">
+            <ul>
+                <ng-container *ngFor="let link of menus">
+                    <li>
+                        <a (click)="link.method ? link.method() : null">
+                            <fa-icon [icon]="link.icon"></fa-icon>
+                            {{link.name}}
+                            <span *ngIf="link.iconsubLinks && link.name === data.SUBMENU_INVESTIGACION"
+                                class="submenuI">
+                                <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                            </span>
+                            <span *ngIf="link.iconsubLinks && link.name === data.SUBMENU_INVESTIGACION"
+                                class="submenuMI" [class.submenuMIClass]="data.menu_investigacion">
+                                <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                            </span>
+    
+                            <span *ngIf="link.iconsubLinks && link.name === data.SUBMENU_PUBLICACIONES"
+                                class="submenuP">
+                                <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                            </span>
+                            <span *ngIf="link.iconsubLinks && link.name === data.SUBMENU_PUBLICACIONES"
+                                class="submenuMP" [class.submenuMPClass]="data.menu_publicaciones">
+                                <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                            </span>
+    
+                            <span *ngIf="link.iconsubLinks&& link.name === data.SUBMENU_MIEMBROS"
+                                class="submenuM">
+                                <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                            </span>
+                            <span *ngIf="link.iconsubLinks&& link.name === data.SUBMENU_MIEMBROS"
+                                class="submenuMM" [class.submenuMMClass]="data.menu_miembros">
+                                <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                            </span>
+                        </a>
+                        <!-----------------Submenu Investigacion------------------->
+                        <ul *ngIf="link.iconsubLinks && link.name === data.SUBMENU_INVESTIGACION"
+                            class="investigacionClass">
+                            <ng-container *ngFor="let sublink of link.sublinks">
+                                <li>
+                                    <a (click)="sublink.submethod ? sublink.submethod() : null">
+                                        <fa-icon [icon]="sublink.subicon"></fa-icon>
+                                        <span>{{sublink.subname}}</span>
+                                    </a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                        <!-----------------Submenu Publicaciones------------------->
+                        <ul *ngIf="link.iconsubLinks && link.name === data.SUBMENU_PUBLICACIONES"
+                            class="publicacionesClass">
+                            <ng-container *ngFor="let sublink of link.sublinks">
+                                <li>
+                                    <a (click)="sublink.submethod ? sublink.submethod() : null">
+                                        <fa-icon [icon]="sublink.subicon"></fa-icon>
+                                        <span>{{sublink.subname}}</span>
+                                    </a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                        <!-----------------Submenu Miembros------------------->
+                        <ul *ngIf="link.iconsubLinks && link.name === data.SUBMENU_MIEMBROS"
+                            class="miembrosClass">
+                            <ng-container *ngFor="let sublink of link.sublinks">
+                                <li>
+                                    <a (click)="sublink.submethod ? sublink.submethod() : null">
+                                        <fa-icon [icon]="sublink.subicon"></fa-icon>
+                                        <span>{{sublink.subname}}</span>
+                                    </a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </li>
+                </ng-container>
+            </ul>
+        </nav>
     </div>
-</div> 
+</header>

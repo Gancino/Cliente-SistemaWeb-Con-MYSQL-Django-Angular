@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { max, min } from 'rxjs/operators';
 
 @Component({
   selector: 'app-card-loader',
@@ -9,19 +8,25 @@ import { max, min } from 'rxjs/operators';
 export class CardLoaderComponent implements OnInit {
 
   //Input styles
-  @Input() imageSize = 75;
-  @Input() barHeight = 15;
-  @Input() bars = 1;
+  @Input() imageSize!: number;
+  @Input() barHeight!: number; 
+  @Input() bars!: number;
 
   //Final properties
-  public totalBars: {width: string}[] = []; 
-  public finalStyleImage = {};
-  public finalHeightBar = '0';
+  public totalBars!: {width: string}[]; 
+  public finalStyleImage!: any;
+  public finalHeightBar!: string;
 
-  constructor() { }
+  constructor() { 
+    this.imageSize = 75;
+    this.barHeight = 15;
+    this.bars  = 1;
+    this.totalBars = [];
+    this.finalStyleImage = {};
+    this.finalHeightBar  = '0';
+  }
 
   ngOnInit() {
-
     //Calculate total bars
     for (let i=0; i<this.bars; i++){
       //Generar un numero aleatorio entero

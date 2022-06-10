@@ -1,0 +1,117 @@
+<div class="col-12">
+    <!--Spinner mientras se envia una peticion al api-->
+    <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+    <!--Formulario-->
+    <form *ngIf="!loading" [formGroup]="libroForm" (ngSubmit)="addEditLibro()" tabindex="0">
+        <div class="row">
+            <!--Content Inputs-->
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Título-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Título</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el título del libro" formControlName="titulo_lib">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(li.titulo_lib.errors && libroSubmitted)">
+                        <ng-container [ngSwitch]="li.titulo_lib.value">
+                            <ng-container *ngSwitchCase="''">*El título es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="li.titulo_lib.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulo_lib')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Desc-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Desc</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese una desc" formControlName="desc_lib">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(li.desc_lib.errors && libroSubmitted)">
+                        <ng-container [ngSwitch]="li.desc_lib.value">
+                            <ng-container *ngSwitchCase="''">*La desc es requerida!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="li.desc_lib.value!=''" matSuffix class="pointer" (click)="eliminarTexto('desc_lib')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo ISSN-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>ISSN</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese un ISSN" formControlName="issn_lib">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(li.issn_lib.errors && libroSubmitted)">
+                        <ng-container [ngSwitch]="li.issn_lib.value">
+                            <ng-container *ngSwitchCase="''">*El ISSN es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="li.issn_lib.value!=''" matSuffix class="pointer" (click)="eliminarTexto('issn_lib')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Select Tipo de Libro-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Tipo</mat-label>
+                    <!--Select options-->
+                    <mat-select formControlName="tipo_lib" [(value)]="this.lib.tipo_lib">
+                        <!--Options-->
+                        <mat-option *ngFor="let tipoLib of tipoLibro" [value]="tipoLib.id">
+                            {{tipoLib.tipo}}
+                        </mat-option>
+                    </mat-select>
+                    <!--Manejo de errores del select-->
+                    <mat-error *ngIf="(li.tipo_lib.errors && libroSubmitted)">
+                        <ng-container [ngSwitch]="li.tipo_lib.value">
+                            <ng-container *ngSwitchCase="''">*Seleccionar el tipo!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!--Campo Autores-->
+            <mat-form-field appearance="outline">
+                <!--Label-->
+                <mat-label>Autores</mat-label>
+                <!--Text Area-->
+                <textarea matInput #autores
+                    placeholder="Ingrese los autores" formControlName="autores_lib">
+                </textarea>
+                <!--Manejo de errores del textArea-->
+                <mat-error *ngIf="(li.autores_lib.errors && libroSubmitted)">
+                    <ng-container [ngSwitch]="li.autores_lib.value">
+                        <ng-container *ngSwitchCase="''">*Este campo es requerido!</ng-container>
+                        <ng-container *ngSwitchDefault>*Nose admite más de 500 caracteres!</ng-container>
+                    </ng-container>
+                </mat-error>
+                <!--Permite borrar el texto del campo-->
+                <mat-icon *ngIf="li.autores_lib.value!=''" matSuffix class="pointer" (click)="eliminarTexto('autores_lib')">close</mat-icon>
+                <!--Mostrar la cantidad de caracteres ingresados-->
+                <mat-hint [align]="'end'">{{autores.value.length}} / 500</mat-hint>
+            </mat-form-field>
+        </div>
+        <!--Buttons tipo submit-->
+        <div class="buttons">
+            <!--Button Guardar-->
+            <button type="submit" *ngIf="lib.id_lib==0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <!--Button Editar-->
+            <button type="submit" *ngIf="lib.id_lib!=0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </div>
+    </form>
+</div>
+

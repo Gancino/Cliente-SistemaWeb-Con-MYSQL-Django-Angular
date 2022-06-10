@@ -1,6 +1,6 @@
 import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadata';
 
-export const USERS_DATA: ICardUser[] = [
+export const USERS_DATA: any[] = [
   {
     id: 1,
     name: 'Ivan Larios',

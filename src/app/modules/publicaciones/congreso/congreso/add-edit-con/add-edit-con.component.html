@@ -1,0 +1,95 @@
+<div class="col-12">
+    <!--Spinner mientras se envia una peticion al api-->
+    <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+    <!--Formulario-->
+    <form *ngIf="!loading" [formGroup]="congresoForm" (ngSubmit)="addEditCongreso()" tabindex="0">
+        <div class="row">
+            <!--Content Inputs-->
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Título-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Título</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el título del congreso" formControlName="titulo_con">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(co.titulo_con.errors && congresoSubmitted)">
+                        <ng-container [ngSwitch]="co.titulo_con.value">
+                            <ng-container *ngSwitchCase="''">*El título es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="co.titulo_con.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulo_con')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Autor-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Autor</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el autor" formControlName="autor_con">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(co.autor_con.errors && congresoSubmitted)">
+                        <ng-container [ngSwitch]="co.autor_con.value">
+                            <ng-container *ngSwitchCase="''">*El autor es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 100 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="co.autor_con.value!=''" matSuffix class="pointer" (click)="eliminarTexto('autor_con')">close</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-xl-6">
+                <!--Campo Año-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Año</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el año" formControlName="anio_con">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(co.anio_con.errors && congresoSubmitted)">
+                        <ng-container [ngSwitch]="co.anio_con.value">
+                            <ng-container *ngSwitchCase="''">*El año es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 4 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="co.anio_con.value!=''" matSuffix class="pointer" (click)="eliminarTexto('anio_con')">close</mat-icon>
+                </mat-form-field>
+                <!--Campo Número de Congreso-->
+                <mat-form-field appearance="outline">
+                    <!--Label-->
+                    <mat-label>Número de Congreso</mat-label>
+                    <!--Input tipo text-->
+                    <input type="text" matInput autocomplete="off" 
+                        placeholder="Ingrese el número de congreso" formControlName="numero_con">
+                    <!--Manejo de errores del input-->
+                    <mat-error *ngIf="(co.numero_con.errors && congresoSubmitted)">
+                        <ng-container [ngSwitch]="co.numero_con.value">
+                            <ng-container *ngSwitchCase="''">*Este campo es requerido!</ng-container>
+                            <ng-container *ngSwitchDefault>*No se admite más de 5 caracteres!</ng-container>
+                        </ng-container>
+                    </mat-error>
+                    <!--Permite borrar el texto del campo-->
+                    <mat-icon *ngIf="co.numero_con.value!=''" matSuffix class="pointer" (click)="eliminarTexto('numero_con')">close</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <!--Buttons tipo submit-->
+        <div class="buttons">
+            <!--Button Guardar-->
+            <button type="submit" *ngIf="con.id_con==0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Guardar
+            </button>
+            <!--Button Editar-->
+            <button type="submit" *ngIf="con.id_con!=0" class="buttonsubmit" 
+                mat-raised-button color="primary">
+                <mat-icon>save</mat-icon>Actualizar
+            </button>
+        </div>
+    </form>
+</div>

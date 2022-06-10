@@ -41,8 +41,12 @@ $secondary: #655C5C;
                 }
                 .small {
                     display: block;
-                    width: 100%;
-                    text-align: right;
+                    //width: 100%;
+                    //text-align: right;
+                    position: relative;
+                    width: 105px;
+                    left: calc(100% - 105px);
+
                     opacity: 0.7;
                     margin-bottom: 3rem;
                     &:hover {
@@ -54,18 +58,19 @@ $secondary: #655C5C;
             &-input {
                 display: flex;
                 flex-direction: column;
+                position: relative;
                 margin-bottom: 2rem;
                 > label {
                     font-weight: 400;
                     color: black;
                     font-size: 1.25rem;
                     margin-bottom: 0.5rem;
-    
                 }
                 > input {
                     height: 50px;
                     border: 1px solid $primary;
-                    padding-left: 1rem;
+                    padding-left: 2rem; //ojo
+                    padding-right: 2rem;
                     opacity: 0.9;
                     background: none;
                     outline: none;
@@ -77,11 +82,26 @@ $secondary: #655C5C;
                         box-shadow: 0 0 0 30px white inset !important;
                     }
                 }
+                > .icon-right, .icon-left{
+                    color: $primary;
+                    position: absolute;
+                    padding: 2px;
+                    min-width: 30px;
+                    top: 40px;
+                    z-index: 1;
+                    cursor: pointer;
+                }
+                > .icon-right{
+                    right: 3px;
+                }
+                > .icon-left{
+                    left: 5px;
+                }
             }
             &-buttons {
                 float: right;
                 margin-bottom: 3rem;
-                &__signup, &__signin {
+                &__signup, &__signin, &__spinner {
                     height: 50px;
                     min-width: 170px;
                     border: none;
@@ -111,6 +131,16 @@ $secondary: #655C5C;
                     }
                     &:disabled {
                         opacity: 0.5;
+                    }
+                }
+                &__spinner {
+                    background: $primary;
+                    color: #fff;
+                    opacity: 0.8;
+                    &-login {
+                        background: #7D051D;
+                        margin: 0 auto;
+                        top: 7px;
                     }
                 }
             }
@@ -180,12 +210,18 @@ $secondary: #655C5C;
                     > input {
                         height: 40px;
                     }
+                    > .icon-right, .icon-left {
+                        top: 35px;
+                    }
                 }
                 &-buttons {
                     float: right;
-                    &__signup, &__signin {
+                    &__signup, &__signin, &__spinner {
                         height: 40px;
                         min-width: 100px;
+                    }
+                    &__spinner-login{
+                        top: 2px;
                     }
                 }
                 &-footer {

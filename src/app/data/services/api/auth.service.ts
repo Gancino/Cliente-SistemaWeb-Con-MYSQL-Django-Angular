@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ERRORS_CONST } from '@data/constants';
 import { API_ROUTES, INTERNAL_ROUTES } from '@data/constants/routes';
@@ -7,6 +7,8 @@ import { IApiUserAuthenticated } from '@data/interfaces';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment as ENV } from "environments/environment";
+import { DisparadorService } from '../disparador/disparador.service';
+declare var $: any;
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +16,12 @@ import { environment as ENV } from "environments/environment";
 export class AuthService {
 
   public currentUser: BehaviorSubject<IApiUserAuthenticated>;
-  public nameUserLS = 'currentUserDesignicode'; 
-  
+  public nameUserLS = 'currentUserDesignicode';
+
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private disparadorService: DisparadorService
   ) { 
     this.currentUser = new BehaviorSubject(
       JSON.parse(localStorage.getItem(this.nameUserLS))
@@ -50,6 +53,7 @@ export class AuthService {
           this.currentUser.next(r.data);
           if (!response.error){
             this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
+            $("html, body").animate({ scrollTop: 0 }, 100);
           }
           //console.log(r.data);
           return response;
@@ -76,38 +80,6 @@ export class AuthService {
     this.router.navigateByUrl(INTERNAL_ROUTES.AUTH_LOGIN);
   }
 
-  cuenta(event: EventEmitter<any>) {
-    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
-    setTimeout(() => {
-      event.emit();
-    }, 150);
-  }
-
-  categorias(event: EventEmitter<any>) {
-    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_CATEGORIA_LIST);
-    setTimeout(() => {
-      event.emit();
-    }, 150);
-  }
-
-  contenidos(event: EventEmitter<any>) {
-    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_CONTENIDO_LIST);
-    setTimeout(() => {
-      event.emit();
-    }, 150);
-  }
-
-  miembros(event: EventEmitter<any>) {
-    this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MIEMBRO_LIST);
-    setTimeout(() => {
-      event.emit();
-    }, 150);
-  }
-
-  publicContent() {
-    this.router.navigateByUrl(INTERNAL_ROUTES.PUBLIC_HOME);
-  }
-
   public setUserToLocalStorage ( user: IApiUserAuthenticated){
     localStorage.setItem(this.nameUserLS, JSON.stringify(user));
   }
@@ -117,18 +89,13 @@ export class AuthService {
   }
 
   UploadPhoto(val:any){
-    return this.http.post(API_ROUTES.PhotoUrl.IMAGEN,val);
+    return this.http.post(API_ROUTES.MEDIA.FILE,val);
   }
 
   UploadFile(val:any){
     return this.http.post(API_ROUTES.API.SAVEIMAGEUSER,val);
   }
 
-  /*
-  updateUser(val:any, id:any){
-    return this.http.put(API_ROUTES.USERS.UPDATE+id+"/", val);
-  }
-  */
   updateUser( formData:any, id:any): Observable <{       //retornara un observable
     error: boolean;
     msg: any;
@@ -141,11 +108,17 @@ export class AuthService {
           response.msg = r.msg;
           response.error = r.error;
           response.data = r.data;
+          let avatar = this.getUser.avatar;
           if(!r.error){
             this.setUserToLocalStorage(r.data);
             this.currentUser = new BehaviorSubject(
               JSON.parse(localStorage.getItem(this.nameUserLS))
             );
+            if(r.data.avatar !== '' && r.data.avatar !== null){
+              if(r.data.avatar !== avatar){
+                this.disparadorService.avatar.emit(r.data.avatar);
+              }
+            }
           }
           //console.log(r.data);
           return response;
@@ -183,28 +156,3 @@ export class AuthService {
       );
   }
 }
-
-
-
-//----------------------------------------------
-/**
-  getMessage() {
-    return this.http.get(ENV.uri);
-  }
-
-  login2(username: string, password: string){
-    return this.http.post<any>(ENV.uri + `auth/login/`,
-      { username, password }, httpOptions).pipe(
-        map(user => {
-          if(user && user.token) {
-            localStorage.setItem("currentUser", JSON.stringify(user));
-          }
-          return user;
-        })
-      );
-  }
-
-  logout2(){
-    localStorage.removeItem('currentUser');
-  }
-*/

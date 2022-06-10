@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CONST_LOGIN_PAGE } from '@data/constants';
-import { AuthService } from '@data/services/api/auth.service';
+import { CONST_GLOBAL } from '@data/constants/global.const';
+import { INTERNAL_ROUTES } from '@data/constants/routes';
+declare var $: any;
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent {
 
-  public data;
-
-  msg: any;
-
-  constructor(
-    private authService: AuthService
-  ){
+  public data: any;
+  
+  constructor(){
     this.data = CONST_LOGIN_PAGE;
   }
+  
+}
+
+/*
   ngOnInit(): void {
     this.showMessage();
   }
@@ -28,4 +30,4 @@ export class LoginComponent implements OnInit{
       //console.log(this.msg);
     });
   }
-}
+  */

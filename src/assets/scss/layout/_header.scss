@@ -10,6 +10,13 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 1rem;
+            //-------
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            height: 60px;
+            //--------
             &__brand {
                 display: flex;
                 align-items: center;
@@ -37,34 +44,214 @@
             &__submenu {
                 display: flex;
                 align-items: center;
-                &-icon {
-                    color: map-get($map: $theme, $key: 'light');
-                    font-size: 1.5rem;
-                    margin: 0 1rem;
-                    transition: 0.7s all ease-in-out;
-                    &:hover {
-                        opacity: 0.7;
-                        cursor: pointer;
-                    }
-                }
-                &-usr {
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    height: 30px;
-                    width: 30px;
-                    border-radius: 100%;
-                    box-shadow: map-get($map: $theme, $key: 'shadow');
-                    border-bottom: map-get($map: $theme, $key: 'border_Secondary');
-                    transition: 0.25s all ease-in-out;
-                    &:hover {
-                        cursor: pointer;
-                        width: 35px;
-                        height: 35px;
-                        background-position: center;
-                    }
-                }
+                &__links {
+                    list-style: none;
+                    &-link {
+                        display: inline-block;
+                        position: relative;
+                        top: 13px;
+                        right: 20px;
+                        line-height: 35px;
+                        text-align: center;
+                        &-router{
+                            display: block;
+                            width: 100%;
+                            color: map-get($map: $theme, $key: 'light');
+                            text-decoration: none;
+                            font-size: 1.5rem;
+                            margin: 0 1rem;
+                            transition: 0.7s all ease-in-out;
+                            position: relative;
+                            margin-bottom: 13px;
+                            border-radius: 5px;
+                            //Icono para el submenu si esq existe
+                            //icono submenu Investigacion
+                            &-submenuI {
+                                position: relative;
+                                display: inline-block;
+                                top: 18px;
+                                left: 5px;
+                                transform: translateY(-50%);
+                                transition: transform 0.4s;
+                            }
+                            //icono submenu Publicaciones
+                            &-submenuP {
+                                position: relative;
+                                display: inline-block;
+                                top: 18px;
+                                left: 5px;
+                                transform: translateY(-50%);
+                                transition: transform 0.4s;
+                            }
+                            &:hover {
+                                opacity: 0.7;
+                                cursor: pointer;
+                                background: rgba(255,255,255,0.15);
+                            }          
+                        }
+                        &__sublinksI {
+                            //display: none
+                            display: block;
 
+                            max-height: 0;
+                            overflow: hidden;
+                            transition: max-height 0.7s;
+                            
+                            position: absolute;
+                            background: map-get($map: $theme, $key: 'primary');
+                            list-style: none;
+                            width: 250%;
+                            z-index: 1000;
+                            border-radius: 5px;
+                            left: -50%;
+                            text-align: left;
+                            //overflow: auto;
+                            &-sublink {
+                                display: block;
+                                border-bottom: map-get($map: $theme, $key: 'border_primary');
+                                position: relative;
+                                margin-left: -30px;
+                                &-subrouter{
+                                    display: block;
+                                    font-size: 1.1rem;
+                                    padding: 0.25rem 0.7rem;
+                                    transition: 0.5s all ease-in-out;
+                                    opacity: 0.7;
+                                    color: map-get($map: $theme, $key: 'light');
+                                    text-decoration: none;
+                                    font-weight: 500;
+                                    width: 100%;
+                                    position: relative;
+                                    border-radius: 5px;
+                                    &-subname {
+                                        margin-left: 0.7rem;
+                                    }
+                                    &:hover {
+                                        background: rgba(255,255,255,0.15);
+                                        cursor: pointer;
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                        &__sublinksP {
+                            //display: none;
+                            display: block;
+
+                            max-height: 0;
+                            overflow: hidden;
+                            transition: max-height 0.7s;
+
+                            position: absolute;
+                            background: map-get($map: $theme, $key: 'primary');
+                            list-style: none;
+                            width: 250%;
+                            z-index: 1000;
+                            border-radius: 5px;
+                            left: -50%;
+                            text-align: left;
+                            &-sublink {
+                                display: block;
+                                border-bottom: map-get($map: $theme, $key: 'border_primary');
+                                position: relative;
+                                margin-left: -30px;
+                                &-subrouter{
+                                    display: block;
+                                    font-size: 1.1rem;
+                                    padding: 0.25rem 0.7rem;
+                                    transition: 0.5s all ease-in-out;
+                                    opacity: 0.7;
+                                    color: map-get($map: $theme, $key: 'light');
+                                    text-decoration: none;
+                                    font-weight: 500;
+                                    width: 100%;
+                                    position: relative;
+                                    border-radius: 5px;
+                                    &-subname {
+                                        margin-left: 0.7rem;
+                                    }
+                                    &:hover {
+                                        background: rgba(255,255,255,0.15);
+                                        cursor: pointer;
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                        &:hover .dsc-header__submenu__links-link__sublinksI {
+                            //display: block;
+                            max-height: 44px;
+                        }
+                        &:hover .dsc-header__submenu__links-link__sublinksP {
+                            //display: block;
+                            max-height: 220px;
+                        }
+                        &:hover .dsc-header__submenu__links-link-router-submenuI{
+                            transform: translateY(-50%) rotate(180deg);
+                        }
+                        &:hover .dsc-header__submenu__links-link-router-submenuP{
+                            transform: translateY(-50%) rotate(180deg);
+                        }
+                    }
+                    &-linkusr {
+                        display: inline-block;
+                        position: relative;
+                        top: 14px;
+                        right: 20px;
+                        line-height: 35px;
+                        text-align: center;
+                        &-routerusr {
+                            display: block;
+                            width: 100%;
+                            color: map-get($map: $theme, $key: 'light');
+                            text-decoration: none;
+                            font-size: 1.5rem;
+                            margin: 0 1rem;
+                            transition: 0.7s all ease-in-out;
+                            position: relative;
+                            margin-bottom: 12px;
+                            border-radius: 5px;
+                            &-usr{
+                                position:fixed;
+                                background-repeat: no-repeat;
+                                background-size: cover;
+                                height: 35px;
+                                width: 35px;
+                                border-radius: 100%;
+                                box-shadow: map-get($map: $theme, $key: 'shadow');
+                                border-bottom: map-get($map: $theme, $key: 'border_Secondary');
+                                transition: 0.25s all ease-in-out;
+                                background-position: center;
+                                top: 12px;
+                                right: 10px;
+                                &:hover {
+                                    top: 10px;
+                                    right: 8px;
+                                    cursor: pointer;
+                                    width: 40px;
+                                    height: 40px;
+                                }
+                            }
+                            /*
+                            &:hover {
+                                opacity: 0.7;
+                                cursor: pointer;
+                                background: rgba(255,255,255,0.15);
+                            }  
+                            */
+                        }
+                    }
+                }
             }
         }
+    }
+}
+
+
+//-----MEJORAR EL HEADER
+@media only screen and (max-width: 745px){
+    .dsc-header__submenu__links-link {
+        visibility: hidden;
+        width: 0;
     }
 }

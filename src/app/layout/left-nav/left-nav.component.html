@@ -1,22 +1,29 @@
 <div class="dsc-left-nav-brand">
-    <fa-icon [icon]="faBars" class="dsc-left-nav-brand__menu" (click)="showMenu.emit()" ></fa-icon>
+    <fa-icon [icon]="data.ICONFAARROWLEFT" class="dsc-left-nav-brand__menu" (click)="showMenu.emit()"></fa-icon>
     <div class="dsc-left-nav-brand__logo">
-        <img [src]="logo" alt="designicode-logo"/>
-        <span>BOOT'S</span>
+        <img [src]="data.LOGO" alt="logo"/>
+        <span>{{data.LOGOMSG}}</span>
     </div>
 </div>
-<div class="dsc-left-nav-usr" *ngIf="this.authService.getUser">
-    <div class="dsc-left-nav-usr__avatar" [ngStyle]="{'background-image': 'url(' + PathMedia+this.authService.getUser.avatar + ')'}"></div>
-    <h4 class="dsc-left-nav-usr__name">{{
-        this.authService.getUser.first_name + ' ' + 
-        this.authService.getUser.last_name
-    }}</h4>
-    <h6 class="dsc-left-nav-usr__position">{{this.authService.getUser.work}}</h6>
+<div class="contenedor">
+    <div class="dsc-left-nav-usr" *ngIf="this.authService.getUser">
+        <div class="dsc-left-nav-usr__avatar" [ngStyle]="{'background-image': 
+            'url(' + data.AVATAR + ')'}">
+        </div>
+        <h4 class="dsc-left-nav-usr__name">
+            {{
+            this.authService.getUser.first_name + ' ' + 
+            this.authService.getUser.last_name
+            }}
+        </h4>
+        <h6 class="dsc-left-nav-usr__position">{{this.authService.getUser.work}}</h6>
+    </div>   
+    <ng-container *ngFor="let menu of menus"> 
+        <app-left-nav-menu [data]="menu" 
+            [submenuInvestigacion]="data.SUBMENU_INVESTIGACION"
+            [submenuPublicaciones]="data.SUBMENU_PUBLICACIONES"
+        >
+        </app-left-nav-menu>
+    </ng-container>
 </div>
-
-<ng-container *ngFor="let menu of menus"> 
-    <app-left-nav-menu [data]="menu"></app-left-nav-menu>
-</ng-container>
-<ng-container><!-- esta parte hacemos afuera por que esta fuera de la interfaz LeftNavMenu en constantes-->
-    <app-left-nav-menu [data]="logoutMenu"></app-left-nav-menu>
-</ng-container>
+   

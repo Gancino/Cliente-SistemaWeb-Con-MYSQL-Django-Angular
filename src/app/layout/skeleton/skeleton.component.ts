@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { CONST_LEFT_NAV_PAGE } from '@data/constants';
+import { IMAGES_ROUTES } from '@data/constants/routes';
 
 @Component({
   selector: 'app-skeleton',
@@ -6,15 +8,20 @@ import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@ang
   styleUrls: ['./skeleton.component.scss']
 })
 export class SkeletonComponent implements AfterViewInit{
+  
+  public menu!: boolean;
+  public $theme!: 'blue-dark' | 'dark' | 'red' | 'yellow';
+  public loader!: string;
+  public isLoader!: boolean;
+  public idAppLeftNav!: string;
 
-  public showLeftNav = true;
-  public $theme: 'blue-dark' | 'dark' | 'red' | 'yellow';
-  public loader = 'assets/images/loader/loader.gif';
-  public isLoader = true;
   constructor() { 
+    this.menu = false;
     this.$theme = 'blue-dark';
+    this.loader = IMAGES_ROUTES.LOADER;
+    this.isLoader = true;
+    this.idAppLeftNav = CONST_LEFT_NAV_PAGE.IDLEFTNAV;
   }
-
 
   //Una ves que todos los componentes se cargen y la vista este lista o completa se ejecuta este metodo
   ngAfterViewInit(): void {
@@ -25,7 +32,7 @@ export class SkeletonComponent implements AfterViewInit{
   }
 
   showMenu() {
-    this.showLeftNav = !this.showLeftNav;
+    this.menu =! this.menu;
   }
 
   getTheme(): string{
@@ -38,5 +45,9 @@ export class SkeletonComponent implements AfterViewInit{
 
   clearTheme(){
     this.$theme = 'blue-dark'
+  }
+
+  setIsLoader(isloader: boolean){
+    this.isLoader = isloader;
   }
 }

@@ -9,19 +9,39 @@
             justify-content: center;
             align-items: center;
             padding: 0.25rem;
-            margin: 0 1rem 0.5rem 1rem;
-            border-radius: 3px;
+            margin: 0;
             background: map-get($map: $theme, $key: 'primary');
             color: map-get($map: $theme, $key: 'light');
             &-text {
                 font-weight: 400;
                 margin-right: 0.5rem;
                 font-size: 0.9rem;
+                padding-left: 0.5rem;
             }
             &__socials {
                 &-social {
                     font-size: 1.25rem;
-                    margin: 0 0.35rem
+                    margin: 0 0.35rem;
+                    color: #fff;
+                }
+                > a:hover{
+                    opacity: 0.6;
+                }
+            }
+        }
+        @media(max-width: 600px) {
+            .dsc-footer {
+                padding: 0;
+                &-text {
+                    font-weight: 350;
+                    margin-right: 0.5rem;
+                    font-size: 0.7rem;
+                }
+                &__socials {
+                    &-social {
+                        font-size: 1.25rem;
+                        margin: 0 0.35rem
+                    }
                 }
             }
         }

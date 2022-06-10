@@ -10,26 +10,26 @@ import { AuthService } from '@data/services/api/auth.service';
 })
 export class EditCredencialesComponent implements OnInit {
 
-  user_id:any;
-  public loading: boolean;
-  public userSubmitted;
-  public userForm: FormGroup;
-  public emailExist: boolean;
-  public emailExistValue: string;
-  public colorEmailInput: string;
-  public usernameExist: boolean;
-  public usernameExistValue: string;
-  public colorUsernameInput: string;
-  public typePassword: string;
-  public clickPassword: boolean;
-  public typeConfirmPassword: string;
-  public clickConfirmPassword: boolean;
-  public colorConfirmPassword: string;
-  public errorConfirmPassword: boolean;
+  public user_id!:any;
+  public loading!: boolean;
+  public userSubmitted!: boolean;
+  public userForm!: FormGroup;
+  public emailExist!: boolean;
+  public emailExistValue!: string;
+  public colorEmailInput!: string;
+  public usernameExist!: boolean;
+  public usernameExistValue!: string;
+  public colorUsernameInput!: string;
+  public typePassword!: string;
+  public clickPassword!: boolean;
+  public typeConfirmPassword!: string;
+  public clickConfirmPassword!: boolean;
+  public colorConfirmPassword!: string;
+  public errorConfirmPassword!: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
-    public authService : AuthService
+    private authService : AuthService
   ) {
     this.loading = false;
     this.colorEmailInput = 'primary';
@@ -81,6 +81,7 @@ export class EditCredencialesComponent implements OnInit {
   get u(){
     return this.userForm.controls;
   }
+
   ngOnInit(): void {
     this.loadUser()
   }
@@ -106,6 +107,7 @@ export class EditCredencialesComponent implements OnInit {
     if(password!==confirmpassword){
       Alertas.mostrarAlert('Oops...','Las contraseñas no coinciden', 'error');
       this.errorConfirmPassword=true;
+      this.colorConfirmPassword='warn';
       return;
     }
 
@@ -120,9 +122,9 @@ export class EditCredencialesComponent implements OnInit {
       setTimeout(() => {
         this.loading=false;
         if(!res.error){
-          Alertas.mostrarAlert('Buen trabajo!','Crendenciales de acceso actualizadas correctamente.','success');
+          Alertas.mostrarAlert(Alertas.MSG_TITLE_SUCCESS,'Crendenciales de acceso actualizadas correctamente.','success');
         }else{
-          Alertas.mostrarAlert('Error!','¡Error al actualizar las credenciales de acceso, intentalo de nuevo!','error');
+          Alertas.mostrarAlert(Alertas.MSG_TITLE_ERROR,'¡Error al actualizar las credenciales de acceso, intentalo de nuevo!','error');
           if(res.msg.username)
           {
             this.usernameExist = true;
@@ -147,8 +149,7 @@ export class EditCredencialesComponent implements OnInit {
       if( emailForm === this.emailExistValue ){
         this.emailExist = true;
         this.colorEmailInput = 'warn';
-      }
-      else{
+      }else{
         this.emailExist = false;
         this.colorEmailInput = 'primary';
       }
@@ -162,8 +163,7 @@ export class EditCredencialesComponent implements OnInit {
       if( usernameForm === this.usernameExistValue ){
         this.usernameExist = true;
         this.colorUsernameInput = 'warn';
-      }
-      else{
+      }else{
         this.usernameExist = false;
         this.colorUsernameInput = 'primary';
       }

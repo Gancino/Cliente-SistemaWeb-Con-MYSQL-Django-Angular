@@ -1,0 +1,8 @@
+<div class="dsc-card-congreso" *ngIf="data" [routerLink]="routeCongresos + '/' + data.id_con">
+    <div class="dsc-card-congreso_info">
+        <h2><li>{{data.titulo_con}}</li></h2>
+        <h4>Año: {{data.anio_con}}</h4>
+        <p>{{data.numero_con}}</p>
+        <p>{{data.autor_con}}</p>
+    </div>
+</div>

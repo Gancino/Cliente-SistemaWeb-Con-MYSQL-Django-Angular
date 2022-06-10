@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alertas } from '@data/constants';
-import { API_ROUTES, INTERNAL_ROUTES } from '@data/constants/routes';
+import { API_ROUTES, IMAGES_ROUTES, INTERNAL_ROUTES } from '@data/constants/routes';
 import { AuthService } from '@data/services/api/auth.service';
+declare var $: any;
 
 @Component({
   selector: 'app-edit-cuenta',
@@ -12,18 +13,20 @@ import { AuthService } from '@data/services/api/auth.service';
 })
 export class EditCuentaComponent implements OnInit {
 
-  user_id:any;
-  public userSubmitted;
-  public userForm: FormGroup;
-  PhotoFilePath!: String;
-  public archivos:any=[];
+  public user_id!: any;
+  public userSubmitted!: boolean;
+  public userForm!: FormGroup;
+  public PhotoFilePath!: String;
+  public archivos!: any[];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    public authService : AuthService
+    private authService : AuthService
   ) {
     this.userSubmitted = false;
+    this.archivos = [];
+    this.PhotoFilePath = IMAGES_ROUTES.LOADER_IMG;
     this.userForm = this.formBuilder.group({
       first_name: [
         '', 
@@ -42,7 +45,7 @@ export class EditCuentaComponent implements OnInit {
       avatar: [
         '', 
         [
-          Validators.required,
+          //Validators.required,
           Validators.maxLength(200)
         ]
       ],
@@ -87,6 +90,7 @@ export class EditCuentaComponent implements OnInit {
   get u(){
     return this.userForm.controls;
   }
+  
   ngOnInit(): void {
     this.loadUser()
   }
@@ -101,7 +105,12 @@ export class EditCuentaComponent implements OnInit {
     this.userForm.get('telefono').setValue(this.authService.getUser.telefono);
     this.userForm.get('empresa').setValue(this.authService.getUser.empresa);
     this.userForm.get('descripcion').setValue(this.authService.getUser.descripcion);
-    this.PhotoFilePath=API_ROUTES.PhotoUrl.MEDIA+this.authService.getUser.avatar;
+    
+    if(this.authService.getUser.avatar == '' || this.authService.getUser.avatar == null ){
+      this.PhotoFilePath=IMAGES_ROUTES.USER_CONTENT;
+    }else{
+      this.PhotoFilePath=API_ROUTES.MEDIA.DEFAULT+this.authService.getUser.avatar;
+    }
   }
 
   updateUser(){
@@ -127,11 +136,12 @@ export class EditCuentaComponent implements OnInit {
 
     this.authService.updateUser(formData, this.user_id).subscribe(res=>{
       if(!res.error){
-        Alertas.mostrarAlert('Buen trabajo!','Perfil actualizado correctamente.','success');
+        Alertas.mostrarAlert(Alertas.MSG_TITLE_SUCCESS, 'Perfil actualizado correctamente.','success');
         //window.location.reload();
         this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
+        $("html, body").animate({ scrollTop: 0 }, 100);
       }else{
-        Alertas.mostrarAlert('Error!','¡Error al actualizar el perfil, intentalo de nuevo!','error');
+        Alertas.mostrarAlert(Alertas.MSG_TITLE_ERROR, '¡Error al actualizar el perfil, intentalo de nuevo!','error');
       }
     });
   }
@@ -177,17 +187,5 @@ export class EditCuentaComponent implements OnInit {
   regresar(){
     this.router.navigateByUrl(INTERNAL_ROUTES.PANEL_MI_CUENTA);
   }
-
-  /*
-  uploadImage(event: any){
-    var file=event.target.files[0];
-    const formData:FormData=new FormData();
-    formData.append('uploadedFile',file,file.name);
-
-    this.authService.UploadFile(formData).subscribe((data:any)=>{
-      this.userForm.get('avatar').setValue(data.toString());
-      this.PhotoFilePath=API_ROUTES.PhotoUrl.MEDIA+this.userForm.get('avatar').value;
-    });
-  }
-  */
+  
 }

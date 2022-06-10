@@ -1,0 +1,45 @@
+<!--Spinner mientras se envia una peticion al api-->
+<mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+<!--Formulario-->
+<form *ngIf="!loading" [formGroup]="pintelectualForm" (ngSubmit)="addEditPIntelectual()" tabindex="0">
+    <!--Campo Título-->
+    <mat-form-field appearance="outline">
+        <!--Label-->
+        <mat-label>Título</mat-label>
+        <!--Input-->
+        <input type="text" matInput autocomplete="off" placeholder="Ingresar el título" formControlName="titulo_pin">
+        <!--Manejo de los errores-->
+        <mat-error *ngIf="(pi.titulo_pin.errors && pintelectualSubmitted)">
+            <ng-container [ngSwitch]="pi.titulo_pin.value">
+                <ng-container *ngSwitchCase="''">*El título es requerido!</ng-container>
+                <ng-container *ngSwitchDefault>*El título debe tener un máximo de 100 caracteres!</ng-container>
+            </ng-container>
+        </mat-error>
+        <!--Permite borrar el texto del campo-->
+        <mat-icon *ngIf="pi.titulo_pin.value!=''" matSuffix class="pointer" (click)="eliminarTexto('titulo_pin')">close</mat-icon>
+    </mat-form-field>
+    <!--Campo Fecha-->
+    <mat-form-field appearance="outline">
+        <!--Label-->
+        <mat-label>Fecha</mat-label>
+        <!--Input tipo Date-->
+        <input type="date" matInput formControlName="fecha_pin">
+        <!--Manejo de errores del input-->
+        <mat-error *ngIf="(pi.fecha_pin.errors && pintelectualSubmitted)">
+            <ng-container [ngSwitch]="pi.fecha_pin.value">
+                <ng-container *ngSwitchCase="''">*La fecha es requerida!</ng-container>
+            </ng-container>
+        </mat-error>
+    </mat-form-field>
+    <!--Buttons tipo submit-->
+    <div class="buttons">
+        <!--Button Guardar-->
+        <button type="submit" *ngIf="pin.id_pin==0" class="buttonsubmit" mat-raised-button color="primary">
+            <mat-icon>save</mat-icon>Guardar
+        </button>
+        <!--Buttons Editar-->
+        <button type="submit" *ngIf="pin.id_pin!=0" class="buttonsubmit" mat-raised-button color="primary">
+            <mat-icon>save</mat-icon>Actualizar
+        </button>
+    </div>
+</form>

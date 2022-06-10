@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { IApiMiembro } from '@data/interfaces';
 import { PublicService } from '@data/services/api/public.service';
-import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadata';
+import { DisparadorService } from '@data/services/disparador/disparador.service';
 import { Subscription } from 'rxjs';
+declare var $: any;
 
 @Component({
   selector: 'app-miembros-list',
@@ -11,30 +14,56 @@ import { Subscription } from 'rxjs';
 export class MiembrosListComponent implements OnInit, OnDestroy {
   
   //-------------------------------------------------------------------
-  public miembros: ICardUser[]; // USERS_DATA;
-  public title: string;
-  public miembroSubscription: Subscription;
+  public dataSource!: MatTableDataSource<any>;
+  public miembros!: IApiMiembro[]; // USERS_DATA;
+  public title!: string;
+  public miembroSubscription!: Subscription;
 
   //public pricePesos: number;
 
   constructor(
-    private service: PublicService
+    private service: PublicService,
+    private disparadorService: DisparadorService
   ) { 
     this.service.setTitle('Lista de miembros');
     this.title = this.service.getTitle();
-
     //this.pricePesos = 0;
   }
 
   
   ngOnInit(): void {
-    this.getMiembros();
+    if(this.service.getFilter){
+      if(this.service.getFilter.filter !== 0){
+        this.getMimebrosFilter(this.service.getFilter.filter);
+      }else{
+        this.getMiembros();
+      }
+    }else{
+      this.getMiembros();
+    }
+
+    this.miembroSubscription = this.disparadorService.open.subscribe(data => {
+      this.miembros = data;
+      this.dataSource = new MatTableDataSource(this.miembros);
+    });
+  }
+
+  getMimebrosFilter(val: any){
+    this.miembroSubscription = this.service
+      .getMiemFilterList(val)
+      .subscribe(r => {
+        this.miembros = (r.error) ? [] : r.data;
+        this.dataSource = new MatTableDataSource(this.miembros);
+      });
   }
 
   getMiembros(){
     this.miembroSubscription = this.service
       .getAllMiembros()
-      .subscribe(r => this.miembros = (r.error) ? [] : r.data);
+      .subscribe(r => {
+        this.miembros = (r.error) ? [] : r.data;
+        this.dataSource = new MatTableDataSource(this.miembros);
+      });
   }
   /*
   addAmount(){
@@ -53,6 +82,16 @@ export class MiembrosListComponent implements OnInit, OnDestroy {
       //console.log('unsubscribe');
       this.miembroSubscription.unsubscribe();
     }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    $("html, body").animate({ scrollTop: 0 }, 100);
+  }
+
+  scrollToUp(){
+    $("html, body").animate({ scrollTop: 0 }, 100);
   }
   //--------------------------------------------------------------------
 

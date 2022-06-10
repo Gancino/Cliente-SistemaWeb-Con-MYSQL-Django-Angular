@@ -2,13 +2,54 @@
     <h5 class="dsc-left-nav-menu__title">{{data.title}}</h5>
     <ul class="dsc-left-nav-menu__links">
         <ng-container *ngFor="let link of data.links">
-            <li 
-                class="dsc-left-nav-menu__links-link" 
-                [routerLink]="link.link ? link.link : null"
-                (click)="link.method ? link.method() : null"
-            >
-                <fa-icon [icon]="link.icon"></fa-icon>
-                <span>{{link.name}}</span>
+            <li class="dsc-left-nav-menu__links-link">
+                <a class="dsc-left-nav-menu__links-link-router" 
+                    (click)="link.method ? link.method() : null">
+                    <fa-icon [icon]="link.icon"></fa-icon>
+                    <span class="dsc-left-nav-menu__links-link-router-name">{{link.name}}</span>
+                    <span *ngIf="link.sublinks && link.name === name_investigacion" 
+                        class="dsc-left-nav-menu__links-link-router-submenuI" 
+                        [class.dsc-left-nav-menu__links-link-router-submenuIClass]="submenuInvestigacion">
+                        <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                    </span>
+                    <span *ngIf="link.sublinks && link.name === name_publicaciones" 
+                        class="dsc-left-nav-menu__links-link-router-submenuP" 
+                        [class.dsc-left-nav-menu__links-link-router-submenuPClass]="submenuPublicaciones">
+                        <fa-icon *ngIf="link.iconsubLinks" [icon]="link.iconsubLinks"></fa-icon>
+                    </span>
+                </a>
+                
+                <!-----------------Submenu Investigacion------------------->
+                <ul *ngIf="link.sublinks && link.name === name_investigacion" 
+                    class="dsc-left-nav-menu__links__sublinksI">
+                    <ng-container *ngFor="let sublink of link.sublinks">
+                        <li class="dsc-left-nav-menu__links__sublinksI-sublink">
+                            <a class="dsc-left-nav-menu__links__sublinksI-sublink-subrouter"
+                                (click)="sublink.submethod ? sublink.submethod() : null"
+                                [matTooltip]="sublink.texthelp ? sublink.texthelp : null"
+                            >
+                                <fa-icon [icon]="sublink.subicon"></fa-icon>
+                                <span class="dsc-left-nav-menu__links__sublinksI-sublink-subrouter-subname">{{sublink.subname}}</span>
+                            </a>
+                        </li>
+                    </ng-container>
+                </ul>
+                <!-----------------Submenu Publicaciones------------------->
+                <ul *ngIf="link.sublinks && link.name === name_publicaciones" 
+                    class="dsc-left-nav-menu__links__sublinksP">
+                    <ng-container *ngFor="let sublink of link.sublinks">
+                        <li class="dsc-left-nav-menu__links__sublinksP-sublink">
+                            <a class="dsc-left-nav-menu__links__sublinksP-sublink-subrouter"
+                                (click)="sublink.submethod ? sublink.submethod() : null"
+                                [matTooltip]="sublink.texthelp ? sublink.texthelp : null"
+                            >
+                                <fa-icon [icon]="sublink.subicon"></fa-icon>
+                                <span class="dsc-left-nav-menu__links__sublinksP-sublink-subrouter-subname">{{sublink.subname}}</span>
+                            </a>
+                        </li>
+                    </ng-container>
+                </ul>
+                <!------------------------------------>
             </li>
         </ng-container>
     </ul>

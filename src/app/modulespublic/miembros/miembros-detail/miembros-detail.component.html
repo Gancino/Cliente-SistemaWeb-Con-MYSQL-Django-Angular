@@ -1,28 +1,37 @@
 <div class="row">
-    <div class="col-12">
-        <h1 class="my-5">
-            <!--<app-title-h1 type="success" [text]="title"></app-title-h1>-->
-        </h1>
-        <br>
-    </div>
     <div class="col-12" *ngIf ="currentMiembro; else loaderComponent;">
+        <div class="col-12">
+            <h1 class="my-5">
+                <!--<app-title-h1 type="success" [text]="title"></app-title-h1>-->
+            </h1>
+            <br>
+        </div>
         <div class="row">
             <div class="col-12 col-md-6 col-xl-3 mb-4 text-center">
-                <img class="dsc-user-img" [src]=PhotoFilePath alt="">
+                <img class="dsc-miembro-img" [src]="PhotoFilePath" alt="imágen">
             </div>
-            <div class="col-12 col-md-6 col-xl-9 pl-4">
-                <h1 class="text-primary border-bottom pb-3">Detalle de {{currentMiembro.nombre_miem}}</h1>
-                <h3 class="text-secondary">Telefono: {{currentMiembro.telefono_miem}}</h3>
+            <div class="col-12 col-md-6 col-xl-9 pl-4 dsc-content">
+                <h1 class="text-primary border-bottom pb-3">{{currentMiembro.nombre_miem + ' ' + currentMiembro.apellido_miem}}</h1>
+                <h3 class="text-secondary">Email: {{currentMiembro.correo_miem}}</h3>
+                <h3 class="text-secondary">Teléfono: {{currentMiembro.telefono_miem}}</h3>
                 <!-- Si tiene trabajo se muestra caso contrario mostramos "-----" -->
                 <h3 class="text-secondary border-bottom pb-3">Puesto: {{currentMiembro.cargo_miem ? currentMiembro.cargo_miem : '-----'}}</h3>
-                <p class="text-secondary">{{currentMiembro.descripcion_miem}}</p>
+                <p class="text-secondary border-bottom pb-3">{{currentMiembro.descripcion_miem}}</p>
+                <!--Button para ver la hoja de vida-->
+                <button *ngIf="hrefPathFile" type="button" class="button" 
+                    mat-raised-button color="primary" (click)="abrirHrefFile()" matTooltip="Ver la hoja de vida">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <!--Redirecciona para ver el archivo subido-->
+                <a href="{{filePath}}" target="_blank" class="ocultar" id="hrefHojaVidaMiembro"></a>
             </div>
         </div>
     </div>
     <ng-template #loaderComponent>
-        <div class="col-12 text-center">
-            <h5>Cargando...</h5>
-            <img src="https://acegif.com/wp-content/uploads/loading-75.gif" alt="">
+        <div class="loader_caja">
+            <div class="loader_box">
+                <img [src]="loader" alt="loader">
+            </div>
         </div>
     </ng-template>
 </div>

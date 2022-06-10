@@ -16,25 +16,27 @@ import Swal from 'sweetalert2';
 })
 export class ShowMieComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  public loading: boolean;
-  displayedColumns: string[];
-  dataSource: MatTableDataSource<any>;
+  public loading!: boolean;
+  public displayedColumns!: string[];
+  public dataSource!: MatTableDataSource<any>;
 
-  ModalTitle!: string;
-  miem:any;
-  MiembroList: IApiMiembro[];
+  public ModalTitle!: string;
+  public miem!: any;
+  public MiembroList!: IApiMiembro[];
+  public AddEditMiemComp!: boolean;
 
   constructor(
     private service : PrivateService,
-    public modal: NgbModal,
+    private modal: NgbModal,
     private _snackBar : MatSnackBar
   ) { 
     this.MiembroList = [];
     this.displayedColumns = ['id_miem', 'nombre_miem', 'apellido_miem', 'correo_miem', 'cargo_miem', 'opciones'];
     this.loading = true;
+    this.AddEditMiemComp = false;
   }
 
   ngOnInit(): void {
@@ -67,6 +69,7 @@ export class ShowMieComponent implements OnInit, AfterViewInit {
   }
 
   addClick(contenido: any){
+    this.AddEditMiemComp = true;
     this.estructModal(contenido);
     this.miem={
     id_miem : 0,
@@ -77,15 +80,20 @@ export class ShowMieComponent implements OnInit, AfterViewInit {
     imagen_miem : "",
     cargo_miem : "",
     descripcion_miem : "",
+    hvida_miem: "",
+    tipo_miem: ""
     }
     this.ModalTitle="Agregar un nuevo miembro";
   }
+
   closeClick(){
     this.modal.dismissAll();
+    this.AddEditMiemComp = false;
     this.refreshMiemList();
   }
 
   editClick(contenido: any, item: any){
+    this.AddEditMiemComp = true;
     this.estructModal(contenido);
     console.log(item);
     this.miem=item;
@@ -94,8 +102,8 @@ export class ShowMieComponent implements OnInit, AfterViewInit {
 
   deleteClick(item: any){
     Swal.fire({
-      title: 'Eliminar registro!', 
-      text: '¿Esta seguro de eliminar este registro?',
+      title: Alertas.MSG_TITLE_DELETE, 
+      text: Alertas.MSG_DELETE,
       width: '40%',
       padding: '1rem',
       backdrop: true,
@@ -106,13 +114,12 @@ export class ShowMieComponent implements OnInit, AfterViewInit {
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#d33',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Si, eliminar!'
+      cancelButtonText: Alertas.MSG_CANCEL_DELETE,
+      confirmButtonText: Alertas.MSG_CONFIRM_DELETE
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.deleteMiembro(item.id_miem).subscribe(data=>{
           Alertas.mostrarToast(data.toString(), this._snackBar);
-          //alert(data.toString());
           this.refreshMiemList();
         })
       }
@@ -129,12 +136,12 @@ export class ShowMieComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.refreshMiemList();
       if(this.MiembroList.length>0){
-        Alertas.mostrarToast('Datos obtenidos correctamente!', this._snackBar);
+        Alertas.mostrarToast(Alertas.MSG_LISTA_OBTENIDA, this._snackBar);
       }else{
-        Alertas.mostrarToast('No existen registros!', this._snackBar);
+        Alertas.mostrarToast(Alertas.MSG_LISTA_VACIA, this._snackBar);
       }
       this.refreshMiemList();
-    }, 500)
+    }, 500);
   }
   
 }

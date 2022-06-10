@@ -1,17 +1,74 @@
 <div class="dsc-header__brand">
-    <fa-icon [icon]="faBars" class="dsc-header__brand-menu" (click)="showMenu.emit()" ></fa-icon>
+    <fa-icon [icon]="data.ICONFABARS" class="dsc-header__brand-menu" (click)="showMenu.emit()" [id]="data.IDNAVHEADER"></fa-icon>
     <div class="dsc-header__brand-logo">
-        <img [src]="logo" alt="desinicode-logo">
-        <span>BOOT'S</span>
+        <img [src]="data.LOGO" alt="logo">
+        <span>{{data.LOGOMSG}}</span>
     </div>
 </div>
-<div class="dsc-header__submenu">
-    <fa-icon [icon]="faHome" class="dsc-header__submenu-icon" routerLink="/panel/cuenta"></fa-icon>
-    <fa-icon [icon]="faIndent" class="dsc-header__submenu-icon" routerLink="/panel/categoria"></fa-icon>
-    <fa-icon [icon]="faIdCard" class="dsc-header__submenu-icon" routerLink="/panel/contenido"></fa-icon>
-    <fa-icon [icon]="faUsers" class="dsc-header__submenu-icon" routerLink="/panel/miembro"></fa-icon>
-    <fa-icon [icon]="faEye" class="dsc-header__submenu-icon" routerLink="/public/home"></fa-icon>
-    <!--<fa-icon [icon]="faBell" class="dsc-header__submenu-icon"></fa-icon>
-    <fa-icon [icon]="faComment" class="dsc-header__submenu-icon" ></fa-icon>-->
-    <div class="dsc-header__submenu-usr" [ngStyle]="{'background-image': 'url(' +  PathMedia + this.authService.getUser.avatar + ')'}" *ngIf="this.authService.getUser" routerLink="/panel/cuenta"></div>
-</div>
+<nav class="dsc-header__submenu">
+    <ul class="dsc-header__submenu__links">
+        <ng-container *ngFor="let iconroute of data.ICONS_ROUTES">
+            <li class="dsc-header__submenu__links-link">
+                <a class="dsc-header__submenu__links-link-router"
+                    (click)="iconroute.method ? iconroute.method() : null"
+                    [matTooltip]="iconroute.text">
+                    <fa-icon [icon]="iconroute.icon"></fa-icon>
+                    <span *ngIf="iconroute.SUB_ICONS_ROUTES && iconroute.text === data.SUBMENU_INVESTIGACION"
+                        class="dsc-header__submenu__links-link-router-submenuI">
+                        <fa-icon *ngIf="iconroute.iconSubLinks" [icon]="iconroute.iconSubLinks"></fa-icon>
+                    </span>
+                    <span *ngIf="iconroute.SUB_ICONS_ROUTES && iconroute.text === data.SUBMENU_PUBLICACIONES"
+                        class="dsc-header__submenu__links-link-router-submenuP">
+                        <fa-icon *ngIf="iconroute.iconSubLinks" [icon]="iconroute.iconSubLinks"></fa-icon>
+                    </span>
+                </a>
+
+                <!-----------------Submenu Investigacion------------------->
+                <ul *ngIf="iconroute.SUB_ICONS_ROUTES && iconroute.text === data.SUBMENU_INVESTIGACION"
+                    class="dsc-header__submenu__links-link__sublinksI">
+                    <ng-container *ngFor="let subiconroute of iconroute.SUB_ICONS_ROUTES">
+                        <li class="dsc-header__submenu__links-link__sublinksI-sublink">
+                            <a class="dsc-header__submenu__links-link__sublinksI-sublink-subrouter"
+                                (click)="subiconroute.submethod ? subiconroute.submethod() : null"
+                                [matTooltip]="subiconroute.texthelp ? subiconroute.texthelp : null"
+                            >
+                                <fa-icon [icon]="subiconroute.subicon"></fa-icon>
+                                <span class="dsc-header__submenu__links-link__sublinksI-sublink-subrouter-subname">{{subiconroute.subtext}}</span>
+                            </a>
+                        </li>
+                    </ng-container>
+                </ul>
+                <!-----------------Submenu Publicaciones------------------->
+                <ul *ngIf="iconroute.SUB_ICONS_ROUTES && iconroute.text === data.SUBMENU_PUBLICACIONES" 
+                    class="dsc-header__submenu__links-link__sublinksP">
+                    <ng-container *ngFor="let subiconroute of iconroute.SUB_ICONS_ROUTES">
+                        <li class="dsc-header__submenu__links-link__sublinksP-sublink">
+                            <a class="dsc-header__submenu__links-link__sublinksP-sublink-subrouter"
+                                (click)="subiconroute.submethod ? subiconroute.submethod() : null"
+                                [matTooltip]="subiconroute.texthelp ? subiconroute.texthelp : null"
+                            >
+                                <fa-icon [icon]="subiconroute.subicon"></fa-icon>
+                                <span class="dsc-header__submenu__links-link__sublinksP-sublink-subrouter-subname">{{subiconroute.subtext}}</span>
+                            </a>
+                        </li>
+                    </ng-container>
+                </ul>
+                
+            </li>
+        </ng-container>
+        <li *ngIf="this.authService.getUser" class="dsc-header__submenu__links-linkusr">
+            <a class="dsc-header__submenu__links-linkusr-routerusr"
+                (click)="data.METHOD_MI_CUENTA ? data.METHOD_MI_CUENTA() : null">
+                <span class="dsc-header__submenu__links-linkusr-routerusr-usr"
+                    [ngStyle]="{'background-image': 'url(' +  this.data.AVATAR + ')'}"
+                    matTooltip="Cuenta">
+                </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+
+
+

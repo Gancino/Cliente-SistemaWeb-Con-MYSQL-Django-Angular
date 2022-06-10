@@ -1,5 +1,13 @@
-<app-navigationpublic></app-navigationpublic>
-<div class="container-fluid dsc-skeleton-content">
-    <router-outlet></router-outlet>
-</div>
-<app-footerpublic class="dsc-footer"></app-footerpublic>
+<section>
+    <app-navigationpublic></app-navigationpublic>
+    <main class="container-fluid dsc-skeleton-content">
+        <router-outlet></router-outlet>
+    </main>
+    <app-footerpublic></app-footerpublic>
+</section>
+
+<ng-container *ngIf="isLoader">
+    <div class="dsc-loader">
+        <img [src]="loader" alt="loader">
+    </div>
+</ng-container>

@@ -6,12 +6,13 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
   styleUrls: ['./title-h1.component.scss']
 })
 export class TitleH1Component implements OnInit,OnChanges {
-  @Input() text: string;
-  @Input() type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'dark';
+  @Input() text!: string;
+  @Input() type!: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'dark';
 
-  @Input() pricePesos: number;
-  public priceDollar: number;
-  public priceEuro: number;
+  @Input() pricePesos!: number;
+  public priceDollar!: number;
+  public priceEuro!: number;
+
   constructor() { 
     this.text = '';
     this.type = 'primary';
@@ -32,7 +33,6 @@ export class TitleH1Component implements OnInit,OnChanges {
   ngOnInit(): void {
     //console.log('ngOnInit');
   }
-  
 
   getCurrentDollarFromApi(){
     return 22;

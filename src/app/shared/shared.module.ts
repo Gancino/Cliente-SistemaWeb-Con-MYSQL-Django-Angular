@@ -9,7 +9,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularDesignModule } from './angular-design/angular-design.module';
 
-
 @NgModule({
   imports: [
     FormsModule,
@@ -23,7 +22,7 @@ import { AngularDesignModule } from './angular-design/angular-design.module';
     //AngularMaterial
     AngularDesignModule
   ],
-  declarations: [...fromComponents.components],
+  declarations: [...fromComponents.components ],
   exports: [
     FormsModule,
     ReactiveFormsModule,

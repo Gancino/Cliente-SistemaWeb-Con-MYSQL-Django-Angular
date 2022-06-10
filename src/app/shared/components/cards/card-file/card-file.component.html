@@ -1,0 +1,11 @@
+<div class="dsc-card-file" *ngIf="data">
+    <div class="dsc-card-file_icon" (click)="hrefClick()" matTooltip="{{this.filePathName}}">
+        <img [src]="icon" alt="iconpdf">
+        <!--Redirecciona para ver el archivo subido-->
+        <a href="{{filePath}}" target="_blank" class="ocultar" [id]="data.id_arch"></a>
+    </div>
+    <button type="button" class="dsc-card-file_icon_icon-delete" matTooltip="Eliminar archivo"
+        (click)="deleteClick(data.id_arch)">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>

@@ -16,7 +16,9 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { CustomErrorStateMatcher } from './custom-state-matcher';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSelectModule } from '@angular/material/select';  
+import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar'; 
 
 @NgModule({
   declarations: [],
@@ -35,7 +37,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatToolbarModule,
     MatCardModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDividerModule,
+    MatProgressBarModule
   ],
   exports: [
     MatSliderModule,
@@ -52,7 +56,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatToolbarModule,
     MatCardModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDividerModule,
+    MatProgressBarModule
   ],
   providers: [
     {

@@ -1,0 +1,33 @@
+<div class="buscar" *ngIf="congresos" (click)="scrollToUp()">
+    <!--Filtro. Permite buscar por cualquier campo-->
+    <mat-form-field appearance="outline">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input autocomplete="off">
+    </mat-form-field>
+</div>
+<div class="row main-with-filter">
+    <div class="col-12">
+        <app-title-h1 type="primary" [text]="title"></app-title-h1>
+    </div>
+
+    <ng-container *ngIf="congresos; else elseCongresosLoader;">
+        <ng-container *ngFor="let anio of aniosExist">
+            <div class="content-for-anio">
+                <h1>{{anio}}</h1>
+                <ng-container *ngFor="let congreso of dataSource.filteredData;trackBy: trackByCongresoId">
+                    <app-card-congreso [data]="congreso" *ngIf="congreso.anio_con == anio"></app-card-congreso>
+                </ng-container>
+            </div>
+        </ng-container>
+    </ng-container>
+    
+    <!----------------------------------
+        Init Loader of card congreso
+    ----------------------------------->
+    <ng-template #elseCongresosLoader>
+        <app-card-loader class="col-12 col-md-6 col-xl-3" [bars]="4" [imageSize]="100" [barHeight]="7" *ngFor="let i of [0,1,2,3]"></app-card-loader>
+    </ng-template>
+    <!----------------------------------
+        End Loader of card congreso
+    ----------------------------------->
+</div>

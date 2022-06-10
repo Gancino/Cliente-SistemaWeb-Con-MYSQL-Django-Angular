@@ -4,14 +4,16 @@
         <div class="login-form-content" app-login-form></div> <!--Llamando a nuestro componente app-login-form-->
         <div class="login-form-footer">
             <div class="login-form-footer__links">
-                <a href="#">Acerca de</a>
-                <a href="#">Contactanos</a>
-                <a href="#">Blog</a>
-                <a routerLink="public/home">Inicio</a>
+                <ng-container *ngFor="let href of data.HREFS">
+                    <a [href]="href.href">{{href.txt}}</a>
+                </ng-container>
+                <a [routerLink]="data.ROUTE_INICIO.route" (click)="data.ROUTE_INICIO.method()">{{data.ROUTE_INICIO.txt}}</a>
             </div>
             <div class="login-form-footer__socials">
-                <ng-container *ngFor="let icon of data.ICONS">
-                    <fa-icon [icon]="icon" class="login-form-footer__socials_social"></fa-icon>
+                <ng-container *ngFor="let iconsocial of data.ICONSSOCIALS">
+                    <a [href]="iconsocial.href">
+                        <fa-icon [icon]="iconsocial.icon" class="login-form-footer__socials_social"></fa-icon>
+                    </a>
                 </ng-container>
             </div>
         </div>

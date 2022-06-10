@@ -1,0 +1,16 @@
+<div class="dsc-carousel-loader" [ngStyle]="{'min-height': finalHeight}">
+    <div class="dsc-carousel-loader__btns">
+        <div class="dsc-carousel-loader__btns-i"></div>
+        <div class="dsc-carousel-loader__btns-i"></div>
+    </div>
+    <div class="dsc-carousel-loader__content">
+        <div class="dsc-carousel-loader__content-item">
+            <div class="dsc-carousel-loader__content-item-title"></div>
+            <div class="dsc-carousel-loader__content-item-subtitle"></div>
+        </div>
+    </div>
+    <div class="dsc-carousel-loader__steps">
+        <div class="dsc-carousel-loader__steps-step" 
+        *ngFor="let item of [0,1,2,3,4]"></div>
+    </div>
+</div>

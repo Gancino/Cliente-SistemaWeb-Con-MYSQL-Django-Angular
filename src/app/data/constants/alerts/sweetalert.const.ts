@@ -27,5 +27,19 @@ export const Alertas = {
           horizontalPosition: 'center',
           verticalPosition: 'bottom'
         })
-    }
+    },
+    MSG_LISTA_OBTENIDA: 'Datos obtenidos correctamente!',
+    MSG_LISTA_VACIA: 'No existen registros!',
+    MSG_TITLE_DELETE: 'Eliminar registro!',
+    MSG_TITLE_DELETE_ARCHIVO: 'Eliminar archivo!',
+    MSG_TITLE_SUCCESS: 'Buen trabajo!',
+    MSG_TITLE_ERROR: 'Error!',
+    MSG_DELETE: '¿Esta seguro de eliminar este registro?',
+    MSG_DELETE_ARCHIVO: '¿Esta seguro de eliminar este archivo?',
+    MSG_CONFIRM_DELETE: 'Si, eliminar!',
+    MSG_CANCEL_DELETE: 'Cancelar',
+    MSG_ADD_SUCCESS: 'Registro agregado correctamente en el sistema.',
+    MSG_ADD_ERROR: '¡Error al agregar el registro, intentalo de nuevo!',
+    MSG_EDIT_SUCCESS: 'Registro actualizado correctamente.',
+    MSG_EDIT_ERROR: '¡Error al actualizar el registro, intentalo de nuevo!'
 }

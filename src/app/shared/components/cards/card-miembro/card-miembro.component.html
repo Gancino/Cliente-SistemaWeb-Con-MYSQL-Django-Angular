@@ -1,0 +1,21 @@
+<div class="dsc-card" *ngIf="data" [routerLink]="routeMiembros + '/' + data.id_miem">
+    <div class="dsc-card_img">
+        <img [src]="PhotoFilePath" alt="imágen">
+    </div>
+    <div class="dsc-card_info">
+        <h2>{{data.nombre_miem}}</h2>
+        <h4>Telefono: {{data.telefono_miem}}</h4>
+        <!--
+        <p>Genero:
+            <ng-container [ngSwitch]="data.gender">
+                <span *ngSwitchCase="'F'">Femenino</span>
+                <span *ngSwitchCase="'M'">Masculino</span>
+                <span *ngSwitchDefault>{{data.gender}}</span>
+            </ng-container>
+        </p>
+    -->
+        <p>{{data.descripcion_miem}}</p>
+        <p *ngIf="data.cargo_miem">{{data.cargo_miem}}</p>
+    </div>
+    
+</div>
